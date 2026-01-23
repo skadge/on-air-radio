@@ -12,13 +12,13 @@ import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
+import com.google.common.util.concurrent.ListenableFuture
+import com.google.common.util.concurrent.MoreExecutors
 import org.guakamole.worldradio.data.RadioRepository
 import org.guakamole.worldradio.data.RadioStation
 import org.guakamole.worldradio.service.RadioPlaybackService
 import org.guakamole.worldradio.ui.RadioApp
 import org.guakamole.worldradio.ui.theme.RadioTheme
-import com.google.common.util.concurrent.ListenableFuture
-import com.google.common.util.concurrent.MoreExecutors
 
 class MainActivity : ComponentActivity() {
 
@@ -251,6 +251,7 @@ class MainActivity : ComponentActivity() {
                                             .setTitle(station.name)
                                             .setSubtitle(station.description)
                                             .setArtist(station.genre)
+                                            .setArtworkUri(android.net.Uri.parse(station.logoUrl))
                                             .build()
                             )
                             .build()

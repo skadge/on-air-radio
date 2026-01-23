@@ -8,7 +8,7 @@ android {
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.example.radio"
+        applicationId = "org.guakamole.worldradio"
         minSdk = 26
         targetSdk = 33
         versionCode = 1
