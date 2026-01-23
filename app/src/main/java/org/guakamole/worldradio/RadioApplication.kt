@@ -5,11 +5,13 @@ import coil.ImageLoader
 import coil.ImageLoaderFactory
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
+import org.guakamole.worldradio.data.RadioRepository
 
 class RadioApplication : Application(), ImageLoaderFactory {
 
     override fun onCreate() {
         super.onCreate()
+        RadioRepository.initialize(this)
     }
 
     override fun newImageLoader(): ImageLoader {

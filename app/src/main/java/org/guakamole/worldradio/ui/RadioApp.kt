@@ -31,7 +31,8 @@ fun RadioApp(
         modifier: Modifier = Modifier
 ) {
     var currentScreen by remember { mutableStateOf(Screen.StationList) }
-    val stations = remember { RadioRepository.stations }
+    var refreshTrigger by remember { mutableStateOf(0) }
+    val stations = remember(refreshTrigger) { RadioRepository.stations }
     val currentStation = currentStationId?.let { id -> stations.find { it.id == id } }
 
     // Navigate to now playing when a station starts
@@ -89,6 +90,10 @@ fun RadioApp(
                             stations = stations,
                             currentStationId = currentStationId,
                             onStationClick = { station -> onStationSelect(station) },
+                            onFavoriteToggle = { station ->
+                                RadioRepository.toggleFavorite(station.id)
+                                refreshTrigger++
+                            },
                             modifier = Modifier.padding(paddingValues)
                     )
                 }
