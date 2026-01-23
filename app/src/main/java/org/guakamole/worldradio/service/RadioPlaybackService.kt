@@ -114,7 +114,7 @@ class RadioPlaybackService : MediaLibraryService() {
 
         val updatedItem = currentItem.buildUpon().setMediaMetadata(updatedMetadata).build()
 
-        player.replaceMediaItem(player.currentMediaItemIndex, updatedItem)
+        player.setMediaItem(updatedItem, /* resetPosition= */ false)
     }
 
     private fun initializeSession() {

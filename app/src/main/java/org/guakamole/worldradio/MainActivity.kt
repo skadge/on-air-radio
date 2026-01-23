@@ -2,6 +2,7 @@ package org.guakamole.worldradio
 
 import android.content.ComponentName
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -251,7 +252,7 @@ class MainActivity : ComponentActivity() {
                                             .setTitle(station.name)
                                             .setSubtitle(station.description)
                                             .setArtist(station.genre)
-                                            .setArtworkUri(android.net.Uri.parse(station.logoUrl))
+                                            .setArtworkUri(Uri.parse(station.logoUrl))
                                             .build()
                             )
                             .build()
