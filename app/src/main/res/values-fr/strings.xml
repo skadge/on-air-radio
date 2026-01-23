@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WorldRadio</string>
+    <string name="now_playing">Lecture en cours</string>
+    <string name="stations">Stations</string>
+    <string name="play">Lire</string>
+    <string name="pause">Pause</string>
+    <string name="stop">Arrêter</string>
+    <string name="previous">Précédent</string>
+    <string name="next">Suivant</string>
+    <string name="loading">Chargement...</string>
+    <string name="no_station_selected">Aucune station sélectionnée</string>
+    <string name="notification_channel_name">Lecture Radio</string>
+    <string name="notification_channel_description">Affiche la station de radio en cours de lecture</string>
+</resources>

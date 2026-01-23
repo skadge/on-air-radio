@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WorldRadio</string>
+    <string name="now_playing">Reproduciendo ahora</string>
+    <string name="stations">Emisoras</string>
+    <string name="play">Reproducir</string>
+    <string name="pause">Pausa</string>
+    <string name="stop">Detener</string>
+    <string name="previous">Anterior</string>
+    <string name="next">Siguiente</string>
+    <string name="loading">Cargando...</string>
+    <string name="no_station_selected">Ninguna emisora seleccionada</string>
+    <string name="notification_channel_name">Reproducción de Radio</string>
+    <string name="notification_channel_description">Muestra la emisora de radio que se está reproduciendo actualmente</string>
+</resources>
