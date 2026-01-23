@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -79,7 +80,20 @@ fun StationCard(
         onFavoriteClick: () -> Unit,
         modifier: Modifier = Modifier
 ) {
-        val backgroundColor = GenreColors.getColorForGenre(station.genre)
+        val baseColor = GenreColors.getColorForGenre(station.genre)
+        val gradient =
+                Brush.verticalGradient(
+                        colors =
+                                listOf(
+                                        baseColor,
+                                        Color(
+                                                red = baseColor.red * 0.7f,
+                                                green = baseColor.green * 0.7f,
+                                                blue = baseColor.blue * 0.7f,
+                                                alpha = baseColor.alpha
+                                        )
+                                )
+                )
 
         Card(
                 modifier = modifier.fillMaxWidth().height(110.dp).clickable(onClick = onClick),
@@ -99,7 +113,7 @@ fun StationCard(
                 Box(
                         modifier =
                                 Modifier.fillMaxSize()
-                                        .background(backgroundColor)
+                                        .background(gradient)
                                         .clip(RoundedCornerShape(12.dp))
                 ) {
                         // Station Name at top-left
