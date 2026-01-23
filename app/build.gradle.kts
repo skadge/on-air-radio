@@ -78,6 +78,7 @@ dependencies {
     
     // Image loading
     implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation("io.coil-kt:coil-svg:2.4.0")
     
     // Testing
     testImplementation("junit:junit:4.13.2")

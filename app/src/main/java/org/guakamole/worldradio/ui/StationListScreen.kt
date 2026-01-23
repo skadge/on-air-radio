@@ -144,10 +144,12 @@ fun StationCard(
                                 contentDescription = null,
                                 modifier =
                                         Modifier.align(Alignment.BottomEnd)
-                                                .offset(x = 10.dp, y = 10.dp) // Partially clipped
+                                                .offset(
+                                                        x = 8.dp,
+                                                        y = 8.dp
+                                                ) // Less aggressive offset
                                                 .size(70.dp)
-                                                .rotate(-25f) // Angled look
-                                                .clip(RoundedCornerShape(8.dp)),
+                                                .rotate(-25f), // Handled by parent clip
                                 contentScale = ContentScale.Crop
                         )
 
