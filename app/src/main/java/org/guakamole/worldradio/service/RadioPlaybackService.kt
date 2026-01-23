@@ -20,6 +20,7 @@ import coil.Coil
 import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
+import coil.size.Size
 import com.google.common.collect.ImmutableList
 import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
@@ -82,6 +83,7 @@ class RadioPlaybackService : MediaLibraryService() {
             val request =
                     ImageRequest.Builder(this@RadioPlaybackService)
                             .data(uri)
+                            .size(Size.ORIGINAL)
                             .allowHardware(false)
                             .build()
 
