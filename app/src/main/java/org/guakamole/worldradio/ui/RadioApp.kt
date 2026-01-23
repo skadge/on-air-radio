@@ -1,4 +1,4 @@
-package com.example.radio.ui
+package org.guakamole.worldradio.ui
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
@@ -8,8 +8,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.radio.data.RadioRepository
-import com.example.radio.data.RadioStation
+import org.guakamole.worldradio.data.RadioRepository
+import org.guakamole.worldradio.data.RadioStation
 
 enum class Screen {
     StationList,

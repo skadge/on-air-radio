@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Radio</string>
+    <string name="app_name">WorldRadio</string>
     <string name="now_playing">Now Playing</string>
     <string name="stations">Stations</string>
     <string name="play">Play</string>

@@ -1,4 +1,4 @@
-package com.example.radio
+package org.guakamole.worldradio
 
 import android.app.Application
 

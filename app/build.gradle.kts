@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.radio"
+    namespace = "org.guakamole.worldradio"
     compileSdk = 33
 
     defaultConfig {

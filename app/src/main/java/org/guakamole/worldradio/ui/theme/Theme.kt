@@ -1,4 +1,4 @@
-package com.example.radio.ui.theme
+package org.guakamole.worldradio.ui.theme
 
 import android.app.Activity
 import android.os.Build

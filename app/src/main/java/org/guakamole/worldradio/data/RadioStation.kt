@@ -1,4 +1,4 @@
-package com.example.radio.data
+package org.guakamole.worldradio.data
 
 /**
  * Represents a radio station with its streaming information

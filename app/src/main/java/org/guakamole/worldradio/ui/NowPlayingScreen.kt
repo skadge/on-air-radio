@@ -1,4 +1,4 @@
-package com.example.radio.ui
+package org.guakamole.worldradio.ui
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
@@ -21,7 +21,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.radio.data.RadioStation
+import org.guakamole.worldradio.data.RadioStation
 
 @Composable
 fun NowPlayingScreen(

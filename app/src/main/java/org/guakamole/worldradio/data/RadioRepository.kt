@@ -1,4 +1,4 @@
-package com.example.radio.data
+package org.guakamole.worldradio.data
 
 /**
  * Repository providing a curated list of public radio stations

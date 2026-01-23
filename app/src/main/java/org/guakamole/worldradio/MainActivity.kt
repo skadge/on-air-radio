@@ -1,4 +1,4 @@
-package com.example.radio
+package org.guakamole.worldradio
 
 import android.content.ComponentName
 import android.graphics.Color
@@ -12,11 +12,11 @@ import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
-import com.example.radio.data.RadioRepository
-import com.example.radio.data.RadioStation
-import com.example.radio.service.RadioPlaybackService
-import com.example.radio.ui.RadioApp
-import com.example.radio.ui.theme.RadioTheme
+import org.guakamole.worldradio.data.RadioRepository
+import org.guakamole.worldradio.data.RadioStation
+import org.guakamole.worldradio.service.RadioPlaybackService
+import org.guakamole.worldradio.ui.RadioApp
+import org.guakamole.worldradio.ui.theme.RadioTheme
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.MoreExecutors
 
