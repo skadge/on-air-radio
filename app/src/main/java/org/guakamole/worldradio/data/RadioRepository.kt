@@ -17,9 +17,8 @@ object RadioRepository {
                         RadioStation(
                                 id = "bbc_radio1",
                                 name = "BBC Radio 1",
-                                streamUrl = "https://stream.live.vc.bbcmedia.co.uk/bbc_radio_one",
-                                logoUrl =
-                                        "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/BBC_Radio_1.svg/200px-BBC_Radio_1.svg.png",
+                                streamUrl = "https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/hls/nonuk/pc_hd_abr_v2/ak/bbc_radio_one.m3u8",
+                                logoUrl = "https://cdn-radiotime-logos.tunein.com/s24939q.png",
                                 description = "The best new music and entertainment",
                                 genre = "Pop/Rock",
                                 country = "UK"
@@ -27,9 +26,8 @@ object RadioRepository {
                         RadioStation(
                                 id = "bbc_radio2",
                                 name = "BBC Radio 2",
-                                streamUrl = "https://stream.live.vc.bbcmedia.co.uk/bbc_radio_two",
-                                logoUrl =
-                                        "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/BBC_Radio_2_2022.svg/330px-BBC_Radio_2_2022.svg.png",
+                                streamUrl = "https://as-hls-ww-live.akamaized.net/pool_74208725/live/ww/bbc_radio_two/bbc_radio_two.isml/bbc_radio_two-audio%3d128000.norewind.m3u8",
+                                logoUrl = "https://cdn-radiotime-logos.tunein.com/s24940q.png",
                                 description = "Great music, great variety",
                                 genre = "Adult Contemporary",
                                 country = "UK"
@@ -37,10 +35,8 @@ object RadioRepository {
                         RadioStation(
                                 id = "bbc_radio4",
                                 name = "BBC Radio 4",
-                                streamUrl =
-                                        "https://stream.live.vc.bbcmedia.co.uk/bbc_radio_fourfm",
-                                logoUrl =
-                                        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/BBC_Radio_4_2022.svg/330px-BBC_Radio_4_2022.svg.png",
+                                streamUrl = "https://as-hls-ww-live.akamaized.net/pool_55057080/live/ww/bbc_radio_fourfm/bbc_radio_fourfm.isml/bbc_radio_fourfm-audio%3d128000.norewind.m3u8",
+                                logoUrl = "https://cdn-radiotime-logos.tunein.com/s25419q.png",
                                 description = "Intelligent speech radio",
                                 genre = "News/Talk",
                                 country = "UK"
@@ -49,8 +45,7 @@ object RadioRepository {
                                 id = "classic_fm",
                                 name = "Classic FM",
                                 streamUrl = "https://media-ice.musicradio.com/ClassicFMMP3",
-                                logoUrl =
-                                        "https://upload.wikimedia.org/wikipedia/en/thumb/b/b2/Classic_FM_UK.svg/200px-Classic_FM_UK.svg.png",
+                                logoUrl = "https://www.classicfm.com/assets_v4r/classic/img/favicon-196x196.png",
                                 description = "The world's greatest music",
                                 genre = "Classical",
                                 country = "UK"
@@ -61,8 +56,7 @@ object RadioRepository {
                                 id = "france_inter",
                                 name = "France Inter",
                                 streamUrl = "https://icecast.radiofrance.fr/franceinter-midfi.mp3",
-                                logoUrl =
-                                        "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/France_Inter_logo_2021.svg/250px-France_Inter_logo_2021.svg.png",
+                                logoUrl = "\thttps://www.lesentreprisesdupaysage.fr/content/uploads/2022/03/france_inter_logo_2021-svg-1024x1024.png",
                                 description = "La radio de service public",
                                 genre = "Talk/Music",
                                 country = "France"
