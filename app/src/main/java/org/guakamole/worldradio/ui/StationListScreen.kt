@@ -1,17 +1,19 @@
 package org.guakamole.worldradio.ui
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Radio
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material3.*
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,8 +25,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import kotlinx.coroutines.launch
 import org.guakamole.worldradio.data.RadioStation
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun StationListScreen(
         stations: List<RadioStation>,
@@ -33,7 +37,11 @@ fun StationListScreen(
         onFavoriteToggle: (RadioStation) -> Unit,
         modifier: Modifier = Modifier
 ) {
+        val listState = rememberLazyListState()
+        val scope = rememberCoroutineScope()
+
         LazyColumn(
+                state = listState,
                 modifier = modifier.fillMaxSize(),
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -43,7 +51,14 @@ fun StationListScreen(
                                 station = station,
                                 isPlaying = station.id == currentStationId,
                                 onClick = { onStationClick(station) },
-                                onFavoriteClick = { onFavoriteToggle(station) }
+                                onFavoriteClick = {
+                                        onFavoriteToggle(station)
+                                        // If it was favorited, scroll to top
+                                        if (!station.isFavorite) {
+                                                scope.launch { listState.animateScrollToItem(0) }
+                                        }
+                                },
+                                modifier = Modifier.animateItemPlacement()
                         )
                 }
         }
