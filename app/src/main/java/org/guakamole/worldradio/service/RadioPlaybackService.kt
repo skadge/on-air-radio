@@ -16,6 +16,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.LibraryResult
 import androidx.media3.session.MediaLibraryService
 import androidx.media3.session.MediaSession
+import coil.Coil
 import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
@@ -47,7 +48,7 @@ class RadioPlaybackService : MediaLibraryService() {
 
     override fun onCreate() {
         super.onCreate()
-        imageLoader = ImageLoader(this)
+        imageLoader = Coil.imageLoader(this)
         initializePlayer()
         initializeSession()
     }
