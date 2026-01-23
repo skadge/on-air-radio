@@ -295,7 +295,7 @@ class RadioPlaybackService : MediaLibraryService() {
                         MediaMetadata.Builder()
                                 .setTitle(station.name)
                                 .setSubtitle(station.description)
-                                .setArtist(station.genre)
+                                .setArtist(getString(station.genre))
                                 .setArtworkUri(Uri.parse(station.logoUrl))
                                 .setIsBrowsable(false)
                                 .setIsPlayable(true)

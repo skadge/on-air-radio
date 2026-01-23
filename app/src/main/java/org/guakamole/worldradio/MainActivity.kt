@@ -104,7 +104,7 @@ class MainActivity : ComponentActivity() {
                                         RadioRepository.stations.size - 1
                                     }
                             RadioRepository.getStationByIndex(previousIndex)?.let { station ->
-                                playStation(station)
+                                playStation(station, isPlaying)
                             }
                         },
                         onNext = {
@@ -113,7 +113,7 @@ class MainActivity : ComponentActivity() {
                                             ?: -1
                             val nextIndex = (currentIndex + 1) % RadioRepository.stations.size
                             RadioRepository.getStationByIndex(nextIndex)?.let { station ->
-                                playStation(station)
+                                playStation(station, isPlaying)
                             }
                         }
                 )
@@ -211,7 +211,7 @@ class MainActivity : ComponentActivity() {
                                                 }
                                         RadioRepository.getStationByIndex(previousIndex)?.let {
                                                 station ->
-                                            playStation(station)
+                                            playStation(station, isPlaying)
                                         }
                                     },
                                     onNext = {
@@ -224,7 +224,7 @@ class MainActivity : ComponentActivity() {
                                                 (currentIndex + 1) % RadioRepository.stations.size
                                         RadioRepository.getStationByIndex(nextIndex)?.let { station
                                             ->
-                                            playStation(station)
+                                            playStation(station, isPlaying)
                                         }
                                     }
                             )
@@ -241,7 +241,7 @@ class MainActivity : ComponentActivity() {
         mediaController = null
     }
 
-    private fun playStation(station: RadioStation) {
+    private fun playStation(station: RadioStation, autoPlay: Boolean = true) {
         mediaController?.let { controller ->
             val mediaItem =
                     MediaItem.Builder()
@@ -251,7 +251,7 @@ class MainActivity : ComponentActivity() {
                                     MediaMetadata.Builder()
                                             .setTitle(station.name)
                                             .setSubtitle(station.description)
-                                            .setArtist(station.genre)
+                                            .setArtist(getString(station.genre))
                                             .setArtworkUri(Uri.parse(station.logoUrl))
                                             .build()
                             )
@@ -259,7 +259,9 @@ class MainActivity : ComponentActivity() {
 
             controller.setMediaItem(mediaItem)
             controller.prepare()
-            controller.play()
+            if (autoPlay) {
+                controller.play()
+            }
         }
     }
 }

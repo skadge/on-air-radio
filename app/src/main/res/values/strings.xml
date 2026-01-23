@@ -12,4 +12,37 @@
     <string name="no_station_selected">No station selected</string>
     <string name="notification_channel_name">Radio Playback</string>
     <string name="notification_channel_description">Shows the currently playing radio station</string>
+    <string name="back_to_stations">Back to stations</string>
+    <string name="connecting">Connecting...</string>
+    <string name="previous_station">Previous station</string>
+    <string name="next_station">Next station</string>
+    <string name="browse_stations">Browse Stations</string>
+    <string name="buffering">Buffering...</string>
+    <string name="remove_from_favorites">Remove from favorites</string>
+    <string name="add_to_favorites">Add to favorites</string>
+    <string name="station_logo_description">%1$s logo</string>
+    <string name="radio">Radio</string>
+
+    <!-- Countries -->
+    <string name="country_uk">UK</string>
+    <string name="country_france">France</string>
+    <string name="country_usa">USA</string>
+    <string name="country_germany">Germany</string>
+
+    <!-- Genres -->
+    <string name="genre_pop_rock">Pop/Rock</string>
+    <string name="genre_adult_contemporary">Adult Contemporary</string>
+    <string name="genre_news_talk">News/Talk</string>
+    <string name="genre_classical">Classical</string>
+    <string name="genre_talk_music">Talk/Music</string>
+    <string name="genre_culture">Culture</string>
+    <string name="genre_eclectic">Eclectic</string>
+    <string name="genre_eclectic_world">Eclectic/World</string>
+    <string name="genre_news">News</string>
+    <string name="genre_alternative">Alternative</string>
+    <string name="genre_classical_culture">Classical/Culture</string>
+    <string name="genre_news_culture">News/Culture</string>
+    <string name="genre_jazz">Jazz</string>
+    <string name="genre_ambient_chill">Ambient/Chill</string>
+    <string name="genre_ambient">Ambient</string>
 </resources>

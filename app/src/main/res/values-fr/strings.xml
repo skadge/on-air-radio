@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">WorldRadio</string>
-    <string name="now_playing">Lecture en cours</string>
+    <string name="now_playing">En cours</string>
     <string name="stations">Stations</string>
-    <string name="play">Lire</string>
+    <string name="play">Lecture</string>
     <string name="pause">Pause</string>
     <string name="stop">Arrêter</string>
     <string name="previous">Précédent</string>
@@ -12,4 +12,37 @@
     <string name="no_station_selected">Aucune station sélectionnée</string>
     <string name="notification_channel_name">Lecture Radio</string>
     <string name="notification_channel_description">Affiche la station de radio en cours de lecture</string>
+    <string name="back_to_stations">Retour aux stations</string>
+    <string name="connecting">Connexion...</string>
+    <string name="previous_station">Station précédente</string>
+    <string name="next_station">Station suivante</string>
+    <string name="browse_stations">Parcourir les stations</string>
+    <string name="buffering">Mise en mémoire tampon...</string>
+    <string name="remove_from_favorites">Retirer des favoris</string>
+    <string name="add_to_favorites">Ajouter aux favoris</string>
+    <string name="station_logo_description">Logo de %1$s</string>
+    <string name="radio">Radio</string>
+
+    <!-- Countries -->
+    <string name="country_uk">Royaume-Uni</string>
+    <string name="country_france">France</string>
+    <string name="country_usa">États-Unis</string>
+    <string name="country_germany">Allemagne</string>
+
+    <!-- Genres -->
+    <string name="genre_pop_rock">Pop/Rock</string>
+    <string name="genre_adult_contemporary">Adulte contemporain</string>
+    <string name="genre_news_talk">Actualités/Débat</string>
+    <string name="genre_classical">Classique</string>
+    <string name="genre_talk_music">Débat/Musique</string>
+    <string name="genre_culture">Culture</string>
+    <string name="genre_eclectic">Éclectique</string>
+    <string name="genre_eclectic_world">Éclectique/Monde</string>
+    <string name="genre_news">Actualités</string>
+    <string name="genre_alternative">Alternatif</string>
+    <string name="genre_classical_culture">Classique/Culture</string>
+    <string name="genre_news_culture">Actualités/Culture</string>
+    <string name="genre_jazz">Jazz</string>
+    <string name="genre_ambient_chill">Ambiance/Chill</string>
+    <string name="genre_ambient">Ambiance</string>
 </resources>

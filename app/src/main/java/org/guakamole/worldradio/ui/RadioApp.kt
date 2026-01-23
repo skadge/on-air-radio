@@ -1,19 +1,33 @@
 package org.guakamole.worldradio.ui
 
 import androidx.compose.animation.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import org.guakamole.worldradio.R
 import org.guakamole.worldradio.data.RadioRepository
 import org.guakamole.worldradio.data.RadioStation
 
 enum class Screen {
-    StationList,
-    NowPlaying
+        StationList,
+        NowPlaying
 }
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
@@ -30,89 +44,110 @@ fun RadioApp(
         onNext: () -> Unit,
         modifier: Modifier = Modifier
 ) {
-    var currentScreen by remember { mutableStateOf(Screen.StationList) }
-    var refreshTrigger by remember { mutableStateOf(0) }
-    val stations = remember(refreshTrigger) { RadioRepository.stations }
-    val currentStation = currentStationId?.let { id -> stations.find { it.id == id } }
+        var currentScreen by remember { mutableStateOf(Screen.StationList) }
+        var refreshTrigger by remember { mutableStateOf(0) }
+        val stations = remember(refreshTrigger) { RadioRepository.stations }
+        val currentStation = currentStationId?.let { id -> stations.find { it.id == id } }
 
-    // Navigate to now playing when a station starts
-    LaunchedEffect(currentStationId) {
-        if (currentStationId != null) {
-            currentScreen = Screen.NowPlaying
+        // Navigate to now playing when a station starts
+        LaunchedEffect(currentStationId) {
+                if (currentStationId != null) {
+                        currentScreen = Screen.NowPlaying
+                }
         }
-    }
 
-    Scaffold(
-            modifier = modifier,
-            topBar = {
-                if (currentScreen == Screen.StationList) {
-                    TopAppBar(
-                            title = { Text("Radio") },
-                            colors =
-                                    TopAppBarDefaults.topAppBarColors(
-                                            containerColor =
-                                                    MaterialTheme.colorScheme.primaryContainer,
-                                            titleContentColor =
-                                                    MaterialTheme.colorScheme.onPrimaryContainer
-                                    )
-                    )
+        Scaffold(
+                modifier = modifier,
+                topBar = {
+                        if (currentScreen == Screen.StationList) {
+                                TopAppBar(
+                                        title = { Text(stringResource(R.string.radio)) },
+                                        colors =
+                                                TopAppBarDefaults.topAppBarColors(
+                                                        containerColor =
+                                                                MaterialTheme.colorScheme
+                                                                        .primaryContainer,
+                                                        titleContentColor =
+                                                                MaterialTheme.colorScheme
+                                                                        .onPrimaryContainer
+                                                )
+                                )
+                        }
+                },
+                bottomBar = {
+                        // Mini player when on station list and something is playing
+                        if (currentScreen == Screen.StationList && currentStation != null) {
+                                MiniPlayer(
+                                        station = currentStation,
+                                        isPlaying = isPlaying,
+                                        isBuffering = isBuffering,
+                                        onPlayPause = onPlayPause,
+                                        onClick = { currentScreen = Screen.NowPlaying }
+                                )
+                        }
                 }
-            },
-            bottomBar = {
-                // Mini player when on station list and something is playing
-                if (currentScreen == Screen.StationList && currentStation != null) {
-                    MiniPlayer(
-                            station = currentStation,
-                            isPlaying = isPlaying,
-                            isBuffering = isBuffering,
-                            onPlayPause = onPlayPause,
-                            onClick = { currentScreen = Screen.NowPlaying }
-                    )
+        ) { paddingValues ->
+                AnimatedContent(
+                        targetState = currentScreen,
+                        label = "screen_transition",
+                        transitionSpec = {
+                                if (targetState == Screen.NowPlaying) {
+                                        slideInVertically { it } + fadeIn() with
+                                                slideOutVertically { -it } + fadeOut()
+                                } else {
+                                        slideInVertically { -it } + fadeIn() with
+                                                slideOutVertically { it } + fadeOut()
+                                }
+                        }
+                ) { screen ->
+                        when (screen) {
+                                Screen.StationList -> {
+                                        StationListScreen(
+                                                stations = stations,
+                                                currentStationId = currentStationId,
+                                                onStationClick = { station ->
+                                                        onStationSelect(station)
+                                                },
+                                                onFavoriteToggle = { station ->
+                                                        RadioRepository.toggleFavorite(station.id)
+                                                        refreshTrigger++
+                                                },
+                                                modifier = Modifier.padding(paddingValues)
+                                        )
+                                }
+                                Screen.NowPlaying -> {
+                                        val currentIndex =
+                                                currentStation?.let { stations.indexOf(it) } ?: -1
+                                        val prevStation =
+                                                if (currentIndex >= 0 && stations.isNotEmpty()) {
+                                                        stations[
+                                                                (currentIndex - 1 + stations.size) %
+                                                                        stations.size]
+                                                } else null
+                                        val nextStation =
+                                                if (currentIndex >= 0 && stations.isNotEmpty()) {
+                                                        stations[(currentIndex + 1) % stations.size]
+                                                } else null
+
+                                        NowPlayingScreen(
+                                                station = currentStation,
+                                                isPlaying = isPlaying,
+                                                isBuffering = isBuffering,
+                                                currentTitle = currentTitle,
+                                                previousStationName = prevStation?.name,
+                                                nextStationName = nextStation?.name,
+                                                onPlayPause = onPlayPause,
+                                                onStop = onStop,
+                                                onPrevious = onPrevious,
+                                                onNext = onNext,
+                                                onBackToList = {
+                                                        currentScreen = Screen.StationList
+                                                }
+                                        )
+                                }
+                        }
                 }
-            }
-    ) { paddingValues ->
-        AnimatedContent(
-                targetState = currentScreen,
-                label = "screen_transition",
-                transitionSpec = {
-                    if (targetState == Screen.NowPlaying) {
-                        slideInVertically { it } + fadeIn() with
-                                slideOutVertically { -it } + fadeOut()
-                    } else {
-                        slideInVertically { -it } + fadeIn() with
-                                slideOutVertically { it } + fadeOut()
-                    }
-                }
-        ) { screen ->
-            when (screen) {
-                Screen.StationList -> {
-                    StationListScreen(
-                            stations = stations,
-                            currentStationId = currentStationId,
-                            onStationClick = { station -> onStationSelect(station) },
-                            onFavoriteToggle = { station ->
-                                RadioRepository.toggleFavorite(station.id)
-                                refreshTrigger++
-                            },
-                            modifier = Modifier.padding(paddingValues)
-                    )
-                }
-                Screen.NowPlaying -> {
-                    NowPlayingScreen(
-                            station = currentStation,
-                            isPlaying = isPlaying,
-                            isBuffering = isBuffering,
-                            currentTitle = currentTitle,
-                            onPlayPause = onPlayPause,
-                            onStop = onStop,
-                            onPrevious = onPrevious,
-                            onNext = onNext,
-                            onBackToList = { currentScreen = Screen.StationList }
-                    )
-                }
-            }
         }
-    }
 }
 
 @Composable
@@ -124,43 +159,90 @@ fun MiniPlayer(
         onClick: () -> Unit,
         modifier: Modifier = Modifier
 ) {
-    Surface(
-            modifier = modifier.fillMaxWidth(),
-            color = MaterialTheme.colorScheme.surfaceVariant,
-            shadowElevation = 8.dp,
-            onClick = onClick
-    ) {
-        Row(
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
+        Surface(
+                modifier =
+                        modifier.fillMaxWidth()
+                                .padding(16.dp)
+                                .height(64.dp)
+                                .clickable(onClick = onClick),
+                shape = CircleShape,
+                color = Color(0xFF1E2130).copy(alpha = 0.95f),
+                shadowElevation = 12.dp
         ) {
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                        text = station.name,
-                        style = MaterialTheme.typography.titleSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                Text(
-                        text = if (isBuffering) "Loading..." else station.description,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
-                )
-            }
+                Row(
+                        modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                        Surface(
+                                modifier = Modifier.size(48.dp).clip(CircleShape),
+                                color = MaterialTheme.colorScheme.surfaceVariant
+                        ) {
+                                AsyncImage(
+                                        model =
+                                                ImageRequest.Builder(LocalContext.current)
+                                                        .data(station.logoUrl)
+                                                        .crossfade(true)
+                                                        .build(),
+                                        contentDescription = null,
+                                        contentScale = ContentScale.Crop
+                                )
+                        }
 
-            if (isBuffering) {
-                CircularProgressIndicator(
-                        modifier = Modifier.size(40.dp).padding(8.dp),
-                        strokeWidth = 2.dp
-                )
-            } else {
-                IconButton(onClick = onPlayPause) {
-                    Icon(
-                            imageVector =
-                                    if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
-                            contentDescription = if (isPlaying) "Pause" else "Play"
-                    )
+                        Spacer(modifier = Modifier.width(12.dp))
+
+                        Column(
+                                modifier = Modifier.weight(1f).fillMaxHeight(),
+                                verticalArrangement = Arrangement.Center
+                        ) {
+                                Text(
+                                        text = station.name,
+                                        style =
+                                                MaterialTheme.typography.titleMedium.copy(
+                                                        fontWeight = FontWeight.Bold
+                                                ),
+                                        color = Color.White,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis
+                                )
+                                Text(
+                                        text =
+                                                if (isBuffering) stringResource(R.string.buffering)
+                                                else stringResource(station.country),
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = Color.White.copy(alpha = 0.7f),
+                                        maxLines = 1
+                                )
+                        }
+
+                        IconButton(
+                                onClick = onPlayPause,
+                                modifier =
+                                        Modifier.size(48.dp)
+                                                .background(
+                                                        color = MaterialTheme.colorScheme.primary,
+                                                        shape = CircleShape
+                                                )
+                        ) {
+                                if (isBuffering) {
+                                        CircularProgressIndicator(
+                                                modifier = Modifier.size(24.dp),
+                                                color = Color.White,
+                                                strokeWidth = 2.dp
+                                        )
+                                } else {
+                                        Icon(
+                                                imageVector =
+                                                        if (isPlaying) Icons.Default.Pause
+                                                        else Icons.Default.PlayArrow,
+                                                contentDescription =
+                                                        if (isPlaying)
+                                                                stringResource(R.string.pause)
+                                                        else stringResource(R.string.play),
+                                                tint = Color.White
+                                        )
+                                }
+                        }
                 }
-            }
         }
-    }
 }

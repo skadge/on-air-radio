@@ -17,11 +17,14 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import org.guakamole.worldradio.R
 import org.guakamole.worldradio.data.RadioStation
 
 @Composable
@@ -30,6 +33,8 @@ fun NowPlayingScreen(
         isPlaying: Boolean,
         isBuffering: Boolean,
         currentTitle: String?,
+        previousStationName: String?,
+        nextStationName: String?,
         onPlayPause: () -> Unit,
         onStop: () -> Unit,
         onPrevious: () -> Unit,
@@ -37,205 +42,271 @@ fun NowPlayingScreen(
         onBackToList: () -> Unit,
         modifier: Modifier = Modifier
 ) {
-    // Pulsing animation for playing state
-    val infiniteTransition = rememberInfiniteTransition(label = "pulse")
-    val scale by
-            infiniteTransition.animateFloat(
-                    initialValue = 1f,
-                    targetValue = 1.05f,
-                    animationSpec =
-                            infiniteRepeatable(
-                                    animation = tween(1000, easing = EaseInOut),
-                                    repeatMode = RepeatMode.Reverse
-                            ),
-                    label = "scale"
-            )
-
-    Column(
-            modifier =
-                    modifier.fillMaxSize()
-                            .background(
-                                    Brush.verticalGradient(
-                                            colors =
-                                                    listOf(
-                                                            MaterialTheme.colorScheme
-                                                                    .primaryContainer,
-                                                            MaterialTheme.colorScheme.background
-                                                    )
-                                    )
-                            )
-                            .padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        // Back button
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
-            IconButton(onClick = onBackToList) {
-                Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "Back to stations",
-                        tint = MaterialTheme.colorScheme.onPrimaryContainer
+        // Pulsing animation for playing state
+        val infiniteTransition = rememberInfiniteTransition(label = "pulse")
+        val scale by
+                infiniteTransition.animateFloat(
+                        initialValue = 1f,
+                        targetValue = 1.05f,
+                        animationSpec =
+                                infiniteRepeatable(
+                                        animation = tween(1000, easing = EaseInOut),
+                                        repeatMode = RepeatMode.Reverse
+                                ),
+                        label = "scale"
                 )
-            }
-        }
 
-        Spacer(modifier = Modifier.height(32.dp))
-
-        if (station != null) {
-            // Station Logo with animation
-            Surface(
-                    modifier =
-                            Modifier.size(240.dp)
-                                    .scale(if (isPlaying && !isBuffering) scale else 1f),
-                    shape = RoundedCornerShape(32.dp),
-                    shadowElevation = 16.dp,
-                    color = MaterialTheme.colorScheme.surface
-            ) {
-                val placeholder = rememberVectorPainter(Icons.Default.Radio)
-                AsyncImage(
-                        model =
-                                ImageRequest.Builder(LocalContext.current)
-                                        .data(station.logoUrl)
-                                        .crossfade(true)
-                                        .build(),
-                        placeholder = placeholder,
-                        error = placeholder,
-                        contentDescription = "${station.name} logo",
-                        modifier = Modifier.fillMaxSize().clip(RoundedCornerShape(32.dp)),
-                        contentScale = ContentScale.Crop
-                )
-            }
-
-            Spacer(modifier = Modifier.height(32.dp))
-
-            // Station Name
-            Text(
-                    text = station.name,
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = MaterialTheme.colorScheme.onBackground,
-                    textAlign = TextAlign.Center,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            // Current Title (from stream metadata) or description
-            Text(
-                    text = currentTitle ?: station.description,
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
-                    textAlign = TextAlign.Center,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            // Genre and Country chips
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                SuggestionChip(onClick = {}, label = { Text(station.genre) })
-                SuggestionChip(onClick = {}, label = { Text(station.country) })
-            }
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            // Buffering indicator
-            if (isBuffering) {
-                CircularProgressIndicator(
-                        modifier = Modifier.size(48.dp),
-                        color = MaterialTheme.colorScheme.primary
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                        text = "Loading...",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
-                )
-                Spacer(modifier = Modifier.height(32.dp))
-            }
-
-            // Playback Controls
-            Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
-            ) {
-                // Previous
-                FilledTonalIconButton(onClick = onPrevious, modifier = Modifier.size(56.dp)) {
-                    Icon(
-                            imageVector = Icons.Default.SkipPrevious,
-                            contentDescription = "Previous station",
-                            modifier = Modifier.size(32.dp)
-                    )
-                }
-
-                // Play/Pause
-                FilledIconButton(
-                        onClick = onPlayPause,
-                        modifier = Modifier.size(80.dp),
-                        shape = CircleShape,
-                        colors =
-                                IconButtonDefaults.filledIconButtonColors(
-                                        containerColor = MaterialTheme.colorScheme.primary
+        Column(
+                modifier =
+                        modifier.fillMaxSize()
+                                .background(
+                                        Brush.verticalGradient(
+                                                colors =
+                                                        listOf(
+                                                                MaterialTheme.colorScheme
+                                                                        .primaryContainer,
+                                                                MaterialTheme.colorScheme.background
+                                                        )
+                                        )
                                 )
+                                .padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+                // Back button with more padding
+                Row(
+                        modifier = Modifier.fillMaxWidth().padding(top = 16.dp, bottom = 16.dp),
+                        horizontalArrangement = Arrangement.Start
                 ) {
-                    Icon(
-                            imageVector =
-                                    if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
-                            contentDescription = if (isPlaying) "Pause" else "Play",
-                            modifier = Modifier.size(48.dp),
-                            tint = MaterialTheme.colorScheme.onPrimary
-                    )
+                        IconButton(onClick = onBackToList) {
+                                Icon(
+                                        imageVector = Icons.Default.ArrowBack,
+                                        contentDescription =
+                                                stringResource(R.string.back_to_stations),
+                                        modifier = Modifier.size(28.dp),
+                                        tint = MaterialTheme.colorScheme.onBackground
+                                )
+                        }
                 }
 
-                // Next
-                FilledTonalIconButton(onClick = onNext, modifier = Modifier.size(56.dp)) {
-                    Icon(
-                            imageVector = Icons.Default.SkipNext,
-                            contentDescription = "Next station",
-                            modifier = Modifier.size(32.dp)
-                    )
+                Spacer(modifier = Modifier.height(16.dp))
+
+                if (station != null) {
+                        // Station Logo with animation
+                        Surface(
+                                modifier =
+                                        Modifier.size(260.dp)
+                                                .scale(
+                                                        if (isPlaying && !isBuffering) scale else 1f
+                                                ),
+                                shape = RoundedCornerShape(32.dp),
+                                shadowElevation = 24.dp,
+                                color = MaterialTheme.colorScheme.surface
+                        ) {
+                                val placeholder = rememberVectorPainter(Icons.Default.Radio)
+                                AsyncImage(
+                                        model =
+                                                ImageRequest.Builder(LocalContext.current)
+                                                        .data(station.logoUrl)
+                                                        .crossfade(true)
+                                                        .build(),
+                                        placeholder = placeholder,
+                                        error = placeholder,
+                                        contentDescription =
+                                                stringResource(
+                                                        R.string.station_logo_description,
+                                                        station.name
+                                                ),
+                                        modifier =
+                                                Modifier.fillMaxSize()
+                                                        .clip(RoundedCornerShape(32.dp)),
+                                        contentScale = ContentScale.Crop
+                                )
+                        }
+
+                        Spacer(modifier = Modifier.height(40.dp))
+
+                        // Station Name
+                        Text(
+                                text = station.name,
+                                style =
+                                        MaterialTheme.typography.headlineMedium.copy(
+                                                fontWeight = FontWeight.Bold
+                                        ),
+                                color = MaterialTheme.colorScheme.onBackground,
+                                textAlign = TextAlign.Center,
+                                maxLines = 2,
+                                overflow = TextOverflow.Ellipsis
+                        )
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        // Current Title (from stream metadata) or description
+                        Text(
+                                text = currentTitle ?: station.description,
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
+                                textAlign = TextAlign.Center,
+                                maxLines = 2,
+                                overflow = TextOverflow.Ellipsis
+                        )
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        // Genre and Country chips
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                SuggestionChip(
+                                        onClick = {},
+                                        label = { Text(stringResource(station.genre)) }
+                                )
+                                SuggestionChip(
+                                        onClick = {},
+                                        label = { Text(stringResource(station.country)) }
+                                )
+                        }
+
+                        Spacer(modifier = Modifier.weight(1f))
+
+                        // Buffering indicator
+                        if (isBuffering) {
+                                CircularProgressIndicator(
+                                        modifier = Modifier.size(48.dp),
+                                        color = MaterialTheme.colorScheme.primary
+                                )
+                                Spacer(modifier = Modifier.height(16.dp))
+                                Text(
+                                        text = stringResource(R.string.connecting),
+                                        style = MaterialTheme.typography.labelMedium,
+                                        color = MaterialTheme.colorScheme.primary
+                                )
+                                Spacer(modifier = Modifier.height(32.dp))
+                        }
+
+                        // Playback Controls with labels
+                        Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceEvenly,
+                                verticalAlignment = Alignment.CenterVertically
+                        ) {
+                                // Previous
+                                Column(
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        modifier = Modifier.width(100.dp)
+                                ) {
+                                        FilledTonalIconButton(
+                                                onClick = onPrevious,
+                                                modifier = Modifier.size(56.dp)
+                                        ) {
+                                                Icon(
+                                                        imageVector = Icons.Default.SkipPrevious,
+                                                        contentDescription =
+                                                                stringResource(
+                                                                        R.string.previous_station
+                                                                ),
+                                                        modifier = Modifier.size(32.dp)
+                                                )
+                                        }
+                                        if (previousStationName != null) {
+                                                Text(
+                                                        text = previousStationName,
+                                                        style = MaterialTheme.typography.labelSmall,
+                                                        color =
+                                                                MaterialTheme.colorScheme
+                                                                        .onBackground.copy(
+                                                                        alpha = 0.5f
+                                                                ),
+                                                        maxLines = 1,
+                                                        overflow = TextOverflow.Ellipsis,
+                                                        modifier = Modifier.padding(top = 4.dp)
+                                                )
+                                        }
+                                }
+
+                                // Play/Pause
+                                FilledIconButton(
+                                        onClick = onPlayPause,
+                                        modifier = Modifier.size(88.dp),
+                                        shape = CircleShape,
+                                        colors =
+                                                IconButtonDefaults.filledIconButtonColors(
+                                                        containerColor =
+                                                                MaterialTheme.colorScheme.primary
+                                                )
+                                ) {
+                                        Icon(
+                                                imageVector =
+                                                        if (isPlaying) Icons.Default.Pause
+                                                        else Icons.Default.PlayArrow,
+                                                contentDescription =
+                                                        if (isPlaying)
+                                                                stringResource(R.string.pause)
+                                                        else stringResource(R.string.play),
+                                                modifier = Modifier.size(48.dp),
+                                                tint = MaterialTheme.colorScheme.onPrimary
+                                        )
+                                }
+
+                                // Next
+                                Column(
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        modifier = Modifier.width(100.dp)
+                                ) {
+                                        FilledTonalIconButton(
+                                                onClick = onNext,
+                                                modifier = Modifier.size(56.dp)
+                                        ) {
+                                                Icon(
+                                                        imageVector = Icons.Default.SkipNext,
+                                                        contentDescription =
+                                                                stringResource(
+                                                                        R.string.next_station
+                                                                ),
+                                                        modifier = Modifier.size(32.dp)
+                                                )
+                                        }
+                                        if (nextStationName != null) {
+                                                Text(
+                                                        text = nextStationName,
+                                                        style = MaterialTheme.typography.labelSmall,
+                                                        color =
+                                                                MaterialTheme.colorScheme
+                                                                        .onBackground.copy(
+                                                                        alpha = 0.5f
+                                                                ),
+                                                        maxLines = 1,
+                                                        overflow = TextOverflow.Ellipsis,
+                                                        modifier = Modifier.padding(top = 4.dp)
+                                                )
+                                        }
+                                }
+                        }
+
+                        Spacer(modifier = Modifier.height(48.dp))
+                } else {
+                        // No station selected
+                        Spacer(modifier = Modifier.weight(1f))
+
+                        Icon(
+                                imageVector = Icons.Default.Radio,
+                                contentDescription = null,
+                                modifier = Modifier.size(120.dp),
+                                tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.3f)
+                        )
+
+                        Spacer(modifier = Modifier.height(24.dp))
+
+                        Text(
+                                text = stringResource(R.string.no_station_selected),
+                                style = MaterialTheme.typography.headlineSmall,
+                                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f)
+                        )
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        OutlinedButton(onClick = onBackToList) {
+                                Text(stringResource(R.string.browse_stations))
+                        }
+
+                        Spacer(modifier = Modifier.weight(1f))
                 }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Stop button
-            TextButton(onClick = onStop) {
-                Icon(
-                        imageVector = Icons.Default.Stop,
-                        contentDescription = null,
-                        modifier = Modifier.size(20.dp)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text("Stop")
-            }
-
-            Spacer(modifier = Modifier.height(32.dp))
-        } else {
-            // No station selected
-            Spacer(modifier = Modifier.weight(1f))
-
-            Icon(
-                    imageVector = Icons.Default.Radio,
-                    contentDescription = null,
-                    modifier = Modifier.size(120.dp),
-                    tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.3f)
-            )
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            Text(
-                    text = "No station selected",
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f)
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            OutlinedButton(onClick = onBackToList) { Text("Browse Stations") }
-
-            Spacer(modifier = Modifier.weight(1f))
         }
-    }
 }

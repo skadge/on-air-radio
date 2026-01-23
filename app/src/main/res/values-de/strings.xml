@@ -3,13 +3,46 @@
     <string name="app_name">WorldRadio</string>
     <string name="now_playing">Aktuelle Wiedergabe</string>
     <string name="stations">Sender</string>
-    <string name="play">Abspielen</string>
+    <string name="play">Wiedergabe</string>
     <string name="pause">Pause</string>
     <string name="stop">Stopp</string>
-    <string name="previous">Vorheriger</string>
-    <string name="next">Nächster</string>
-    <string name="loading">Laden...</string>
+    <string name="previous">Zurück</string>
+    <string name="next">Weiter</string>
+    <string name="loading">Lädt...</string>
     <string name="no_station_selected">Kein Sender ausgewählt</string>
     <string name="notification_channel_name">Radio-Wiedergabe</string>
-    <string name="notification_channel_description">Zeigt den aktuell empfangenen Radiosender an</string>
+    <string name="notification_channel_description">Zeigt den aktuell spielenden Radiosender an</string>
+    <string name="back_to_stations">Zurück zu den Sendern</string>
+    <string name="connecting">Verbindung wird hergestellt...</string>
+    <string name="previous_station">Vorheriger Sender</string>
+    <string name="next_station">Nächster Sender</string>
+    <string name="browse_stations">Sender durchsuchen</string>
+    <string name="buffering">Pufferung...</string>
+    <string name="remove_from_favorites">Aus Favoriten entfernen</string>
+    <string name="add_to_favorites">Zu Favoriten hinzufügen</string>
+    <string name="station_logo_description">%1$s Logo</string>
+    <string name="radio">Radio</string>
+
+    <!-- Countries -->
+    <string name="country_uk">Vereinigtes Königreich</string>
+    <string name="country_france">Frankreich</string>
+    <string name="country_usa">USA</string>
+    <string name="country_germany">Deutschland</string>
+
+    <!-- Genres -->
+    <string name="genre_pop_rock">Pop/Rock</string>
+    <string name="genre_adult_contemporary">Adult Contemporary</string>
+    <string name="genre_news_talk">Nachrichten/Talk</string>
+    <string name="genre_classical">Klassik</string>
+    <string name="genre_talk_music">Talk/Musik</string>
+    <string name="genre_culture">Kultur</string>
+    <string name="genre_eclectic">Eklektisch</string>
+    <string name="genre_eclectic_world">Eklektisch/Weltmusik</string>
+    <string name="genre_news">Nachrichten</string>
+    <string name="genre_alternative">Alternativ</string>
+    <string name="genre_classical_culture">Klassik/Kultur</string>
+    <string name="genre_news_culture">Nachrichten/Kultur</string>
+    <string name="genre_jazz">Jazz</string>
+    <string name="genre_ambient_chill">Ambient/Chill</string>
+    <string name="genre_ambient">Ambient</string>
 </resources>

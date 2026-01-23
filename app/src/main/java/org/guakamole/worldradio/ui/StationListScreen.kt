@@ -1,6 +1,7 @@
 package org.guakamole.worldradio.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -8,7 +9,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Radio
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material3.*
@@ -17,15 +17,18 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import kotlinx.coroutines.launch
+import org.guakamole.worldradio.R
 import org.guakamole.worldradio.data.RadioStation
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -53,7 +56,6 @@ fun StationListScreen(
                                 onClick = { onStationClick(station) },
                                 onFavoriteClick = {
                                         onFavoriteToggle(station)
-                                        // If it was favorited, scroll to top
                                         if (!station.isFavorite) {
                                                 scope.launch { listState.animateScrollToItem(0) }
                                         }
@@ -73,147 +75,139 @@ fun StationCard(
         modifier: Modifier = Modifier
 ) {
         Card(
-                modifier = modifier.fillMaxWidth().clickable(onClick = onClick),
+                modifier = modifier.fillMaxWidth().height(100.dp).clickable(onClick = onClick),
                 shape = RoundedCornerShape(16.dp),
                 colors =
                         CardDefaults.cardColors(
                                 containerColor =
-                                        if (isPlaying) {
-                                                MaterialTheme.colorScheme.primaryContainer
-                                        } else {
-                                                MaterialTheme.colorScheme.surfaceVariant
-                                        }
+                                        MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
                         ),
                 elevation =
-                        CardDefaults.cardElevation(defaultElevation = if (isPlaying) 8.dp else 2.dp)
+                        CardDefaults.cardElevation(
+                                defaultElevation = if (isPlaying) 8.dp else 4.dp
+                        ),
+                border =
+                        if (isPlaying)
+                                androidx.compose.foundation.BorderStroke(
+                                        2.dp,
+                                        MaterialTheme.colorScheme.primary
+                                )
+                        else null
         ) {
-                Row(
-                        modifier = Modifier.fillMaxWidth().padding(16.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                        // Station Logo
-                        Surface(
-                                modifier = Modifier.size(64.dp),
-                                shape = RoundedCornerShape(12.dp),
-                                color = MaterialTheme.colorScheme.surface
+                Box(modifier = Modifier.fillMaxSize()) {
+                        // Background Gradient
+                        Box(
+                                modifier =
+                                        Modifier.fillMaxSize()
+                                                .clip(RoundedCornerShape(16.dp))
+                                                .background(
+                                                        brush =
+                                                                Brush.horizontalGradient(
+                                                                        colors =
+                                                                                listOf(
+                                                                                        MaterialTheme
+                                                                                                .colorScheme
+                                                                                                .surface,
+                                                                                        MaterialTheme
+                                                                                                .colorScheme
+                                                                                                .surfaceVariant
+                                                                                )
+                                                                )
+                                                )
                         ) {
-                                val placeholder = rememberVectorPainter(Icons.Default.Radio)
+                                // Station Logo
                                 AsyncImage(
                                         model =
                                                 ImageRequest.Builder(LocalContext.current)
                                                         .data(station.logoUrl)
                                                         .crossfade(true)
                                                         .build(),
-                                        placeholder = placeholder,
-                                        error = placeholder,
-                                        contentDescription = "${station.name} logo",
+                                        contentDescription = null,
                                         modifier =
-                                                Modifier.fillMaxSize()
+                                                Modifier.align(Alignment.CenterStart)
+                                                        .padding(start = 16.dp)
+                                                        .size(80.dp)
                                                         .clip(RoundedCornerShape(12.dp)),
                                         contentScale = ContentScale.Crop
                                 )
                         }
 
-                        // Station Info
-                        Column(
-                                modifier = Modifier.weight(1f),
-                                verticalArrangement = Arrangement.spacedBy(4.dp)
+                        // Content Overlay
+                        Row(
+                                modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
+                                verticalAlignment = Alignment.CenterVertically
                         ) {
-                                Row(
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                Spacer(modifier = Modifier.width(96.dp))
+
+                                Column(
+                                        modifier = Modifier.weight(1f),
+                                        verticalArrangement = Arrangement.Center
                                 ) {
                                         Text(
                                                 text = station.name,
-                                                style = MaterialTheme.typography.titleMedium,
-                                                color =
-                                                        if (isPlaying) {
-                                                                MaterialTheme.colorScheme
-                                                                        .onPrimaryContainer
-                                                        } else {
-                                                                MaterialTheme.colorScheme
-                                                                        .onSurfaceVariant
-                                                        },
+                                                style =
+                                                        MaterialTheme.typography.titleLarge.copy(
+                                                                fontWeight = FontWeight.Bold,
+                                                                letterSpacing = 0.5.sp
+                                                        ),
+                                                color = MaterialTheme.colorScheme.onSurface,
                                                 maxLines = 1,
-                                                overflow = TextOverflow.Ellipsis,
-                                                modifier = Modifier.weight(1f)
+                                                overflow = TextOverflow.Ellipsis
                                         )
 
-                                        IconButton(
-                                                onClick = onFavoriteClick,
-                                                modifier = Modifier.size(24.dp)
-                                        ) {
-                                                Icon(
-                                                        imageVector =
-                                                                if (station.isFavorite)
-                                                                        Icons.Filled.Star
-                                                                else Icons.Filled.StarBorder,
-                                                        contentDescription =
-                                                                if (station.isFavorite)
-                                                                        "Remove from favorites"
-                                                                else "Add to favorites",
-                                                        tint =
-                                                                if (station.isFavorite)
-                                                                        Color(0xFFFFD700)
-                                                                else
-                                                                        LocalContentColor.current
-                                                                                .copy(alpha = 0.6f)
+                                        Spacer(modifier = Modifier.height(4.dp))
+
+                                        Row(verticalAlignment = Alignment.CenterVertically) {
+                                                Text(
+                                                        text =
+                                                                stringResource(station.genre)
+                                                                        .uppercase(),
+                                                        style = MaterialTheme.typography.labelSmall,
+                                                        color = MaterialTheme.colorScheme.primary
+                                                )
+
+                                                Text(
+                                                        text =
+                                                                " • ${stringResource(station.country)}",
+                                                        style = MaterialTheme.typography.labelSmall,
+                                                        color =
+                                                                MaterialTheme.colorScheme
+                                                                        .onSurfaceVariant.copy(
+                                                                        alpha = 0.7f
+                                                                )
                                                 )
                                         }
                                 }
 
-                                Text(
-                                        text = station.description,
-                                        style = MaterialTheme.typography.bodySmall,
-                                        color =
-                                                if (isPlaying) {
-                                                        MaterialTheme.colorScheme.onPrimaryContainer
-                                                                .copy(alpha = 0.7f)
-                                                } else {
-                                                        MaterialTheme.colorScheme.onSurfaceVariant
-                                                                .copy(alpha = 0.7f)
-                                                },
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis
-                                )
-                                // ... rest of the file ...
-
-                                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                        AssistChip(
-                                                onClick = {},
-                                                label = {
-                                                        Text(
-                                                                text = station.genre,
-                                                                style =
-                                                                        MaterialTheme.typography
-                                                                                .labelSmall
-                                                        )
-                                                },
-                                                modifier = Modifier.height(24.dp)
-                                        )
-                                        AssistChip(
-                                                onClick = {},
-                                                label = {
-                                                        Text(
-                                                                text = station.country,
-                                                                style =
-                                                                        MaterialTheme.typography
-                                                                                .labelSmall
-                                                        )
-                                                },
-                                                modifier = Modifier.height(24.dp)
+                                IconButton(
+                                        onClick = onFavoriteClick,
+                                        modifier = Modifier.size(32.dp)
+                                ) {
+                                        Icon(
+                                                imageVector =
+                                                        if (station.isFavorite) Icons.Filled.Star
+                                                        else Icons.Filled.StarBorder,
+                                                contentDescription =
+                                                        if (station.isFavorite)
+                                                                stringResource(
+                                                                        R.string
+                                                                                .remove_from_favorites
+                                                                )
+                                                        else
+                                                                stringResource(
+                                                                        R.string.add_to_favorites
+                                                                ),
+                                                tint =
+                                                        if (station.isFavorite)
+                                                                MaterialTheme.colorScheme.secondary
+                                                        else
+                                                                MaterialTheme.colorScheme
+                                                                        .onSurfaceVariant.copy(
+                                                                        alpha = 0.4f
+                                                                ),
+                                                modifier = Modifier.size(24.dp)
                                         )
                                 }
-                        }
-
-                        // Playing indicator
-                        if (isPlaying) {
-                                Surface(
-                                        modifier = Modifier.size(12.dp),
-                                        shape = RoundedCornerShape(6.dp),
-                                        color = MaterialTheme.colorScheme.primary
-                                ) {}
                         }
                 }
         }

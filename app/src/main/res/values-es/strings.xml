@@ -12,4 +12,37 @@
     <string name="no_station_selected">Ninguna emisora seleccionada</string>
     <string name="notification_channel_name">Reproducción de Radio</string>
     <string name="notification_channel_description">Muestra la emisora de radio que se está reproduciendo actualmente</string>
+    <string name="back_to_stations">Volver a las emisoras</string>
+    <string name="connecting">Conectando...</string>
+    <string name="previous_station">Emisora anterior</string>
+    <string name="next_station">Siguiente emisora</string>
+    <string name="browse_stations">Explorar emisoras</string>
+    <string name="buffering">Cargando búfer...</string>
+    <string name="remove_from_favorites">Eliminar de favoritos</string>
+    <string name="add_to_favorites">Añadir a favoritos</string>
+    <string name="station_logo_description">Logo de %1$s</string>
+    <string name="radio">Radio</string>
+
+    <!-- Countries -->
+    <string name="country_uk">Reino Unido</string>
+    <string name="country_france">Francia</string>
+    <string name="country_usa">EE. UU.</string>
+    <string name="country_germany">Alemania</string>
+
+    <!-- Genres -->
+    <string name="genre_pop_rock">Pop/Rock</string>
+    <string name="genre_adult_contemporary">Adulto contemporáneo</string>
+    <string name="genre_news_talk">Noticias/Charlas</string>
+    <string name="genre_classical">Clásica</string>
+    <string name="genre_talk_music">Charla/Música</string>
+    <string name="genre_culture">Cultura</string>
+    <string name="genre_eclectic">Ecléctico</string>
+    <string name="genre_eclectic_world">Ecléctico/Mundial</string>
+    <string name="genre_news">Noticias</string>
+    <string name="genre_alternative">Alternativa</string>
+    <string name="genre_classical_culture">Clásica/Cultura</string>
+    <string name="genre_news_culture">Noticias/Cultura</string>
+    <string name="genre_jazz">Jazz</string>
+    <string name="genre_ambient_chill">Ambient/Chill</string>
+    <string name="genre_ambient">Ambient</string>
 </resources>

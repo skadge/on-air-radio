@@ -2,6 +2,7 @@ package org.guakamole.worldradio.data
 
 import android.content.Context
 import android.content.SharedPreferences
+import org.guakamole.worldradio.R
 
 /** Repository providing a curated list of public radio stations */
 object RadioRepository {
@@ -17,38 +18,42 @@ object RadioRepository {
                         RadioStation(
                                 id = "bbc_radio1",
                                 name = "BBC Radio 1",
-                                streamUrl = "https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/hls/nonuk/pc_hd_abr_v2/ak/bbc_radio_one.m3u8",
+                                streamUrl =
+                                        "https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/hls/nonuk/pc_hd_abr_v2/ak/bbc_radio_one.m3u8",
                                 logoUrl = "https://cdn-radiotime-logos.tunein.com/s24939q.png",
                                 description = "The best new music and entertainment",
-                                genre = "Pop/Rock",
-                                country = "UK"
+                                genre = R.string.genre_pop_rock,
+                                country = R.string.country_uk
                         ),
                         RadioStation(
                                 id = "bbc_radio2",
                                 name = "BBC Radio 2",
-                                streamUrl = "https://as-hls-ww-live.akamaized.net/pool_74208725/live/ww/bbc_radio_two/bbc_radio_two.isml/bbc_radio_two-audio%3d128000.norewind.m3u8",
+                                streamUrl =
+                                        "https://as-hls-ww-live.akamaized.net/pool_74208725/live/ww/bbc_radio_two/bbc_radio_two.isml/bbc_radio_two-audio%3d128000.norewind.m3u8",
                                 logoUrl = "https://cdn-radiotime-logos.tunein.com/s24940q.png",
                                 description = "Great music, great variety",
-                                genre = "Adult Contemporary",
-                                country = "UK"
+                                genre = R.string.genre_adult_contemporary,
+                                country = R.string.country_uk
                         ),
                         RadioStation(
                                 id = "bbc_radio4",
                                 name = "BBC Radio 4",
-                                streamUrl = "https://as-hls-ww-live.akamaized.net/pool_55057080/live/ww/bbc_radio_fourfm/bbc_radio_fourfm.isml/bbc_radio_fourfm-audio%3d128000.norewind.m3u8",
+                                streamUrl =
+                                        "https://as-hls-ww-live.akamaized.net/pool_55057080/live/ww/bbc_radio_fourfm/bbc_radio_fourfm.isml/bbc_radio_fourfm-audio%3d128000.norewind.m3u8",
                                 logoUrl = "https://cdn-radiotime-logos.tunein.com/s25419q.png",
                                 description = "Intelligent speech radio",
-                                genre = "News/Talk",
-                                country = "UK"
+                                genre = R.string.genre_news_talk,
+                                country = R.string.country_uk
                         ),
                         RadioStation(
                                 id = "classic_fm",
                                 name = "Classic FM",
                                 streamUrl = "https://media-ice.musicradio.com/ClassicFMMP3",
-                                logoUrl = "https://www.classicfm.com/assets_v4r/classic/img/favicon-196x196.png",
+                                logoUrl =
+                                        "https://www.classicfm.com/assets_v4r/classic/img/favicon-196x196.png",
                                 description = "The world's greatest music",
-                                genre = "Classical",
-                                country = "UK"
+                                genre = R.string.genre_classical,
+                                country = R.string.country_uk
                         ),
 
                         // France
@@ -56,10 +61,11 @@ object RadioRepository {
                                 id = "france_inter",
                                 name = "France Inter",
                                 streamUrl = "https://icecast.radiofrance.fr/franceinter-midfi.mp3",
-                                logoUrl = "\thttps://www.lesentreprisesdupaysage.fr/content/uploads/2022/03/france_inter_logo_2021-svg-1024x1024.png",
+                                logoUrl =
+                                        "\thttps://www.lesentreprisesdupaysage.fr/content/uploads/2022/03/france_inter_logo_2021-svg-1024x1024.png",
                                 description = "La radio de service public",
-                                genre = "Talk/Music",
-                                country = "France"
+                                genre = R.string.genre_talk_music,
+                                country = R.string.country_france
                         ),
                         RadioStation(
                                 id = "france_culture",
@@ -69,8 +75,8 @@ object RadioRepository {
                                 logoUrl =
                                         "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/France_Culture_logo_2021.svg/250px-France_Culture_logo_2021.svg.png",
                                 description = "Culture et savoirs",
-                                genre = "Culture",
-                                country = "France"
+                                genre = R.string.genre_culture,
+                                country = R.string.country_france
                         ),
                         RadioStation(
                                 id = "france_musique",
@@ -80,8 +86,8 @@ object RadioRepository {
                                 logoUrl =
                                         "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/France_Musique_logo_2021.svg/250px-France_Musique_logo_2021.svg.png",
                                 description = "La musique classique et plus",
-                                genre = "Classical",
-                                country = "France"
+                                genre = R.string.genre_classical,
+                                country = R.string.country_france
                         ),
                         RadioStation(
                                 id = "fip",
@@ -90,8 +96,8 @@ object RadioRepository {
                                 logoUrl =
                                         "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/FIP_logo_2021.svg/250px-FIP_logo_2021.svg.png",
                                 description = "Éclectisme musical",
-                                genre = "Eclectic",
-                                country = "France"
+                                genre = R.string.genre_eclectic,
+                                country = R.string.country_france
                         ),
                         RadioStation(
                                 id = "radio_nova",
@@ -100,8 +106,8 @@ object RadioRepository {
                                 logoUrl =
                                         "https://www.nova.fr/wp-content/thumbnails/uploads/sites/2/2024/05/NOVA-nova-400x496-1-t-1700x1030.png",
                                 description = "Le Grand Mix de Radio Nova",
-                                genre = "Eclectic/World",
-                                country = "France"
+                                genre = R.string.genre_eclectic_world,
+                                country = R.string.country_france
                         ),
 
                         // USA
@@ -112,8 +118,8 @@ object RadioRepository {
                                 logoUrl =
                                         "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/National_Public_Radio_logo.svg/200px-National_Public_Radio_logo.svg.png",
                                 description = "National Public Radio",
-                                genre = "News",
-                                country = "USA"
+                                genre = R.string.genre_news,
+                                country = R.string.country_usa
                         ),
                         RadioStation(
                                 id = "kexp",
@@ -122,8 +128,8 @@ object RadioRepository {
                                 logoUrl =
                                         "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/KEXP_logo.svg/200px-KEXP_logo.svg.png",
                                 description = "Where the music matters",
-                                genre = "Alternative",
-                                country = "USA"
+                                genre = R.string.genre_alternative,
+                                country = R.string.country_usa
                         ),
 
                         // Germany
@@ -135,8 +141,8 @@ object RadioRepository {
                                 logoUrl =
                                         "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/WDR_3_logo_2012.svg/200px-WDR_3_logo_2012.svg.png",
                                 description = "Kultur und Klassik",
-                                genre = "Classical/Culture",
-                                country = "Germany"
+                                genre = R.string.genre_classical_culture,
+                                country = R.string.country_germany
                         ),
                         RadioStation(
                                 id = "deutschlandfunk",
@@ -146,8 +152,8 @@ object RadioRepository {
                                 logoUrl =
                                         "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Deutschlandfunk_Logo_2017.svg/200px-Deutschlandfunk_Logo_2017.svg.png",
                                 description = "Nachrichten und Kultur",
-                                genre = "News/Culture",
-                                country = "Germany"
+                                genre = R.string.genre_news_culture,
+                                country = R.string.country_germany
                         ),
 
                         // Jazz
@@ -159,8 +165,8 @@ object RadioRepository {
                                 logoUrl =
                                         "https://upload.wikimedia.org/wikipedia/fr/thumb/2/24/Logo_Jazz_Radio.svg/200px-Logo_Jazz_Radio.svg.png",
                                 description = "100% Jazz",
-                                genre = "Jazz",
-                                country = "France"
+                                genre = R.string.genre_jazz,
+                                country = R.string.country_france
                         ),
                         RadioStation(
                                 id = "tsfjazz",
@@ -169,8 +175,8 @@ object RadioRepository {
                                 logoUrl =
                                         "https://upload.wikimedia.org/wikipedia/fr/thumb/4/44/TSF_Jazz_logo.svg/200px-TSF_Jazz_logo.svg.png",
                                 description = "La radio jazz",
-                                genre = "Jazz",
-                                country = "France"
+                                genre = R.string.genre_jazz,
+                                country = R.string.country_france
                         ),
 
                         // World
@@ -180,8 +186,8 @@ object RadioRepository {
                                 streamUrl = "https://ice1.somafm.com/groovesalad-128-mp3",
                                 logoUrl = "https://somafm.com/img3/groovesalad-400.jpg",
                                 description = "A nicely chilled plate of ambient beats",
-                                genre = "Ambient/Chill",
-                                country = "USA"
+                                genre = R.string.genre_ambient_chill,
+                                country = R.string.country_usa
                         ),
                         RadioStation(
                                 id = "soma_drone",
@@ -189,8 +195,8 @@ object RadioRepository {
                                 streamUrl = "https://ice1.somafm.com/dronezone-128-mp3",
                                 logoUrl = "https://somafm.com/img3/dronezone-400.jpg",
                                 description = "Atmospheric textures with minimal beats",
-                                genre = "Ambient",
-                                country = "USA"
+                                genre = R.string.genre_ambient,
+                                country = R.string.country_usa
                         )
                 )
 
