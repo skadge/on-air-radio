@@ -22,9 +22,10 @@
     <string name="add_to_favorites">Ajouter aux favoris</string>
     <string name="station_logo_description">Logo de %1$s</string>
     <string name="radio">Radio</string>
+    <string name="on_air">en direct</string>
 
     <!-- Countries -->
-    <string name="country_uk">Royaume-Uni</string>
+    <string name="country_uk">UK</string>
     <string name="country_france">France</string>
     <string name="country_usa">États-Unis</string>
     <string name="country_germany">Allemagne</string>

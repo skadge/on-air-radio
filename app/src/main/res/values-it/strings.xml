@@ -22,6 +22,7 @@
     <string name="add_to_favorites">Aggiungi ai preferiti</string>
     <string name="station_logo_description">Logo di %1$s</string>
     <string name="radio">Radio</string>
+    <string name="on_air">in onda</string>
 
     <!-- Countries -->
     <string name="country_uk">Regno Unito</string>

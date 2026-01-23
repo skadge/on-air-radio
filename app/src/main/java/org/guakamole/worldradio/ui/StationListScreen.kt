@@ -151,28 +151,45 @@ fun StationCard(
                                 contentScale = ContentScale.Crop
                         )
 
-                        // Favorite Icon
-                        IconButton(
-                                onClick = onFavoriteClick,
+                        // Country and Favorite Icon
+                        Row(
                                 modifier =
                                         Modifier.align(Alignment.BottomStart)
-                                                .padding(4.dp)
-                                                .size(32.dp)
+                                                .padding(bottom = 4.dp, start = 8.dp),
+                                verticalAlignment = Alignment.CenterVertically
                         ) {
-                                Icon(
-                                        imageVector =
-                                                if (station.isFavorite) Icons.Filled.Star
-                                                else Icons.Filled.StarBorder,
-                                        contentDescription =
-                                                if (station.isFavorite)
-                                                        stringResource(
-                                                                R.string.remove_from_favorites
-                                                        )
-                                                else stringResource(R.string.add_to_favorites),
-                                        tint =
-                                                if (station.isFavorite) Color.White
-                                                else Color.White.copy(alpha = 0.5f),
-                                        modifier = Modifier.size(20.dp)
+                                IconButton(
+                                        onClick = onFavoriteClick,
+                                        modifier = Modifier.size(32.dp)
+                                ) {
+                                        Icon(
+                                                imageVector =
+                                                        if (station.isFavorite) Icons.Filled.Star
+                                                        else Icons.Filled.StarBorder,
+                                                contentDescription =
+                                                        if (station.isFavorite)
+                                                                stringResource(
+                                                                        R.string
+                                                                                .remove_from_favorites
+                                                                )
+                                                        else
+                                                                stringResource(
+                                                                        R.string.add_to_favorites
+                                                                ),
+                                                tint =
+                                                        if (station.isFavorite) Color.White
+                                                        else Color.White.copy(alpha = 0.5f),
+                                                modifier = Modifier.size(20.dp)
+                                        )
+                                }
+                                Text(
+                                        text = stringResource(station.country),
+                                        style =
+                                                MaterialTheme.typography.labelSmall.copy(
+                                                        fontSize = 11.sp,
+                                                        fontWeight = FontWeight.Medium
+                                                ),
+                                        color = Color.White.copy(alpha = 0.4f)
                                 )
                         }
                 }
