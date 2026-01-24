@@ -164,7 +164,11 @@ fun RadioApp(
                                                 stations = filteredStations,
                                                 currentStationId = currentStationId,
                                                 onStationClick = { station ->
-                                                        onStationSelect(station)
+                                                        if (station.id == currentStationId) {
+                                                                currentScreen = Screen.NowPlaying
+                                                        } else {
+                                                                onStationSelect(station)
+                                                        }
                                                 },
                                                 onFavoriteToggle = { station ->
                                                         RadioRepository.toggleFavorite(station.id)
@@ -198,6 +202,14 @@ fun RadioApp(
                                                 onStop = onStop,
                                                 onPrevious = onPrevious,
                                                 onNext = onNext,
+                                                onFavoriteToggle = {
+                                                        currentStation?.let {
+                                                                RadioRepository.toggleFavorite(
+                                                                        it.id
+                                                                )
+                                                                refreshTrigger++
+                                                        }
+                                                },
                                                 onBackToList = {
                                                         currentScreen = Screen.StationList
                                                 }
@@ -364,4 +376,4 @@ fun HomeTopBar(isLive: Boolean = false) {
                         )
                 }
         }
-
+}

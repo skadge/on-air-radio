@@ -39,6 +39,7 @@ fun NowPlayingScreen(
         onStop: () -> Unit,
         onPrevious: () -> Unit,
         onNext: () -> Unit,
+        onFavoriteToggle: () -> Unit,
         onBackToList: () -> Unit,
         modifier: Modifier = Modifier
 ) {
@@ -61,6 +62,8 @@ fun NowPlayingScreen(
                 }
         }
 
+        var showMenu by remember { mutableStateOf(false) }
+
         Column(
                 modifier =
                         modifier.fillMaxSize()
@@ -77,10 +80,11 @@ fun NowPlayingScreen(
                                 .padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
         ) {
-                // Back button with more padding
+                // Top Bar with Back and Menu
                 Row(
                         modifier = Modifier.fillMaxWidth().padding(top = 16.dp, bottom = 16.dp),
-                        horizontalArrangement = Arrangement.Start
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
                 ) {
                         IconButton(onClick = onBackToList) {
                                 Icon(
@@ -90,6 +94,57 @@ fun NowPlayingScreen(
                                         modifier = Modifier.size(28.dp),
                                         tint = MaterialTheme.colorScheme.onBackground
                                 )
+                        }
+
+                        Box {
+                                IconButton(onClick = { showMenu = true }) {
+                                        Icon(
+                                                imageVector = Icons.Default.MoreVert,
+                                                contentDescription = "Options",
+                                                modifier = Modifier.size(28.dp),
+                                                tint = MaterialTheme.colorScheme.onBackground
+                                        )
+                                }
+                                DropdownMenu(
+                                        expanded = showMenu,
+                                        onDismissRequest = { showMenu = false }
+                                ) {
+                                        if (station != null) {
+                                                DropdownMenuItem(
+                                                        text = {
+                                                                Text(
+                                                                        if (station.isFavorite)
+                                                                                stringResource(
+                                                                                        R.string
+                                                                                                .remove_from_favorites
+                                                                                )
+                                                                        else
+                                                                                stringResource(
+                                                                                        R.string
+                                                                                                .add_to_favorites
+                                                                                )
+                                                                )
+                                                        },
+                                                        onClick = {
+                                                                onFavoriteToggle()
+                                                                showMenu = false
+                                                        },
+                                                        leadingIcon = {
+                                                                Icon(
+                                                                        imageVector =
+                                                                                if (station.isFavorite
+                                                                                )
+                                                                                        Icons.Default
+                                                                                                .Star
+                                                                                else
+                                                                                        Icons.Default
+                                                                                                .StarBorder,
+                                                                        contentDescription = null
+                                                                )
+                                                        }
+                                                )
+                                        }
+                                }
                         }
                 }
 
