@@ -132,6 +132,14 @@ class RadioPlaybackService : MediaLibraryService() {
                             }
                         }
                     }
+
+                    override fun onPlayerError(error: androidx.media3.common.PlaybackException) {
+                        android.util.Log.e(
+                                "RadioPlaybackService",
+                                "Player error: ${error.message}",
+                                error
+                        )
+                    }
                 }
         )
 
