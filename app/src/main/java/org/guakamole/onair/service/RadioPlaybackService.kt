@@ -90,45 +90,66 @@ class RadioPlaybackService : MediaLibraryService() {
                                             "MetadataDebug",
                                             "Service: Updating player metadata with ICY title: $icyTitle"
                                     )
-                                    player?.let { p ->
-                                        val currentItem = p.currentMediaItem ?: return@let
-                                        if (currentItem.mediaMetadata.title != icyTitle) {
-                                            // When showing song title, we want the subtitle
-                                            // (Artist) to be the Station Name
-                                            // instead of the Genre, so it shows "Title" / "Station
-                                            // Name" in notification
-                                            val station =
-                                                    RadioRepository.getStationById(
-                                                            currentItem.mediaId
-                                                    )
-                                            val artist =
-                                                    station?.name
-                                                            ?: currentItem.mediaMetadata.artist
-
-                                            val newMetadata =
-                                                    currentItem
-                                                            .mediaMetadata
-                                                            .buildUpon()
-                                                            .setTitle(icyTitle)
-                                                            .setArtist(artist)
-                                                            .setSubtitle(artist)
-                                                            .build()
-                                            val newItem =
-                                                    currentItem
-                                                            .buildUpon()
-                                                            .setMediaMetadata(newMetadata)
-                                                            .build()
-
-                                            // Update the item without resetting position to keep
-                                            // playback smooth
-                                            p.setMediaItem(newItem, /* resetPosition= */ false)
-                                            android.util.Log.d(
-                                                    "MetadataDebug",
-                                                    "Service: Updated MediaItem metadata: Title=$icyTitle, Artist=$artist, Subtitle=$artist"
-                                            )
-                                        }
+                                    updatePlayerMetadata(icyTitle, null)
+                                }
+                            } else if (entry is
+                                            androidx.media3.extractor.metadata.id3.TextInformationFrame
+                            ) {
+                                android.util.Log.d(
+                                        "MetadataDebug",
+                                        "Service: Received ID3 frame: id=${entry.id}, value=${entry.value}"
+                                )
+                                if (entry.id == "TIT2") {
+                                    val title = entry.values[0]
+                                    if (!title.isBlank()) {
+                                        updatePlayerMetadata(title, null)
+                                    }
+                                } else if (entry.id == "TPE1") {
+                                    val artist = entry.values[0]
+                                    if (!artist.isBlank()) {
+                                        updatePlayerMetadata(null, artist)
                                     }
                                 }
+                            }
+                        }
+                    }
+
+                    private fun updatePlayerMetadata(titleArg: String?, artistArg: String?) {
+                        player?.let { p ->
+                            val currentItem = p.currentMediaItem ?: return@let
+                            val newTitle = titleArg ?: currentItem.mediaMetadata.title.toString()
+
+                            // Check if anything actually changed to avoid infinite loops or
+                            // redundant updates
+                            if (currentItem.mediaMetadata.title != newTitle ||
+                                            (artistArg != null &&
+                                                    currentItem.mediaMetadata.artist != artistArg)
+                            ) {
+                                val station = RadioRepository.getStationById(currentItem.mediaId)
+                                val artist =
+                                        artistArg
+                                                ?: station?.name ?: currentItem.mediaMetadata.artist
+
+                                val newMetadata =
+                                        currentItem
+                                                .mediaMetadata
+                                                .buildUpon()
+                                                .setTitle(newTitle)
+                                                .setArtist(artist)
+                                                .setSubtitle(artist)
+                                                .build()
+
+                                val newItem =
+                                        currentItem
+                                                .buildUpon()
+                                                .setMediaMetadata(newMetadata)
+                                                .build()
+
+                                p.setMediaItem(newItem, /* resetPosition= */ false)
+                                android.util.Log.d(
+                                        "MetadataDebug",
+                                        "Service: Updated MediaItem: Title=$newTitle, Artist=$artist"
+                                )
                             }
                         }
                     }

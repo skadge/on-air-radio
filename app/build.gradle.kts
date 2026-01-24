@@ -3,6 +3,30 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
+// =============================================================================
+// Station Build Task - generates RadioRepository.kt from stations.yaml
+// =============================================================================
+val buildStations = tasks.register<Exec>("buildStations") {
+    description = "Build radio station resources from stations.yaml"
+    group = "build"
+    workingDir = rootProject.projectDir
+
+    inputs.file("${rootProject.projectDir}/stations.yaml")
+    inputs.file("${rootProject.projectDir}/scripts/requirements.txt")
+    inputs.dir("${rootProject.projectDir}/scripts")
+    outputs.file("${projectDir}/src/main/java/org/guakamole/onair/data/RadioRepository.kt")
+
+    // Use system Python directly - dependencies should be installed system-wide or via pip
+    // For venv support, run: python3 -m venv .venv && .venv/bin/pip install -r scripts/requirements.txt
+    commandLine("python3", "scripts/build_stations.py")
+}
+
+tasks.named("preBuild") {
+    dependsOn(buildStations)
+}
+// =============================================================================
+
+
 android {
     namespace = "org.guakamole.onair"
     compileSdk = 35

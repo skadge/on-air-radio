@@ -1,0 +1,185 @@
+# Radio Station Definitions
+# This is the source of truth for all stations in the app.
+# Run `./gradlew buildStations` to regenerate code after changes.
+
+# Constants map to Android string resources (R.string.*)
+constants:
+  genres:
+    pop_rock: genre_pop_rock
+    adult_contemporary: genre_adult_contemporary
+    news_talk: genre_news_talk
+    classical: genre_classical
+    talk_music: genre_talk_music
+    culture: genre_culture
+    eclectic: genre_eclectic
+    eclectic_world: genre_eclectic_world
+    news: genre_news
+    alternative: genre_alternative
+    classical_culture: genre_classical_culture
+    news_culture: genre_news_culture
+    jazz: genre_jazz
+    ambient_chill: genre_ambient_chill
+    ambient: genre_ambient
+
+  countries:
+    uk: country_uk
+    france: country_france
+    usa: country_usa
+    germany: country_germany
+
+# Station definitions
+stations:
+  # ============ UK ============
+  - id: bbc_radio_1
+    name: BBC Radio 1
+    stream_url: https://as-hls-ww-live.akamaized.net/pool_01505109/live/ww/bbc_radio_one/bbc_radio_one.isml/bbc_radio_one-audio%3d96000.norewind.m3u8
+    logo_url: https://cdn-radiotime-logos.tunein.com/s24939q.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/en/e/ea/BBC_Radio_1.svg
+    description: The best new music and entertainment
+    genre: pop_rock
+    country: uk
+
+  - id: bbc_radio_2
+    name: BBC Radio 2
+    stream_url: https://as-hls-ww-live.akamaized.net/pool_74208725/live/ww/bbc_radio_two/bbc_radio_two.isml/bbc_radio_two-audio%3d128000.norewind.m3u8
+    logo_url: https://cdn-radiotime-logos.tunein.com/s24940q.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/en/8/8c/BBC_Radio_2.svg
+    description: Great music, great variety
+    genre: adult_contemporary
+    country: uk
+
+  - id: bbc_radio_4
+    name: BBC Radio 4
+    stream_url: https://as-hls-ww-live.akamaized.net/pool_55057080/live/ww/bbc_radio_fourfm/bbc_radio_fourfm.isml/bbc_radio_fourfm-audio%3d128000.norewind.m3u8
+    logo_url: https://cdn-radiotime-logos.tunein.com/s25419q.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/en/4/44/BBC_Radio_4.svg
+    description: Intelligent speech radio
+    genre: news_talk
+    country: uk
+
+  - id: classic_fm
+    name: Classic FM
+    stream_url: https://media-ice.musicradio.com/ClassicFMMP3
+    logo_url: https://www.classicfm.com/assets_v4r/classic/img/favicon-196x196.png
+    description: "The world's greatest music"
+    genre: classical
+    country: uk
+
+  # ============ France ============
+  - id: france_inter
+    name: France Inter
+    stream_url: https://icecast.radiofrance.fr/franceinter-midfi.mp3
+    logo_url: https://www.lesentreprisesdupaysage.fr/content/uploads/2022/03/france_inter_logo_2021-svg-1024x1024.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/1/10/France_Inter_logo_2021.svg
+    description: La radio de service public
+    genre: talk_music
+    country: france
+
+  - id: france_culture
+    name: France Culture
+    stream_url: https://icecast.radiofrance.fr/franceculture-midfi.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/France_Culture_logo_2021.svg/250px-France_Culture_logo_2021.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/d/d6/France_Culture_logo_2021.svg
+    description: Culture et savoirs
+    genre: culture
+    country: france
+
+  - id: france_musique
+    name: France Musique
+    stream_url: https://icecast.radiofrance.fr/francemusique-midfi.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/6/6c/France_Musique_logo_2021.svg
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/6/6c/France_Musique_logo_2021.svg
+    description: La musique classique et plus
+    genre: classical
+    country: france
+
+  - id: fip
+    name: FIP
+    stream_url: https://icecast.radiofrance.fr/fip-midfi.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/1/16/FIP_logo_2021.svg
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/1/16/FIP_logo_2021.svg
+    description: Éclectisme musical
+    genre: eclectic
+    country: france
+
+  - id: radio_nova
+    name: Radio Nova
+    stream_url: https://novazz.ice.infomaniak.ch/novazz-128.mp3
+    logo_url: https://www.nova.fr/wp-content/thumbnails/uploads/sites/2/2024/05/NOVA-nova-400x496-1-t-1700x1030.png
+    description: Le Grand Mix de Radio Nova
+    genre: eclectic_world
+    country: france
+
+  # ============ USA ============
+  - id: npr
+    name: NPR News
+    stream_url: https://npr-ice.streamguys1.com/live.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/National_Public_Radio_logo.svg/200px-National_Public_Radio_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/d/d7/National_Public_Radio_logo.svg
+    description: National Public Radio
+    genre: news
+    country: usa
+
+  - id: kexp
+    name: KEXP 90.3
+    stream_url: https://kexp-mp3-128.streamguys1.com/kexp128.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/KEXP_logo.svg/200px-KEXP_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/6/69/KEXP_logo.svg
+    description: Where the music matters
+    genre: alternative
+    country: usa
+
+  # ============ Germany ============
+  - id: wdr3
+    name: WDR 3
+    stream_url: https://wdr-wdr3-live.icecastssl.wdr.de/wdr/wdr3/live/mp3/128/stream.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/WDR_3_logo_2012.svg/200px-WDR_3_logo_2012.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/e/e6/WDR_3_logo_2012.svg
+    description: Kultur und Klassik
+    genre: classical_culture
+    country: germany
+
+  - id: deutschlandradio
+    name: Deutschlandfunk
+    stream_url: https://st01.sslstream.dlf.de/dlf/01/128/mp3/stream.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Deutschlandfunk_Logo_2017.svg/200px-Deutschlandfunk_Logo_2017.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/1/14/Deutschlandfunk_Logo_2017.svg
+    description: Nachrichten und Kultur
+    genre: news_culture
+    country: germany
+
+  # ============ Jazz ============
+  - id: jazz_radio
+    name: Jazz Radio
+    stream_url: https://jazzradio.ice.infomaniak.ch/jazzradio-high.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/fr/thumb/2/24/Logo_Jazz_Radio.svg/200px-Logo_Jazz_Radio.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/fr/2/24/Logo_Jazz_Radio.svg
+    description: 100% Jazz
+    genre: jazz
+    country: france
+
+  - id: tsfjazz
+    name: TSF Jazz
+    stream_url: https://tsfjazz.ice.infomaniak.ch/tsfjazz-high.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/fr/thumb/4/44/TSF_Jazz_logo.svg/200px-TSF_Jazz_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/fr/4/44/TSF_Jazz_logo.svg
+    description: La radio jazz
+    genre: jazz
+    country: france
+
+  # ============ World / Ambient ============
+  - id: soma_groove
+    name: SomaFM Groove Salad
+    stream_url: https://ice1.somafm.com/groovesalad-128-mp3
+    logo_url: https://somafm.com/img3/groovesalad-400.jpg
+    description: A nicely chilled plate of ambient beats
+    genre: ambient_chill
+    country: usa
+
+  - id: soma_drone
+    name: SomaFM Drone Zone
+    stream_url: https://ice1.somafm.com/dronezone-128-mp3
+    logo_url: https://somafm.com/img3/dronezone-400.jpg
+    description: Atmospheric textures with minimal beats
+    genre: ambient
+    country: usa
