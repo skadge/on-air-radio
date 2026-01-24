@@ -23,6 +23,8 @@
     <string name="station_logo_description">Logo de %1$s</string>
     <string name="radio">Radio</string>
     <string name="on_air">en direct</string>
+    <string name="region">Région</string>
+    <string name="style">Style</string>
 
     <!-- Countries -->
     <string name="country_uk">UK</string>
@@ -52,4 +54,7 @@
     <string name="genre_hits">Hits</string>
     <string name="genre_oldies">Oldies</string>
     <string name="genre_variety">Variété</string>
+    <string name="search_stations">Rechercher des stations...</string>
+    <string name="favorites">Favoris</string>
+    <string name="all_stations">Toutes les stations</string>
 </resources>
