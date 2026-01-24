@@ -14,7 +14,6 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,7 +29,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import kotlinx.coroutines.launch
 import org.guakamole.onair.R
 import org.guakamole.onair.data.RadioStation
 import org.guakamole.onair.ui.theme.GenreColors
@@ -45,7 +43,9 @@ fun StationListScreen(
         modifier: Modifier = Modifier
 ) {
         val gridState = rememberLazyGridState()
-        val scope = rememberCoroutineScope()
+
+        val (favorites, others) = stations.partition { it.isFavorite }
+        val hasFavorites = favorites.isNotEmpty()
 
         LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
@@ -55,21 +55,50 @@ fun StationListScreen(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-                items(stations, key = { it.id }) { station ->
+                if (hasFavorites) {
+                        item(span = { androidx.compose.foundation.lazy.grid.GridItemSpan(2) }) {
+                                SectionHeader(stringResource(R.string.favorites))
+                        }
+
+                        items(favorites, key = { it.id }) { station ->
+                                StationCard(
+                                        station = station,
+                                        isPlaying = station.id == currentStationId,
+                                        onClick = { onStationClick(station) },
+                                        onFavoriteClick = { onFavoriteToggle(station) },
+                                        modifier = Modifier.animateItemPlacement()
+                                )
+                        }
+
+                        item(span = { androidx.compose.foundation.lazy.grid.GridItemSpan(2) }) {
+                                SectionHeader(
+                                        stringResource(R.string.all_stations),
+                                        modifier = Modifier.padding(top = 16.dp)
+                                )
+                        }
+                }
+
+                items(others, key = { it.id }) { station ->
                         StationCard(
                                 station = station,
                                 isPlaying = station.id == currentStationId,
                                 onClick = { onStationClick(station) },
-                                onFavoriteClick = {
-                                        onFavoriteToggle(station)
-                                        if (!station.isFavorite) {
-                                                scope.launch { gridState.animateScrollToItem(0) }
-                                        }
-                                },
+                                onFavoriteClick = { onFavoriteToggle(station) },
                                 modifier = Modifier.animateItemPlacement()
                         )
                 }
         }
+}
+
+@Composable
+private fun SectionHeader(title: String, modifier: Modifier = Modifier) {
+        Text(
+                text = title,
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onBackground,
+                modifier = modifier.padding(bottom = 8.dp)
+        )
 }
 
 @Composable

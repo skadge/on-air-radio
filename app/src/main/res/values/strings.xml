@@ -53,4 +53,6 @@
     <string name="genre_jazz">Jazz</string>
     <string name="genre_ambient_chill">Ambient/Chill</string>
     <string name="genre_ambient">Ambient</string>
+    <string name="favorites">Favorites</string>
+    <string name="all_stations">All Stations</string>
 </resources>
