@@ -1,6 +1,6 @@
 // AUTO-GENERATED from stations.yaml - DO NOT EDIT MANUALLY
 // Run: ./gradlew buildStations (or python scripts/build_stations.py)
-// Generated with 42 stations
+// Generated with 53 stations
 
 package org.guakamole.onair.data
 
@@ -69,6 +69,16 @@ object RadioRepository {
                                 country = R.string.country_uk
                         ),
                         RadioStation(
+                                id = "bbc_radio_3",
+                                name = "BBC Radio 3",
+                                streamUrl = "http://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_three/bbc_radio_three.isml/bbc_radio_three-audio%3d96000.norewind.m3u8",
+                                logoUrl = "https://cdn-radiotime-logos.tunein.com/s24941q.png",
+                                logoResId = 0,
+                                description = "Classical, jazz, world music, arts and drama",
+                                genre = R.string.genre_classical,
+                                country = R.string.country_uk
+                        ),
+                        RadioStation(
                                 id = "bbc_radio_4",
                                 name = "BBC Radio 4",
                                 streamUrl = "https://as-hls-ww-live.akamaized.net/pool_55057080/live/ww/bbc_radio_fourfm/bbc_radio_fourfm.isml/bbc_radio_fourfm-audio%3d128000.norewind.m3u8",
@@ -76,6 +86,26 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_bbc_radio_4,
                                 description = "Intelligent speech radio",
                                 genre = R.string.genre_news_talk,
+                                country = R.string.country_uk
+                        ),
+                        RadioStation(
+                                id = "bbc_radio_5_live",
+                                name = "BBC Radio 5 Live",
+                                streamUrl = "http://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_five_live/bbc_radio_five_live.isml/bbc_radio_five_live-audio=96000.m3u8",
+                                logoUrl = "https://cdn-radiotime-logos.tunein.com/s24943q.png",
+                                logoResId = R.drawable.logo_bbc_radio_5_live,
+                                description = "Live news and live sport",
+                                genre = R.string.genre_news_talk,
+                                country = R.string.country_uk
+                        ),
+                        RadioStation(
+                                id = "bbc_6music",
+                                name = "BBC Radio 6 Music",
+                                streamUrl = "https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d96000.norewind.m3u8",
+                                logoUrl = "https://cdn-radiotime-logos.tunein.com/s24944q.png",
+                                logoResId = 0,
+                                description = "The place for alternative music",
+                                genre = R.string.genre_alternative,
                                 country = R.string.country_uk
                         ),
                         RadioStation(
@@ -97,6 +127,16 @@ object RadioRepository {
                                 description = "La radio líder en España",
                                 genre = R.string.genre_news_talk,
                                 country = R.string.country_spain
+                        ),
+                        RadioStation(
+                                id = "capital_fm",
+                                name = "Capital FM",
+                                streamUrl = "http://icecast.thisisdax.com/CapitalUKMP3",
+                                logoUrl = "https://cdn-radiotime-logos.tunein.com/s2728q.png",
+                                logoResId = R.drawable.logo_capital_fm,
+                                description = "The UK's No.1 Hit Music Station",
+                                genre = R.string.genre_hits,
+                                country = R.string.country_uk
                         ),
                         RadioStation(
                                 id = "classic_fm",
@@ -179,6 +219,16 @@ object RadioRepository {
                                 country = R.string.country_france
                         ),
                         RadioStation(
+                                id = "heart_uk",
+                                name = "Heart UK",
+                                streamUrl = "http://ice-sov.musicradio.com/HeartLondonMP3",
+                                logoUrl = "https://cdn-radiotime-logos.tunein.com/s121960q.png",
+                                logoResId = R.drawable.logo_heart_uk,
+                                description = "Turn up the feel good",
+                                genre = R.string.genre_pop_rock,
+                                country = R.string.country_uk
+                        ),
+                        RadioStation(
                                 id = "jazz_radio",
                                 name = "Jazz Radio",
                                 streamUrl = "https://jazzradio.ice.infomaniak.ch/jazzradio-high.mp3",
@@ -189,6 +239,26 @@ object RadioRepository {
                                 country = R.string.country_france
                         ),
                         RadioStation(
+                                id = "jazz24",
+                                name = "Jazz24",
+                                streamUrl = "https://knkx-live-a.edge.audiocdn.com/6285_128k",
+                                logoUrl = "https://cdn-radiotime-logos.tunein.com/s6861q.png",
+                                logoResId = 0,
+                                description = "Jazz from Seattle's KNKX",
+                                genre = R.string.genre_jazz,
+                                country = R.string.country_usa
+                        ),
+                        RadioStation(
+                                id = "kcrw",
+                                name = "KCRW 89.9",
+                                streamUrl = "https://kcrw.streamguys1.com/kcrw_128k_mp3_on_air",
+                                logoUrl = "https://cdn-radiotime-logos.tunein.com/s24748q.png",
+                                logoResId = 0,
+                                description = "Music, news, and culture from LA",
+                                genre = R.string.genre_eclectic,
+                                country = R.string.country_usa
+                        ),
+                        RadioStation(
                                 id = "kexp",
                                 name = "KEXP 90.3",
                                 streamUrl = "https://kexp-mp3-128.streamguys1.com/kexp128.mp3",
@@ -197,6 +267,16 @@ object RadioRepository {
                                 description = "Where the music matters",
                                 genre = R.string.genre_alternative,
                                 country = R.string.country_usa
+                        ),
+                        RadioStation(
+                                id = "lbc",
+                                name = "LBC",
+                                streamUrl = "http://icecast.thisisdax.com/LBCUKMP3",
+                                logoUrl = "https://cdn-radiotime-logos.tunein.com/s25071q.png",
+                                logoResId = 0,
+                                description = "Leading Britain's Conversation",
+                                genre = R.string.genre_news_talk,
+                                country = R.string.country_uk
                         ),
                         RadioStation(
                                 id = "los40",
@@ -329,6 +409,16 @@ object RadioRepository {
                                 country = R.string.country_france
                         ),
                         RadioStation(
+                                id = "radio_paradise",
+                                name = "Radio Paradise",
+                                streamUrl = "https://stream.radioparadise.com/mp3-128",
+                                logoUrl = "https://www.radioparadise.com/graphics/logo_rp_75.png",
+                                logoResId = 0,
+                                description = "Eclectic blend of music from California",
+                                genre = R.string.genre_eclectic,
+                                country = R.string.country_usa
+                        ),
+                        RadioStation(
                                 id = "rds",
                                 name = "RDS",
                                 streamUrl = "https://streamcdnm9-dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S44552214/uKpgwOHmle0S/playlist.m3u8",
@@ -437,6 +527,26 @@ object RadioRepository {
                                 description = "Kultur und Klassik",
                                 genre = R.string.genre_classical_culture,
                                 country = R.string.country_germany
+                        ),
+                        RadioStation(
+                                id = "wnyc_fm",
+                                name = "WNYC 93.9 FM",
+                                streamUrl = "http://fm939.wnyc.org/wnycfm.mp3",
+                                logoUrl = "https://cdn-radiotime-logos.tunein.com/s21606q.png",
+                                logoResId = 0,
+                                description = "New York's flagship public radio station",
+                                genre = R.string.genre_news_talk,
+                                country = R.string.country_usa
+                        ),
+                        RadioStation(
+                                id = "wqxr",
+                                name = "WQXR 105.9 FM",
+                                streamUrl = "http://stream.wqxr.org/wqxr.mp3",
+                                logoUrl = "https://cdn-radiotime-logos.tunein.com/s27341q.png",
+                                logoResId = R.drawable.logo_wqxr,
+                                description = "New York's only dedicated classical station",
+                                genre = R.string.genre_classical,
+                                country = R.string.country_usa
                         )
                 )
 

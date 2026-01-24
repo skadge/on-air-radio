@@ -71,6 +71,60 @@ stations:
     genre: classical
     country: uk
 
+  - id: bbc_radio_3
+    name: BBC Radio 3
+    stream_url: http://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_three/bbc_radio_three.isml/bbc_radio_three-audio%3d96000.norewind.m3u8
+    logo_url: https://cdn-radiotime-logos.tunein.com/s24941q.png
+    logo_svg_url: https://en.wikipedia.org/wiki/Special:FilePath/BBC_Radio_3.svg
+    description: Classical, jazz, world music, arts and drama
+    genre: classical
+    country: uk
+
+  - id: bbc_radio_5_live
+    name: BBC Radio 5 Live
+    stream_url: http://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_five_live/bbc_radio_five_live.isml/bbc_radio_five_live-audio=96000.m3u8
+    logo_url: https://cdn-radiotime-logos.tunein.com/s24943q.png
+    logo_svg_url: https://en.wikipedia.org/wiki/Special:FilePath/BBC_Radio_5_Live.svg
+    description: Live news and live sport
+    genre: news_talk
+    country: uk
+
+  - id: bbc_6music
+    name: BBC Radio 6 Music
+    stream_url: https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d96000.norewind.m3u8
+    logo_url: https://cdn-radiotime-logos.tunein.com/s24944q.png
+    logo_svg_url: https://en.wikipedia.org/wiki/Special:FilePath/BBC_Radio_6_Music.svg
+    description: The place for alternative music
+    genre: alternative
+    country: uk
+
+  - id: capital_fm
+    name: Capital FM
+    stream_url: http://icecast.thisisdax.com/CapitalUKMP3
+    logo_url: https://cdn-radiotime-logos.tunein.com/s2728q.png
+    logo_svg_url: https://en.wikipedia.org/wiki/Special:FilePath/Logo_Capital_FM.svg
+    description: The UK's No.1 Hit Music Station
+    genre: hits
+    country: uk
+
+  - id: heart_uk
+    name: Heart UK
+    stream_url: http://ice-sov.musicradio.com/HeartLondonMP3
+    logo_url: https://cdn-radiotime-logos.tunein.com/s121960q.png
+    logo_svg_url: https://en.wikipedia.org/wiki/Special:FilePath/The_Heart_Network_logo.svg
+    description: Turn up the feel good
+    genre: pop_rock
+    country: uk
+
+  - id: lbc
+    name: LBC
+    stream_url: http://icecast.thisisdax.com/LBCUKMP3
+    logo_url: https://cdn-radiotime-logos.tunein.com/s25071q.png
+    logo_svg_url: https://en.wikipedia.org/wiki/Special:FilePath/LBC_logo.svg
+    description: Leading Britain's Conversation
+    genre: news_talk
+    country: uk
+
   # ============ France ============
   - id: france_inter
     name: France Inter
@@ -133,6 +187,48 @@ stations:
     logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/6/69/KEXP_logo.svg
     description: Where the music matters
     genre: alternative
+    country: usa
+
+  - id: wnyc_fm
+    name: WNYC 93.9 FM
+    stream_url: http://fm939.wnyc.org/wnycfm.mp3
+    logo_url: https://cdn-radiotime-logos.tunein.com/s21606q.png
+    logo_svg_url: https://en.wikipedia.org/wiki/Special:FilePath/WNYC_logo.svg
+    description: New York's flagship public radio station
+    genre: news_talk
+    country: usa
+
+  - id: wqxr
+    name: WQXR 105.9 FM
+    stream_url: http://stream.wqxr.org/wqxr.mp3
+    logo_url: https://cdn-radiotime-logos.tunein.com/s27341q.png
+    logo_svg_url: https://en.wikipedia.org/wiki/Special:FilePath/WQXR-FM_logo.svg
+    description: New York's only dedicated classical station
+    genre: classical
+    country: usa
+
+  - id: jazz24
+    name: Jazz24
+    stream_url: https://knkx-live-a.edge.audiocdn.com/6285_128k
+    logo_url: https://cdn-radiotime-logos.tunein.com/s6861q.png
+    description: "Jazz from Seattle's KNKX"
+    genre: jazz
+    country: usa
+
+  - id: kcrw
+    name: KCRW 89.9
+    stream_url: https://kcrw.streamguys1.com/kcrw_128k_mp3_on_air
+    logo_url: https://cdn-radiotime-logos.tunein.com/s24748q.png
+    description: Music, news, and culture from LA
+    genre: eclectic
+    country: usa
+
+  - id: radio_paradise
+    name: Radio Paradise
+    stream_url: https://stream.radioparadise.com/mp3-128
+    logo_url: https://www.radioparadise.com/graphics/logo_rp_75.png
+    description: Eclectic blend of music from California
+    genre: eclectic
     country: usa
 
   # ============ Germany ============
