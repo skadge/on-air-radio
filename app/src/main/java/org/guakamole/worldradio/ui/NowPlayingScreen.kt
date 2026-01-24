@@ -106,7 +106,11 @@ fun NowPlayingScreen(
                                 AsyncImage(
                                         model =
                                                 ImageRequest.Builder(LocalContext.current)
-                                                        .data(station.logoUrl)
+                                                        .data(
+                                                                if (station.logoResId != 0)
+                                                                        station.logoResId
+                                                                else station.logoUrl
+                                                        )
                                                         .crossfade(true)
                                                         .build(),
                                         placeholder = placeholder,

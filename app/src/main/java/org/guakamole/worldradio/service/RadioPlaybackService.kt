@@ -296,7 +296,15 @@ class RadioPlaybackService : MediaLibraryService() {
                                 .setTitle(station.name)
                                 .setSubtitle(station.description)
                                 .setArtist(getString(station.genre))
-                                .setArtworkUri(Uri.parse(station.logoUrl))
+                                .setArtworkUri(
+                                        if (station.logoResId != 0) {
+                                            Uri.parse(
+                                                    "android.resource://${packageName}/${station.logoResId}"
+                                            )
+                                        } else {
+                                            Uri.parse(station.logoUrl)
+                                        }
+                                )
                                 .setIsBrowsable(false)
                                 .setIsPlayable(true)
                                 .setMediaType(MediaMetadata.MEDIA_TYPE_RADIO_STATION)

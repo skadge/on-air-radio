@@ -8,6 +8,7 @@ data class RadioStation(
         val name: String,
         val streamUrl: String,
         val logoUrl: String,
+        val logoResId: Int = 0,
         val description: String = "",
         @StringRes val genre: Int = 0,
         @StringRes val country: Int = 0,

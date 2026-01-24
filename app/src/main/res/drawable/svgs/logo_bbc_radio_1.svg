@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.0"
+   width="212.5"
+   height="212.59375"
+   id="svg4085"
+   sodipodi:docname="logo_bbc_radio_1.svg"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="1"
+     inkscape:cx="396.5"
+     inkscape:cy="348.5"
+     inkscape:window-width="1920"
+     inkscape:window-height="1131"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g3711" />
+  <defs
+     id="defs4087" />
+  <g
+     id="layer1"
+     transform="translate(-191.8125,-17.71875)">
+    <g
+       id="g3711">
+      <path
+         d="M 262.78664,47.016206 V 208.96349 h 72.15178 V 47.016206 Z"
+         id="rect4115"
+         style="display:inline;overflow:visible;visibility:visible;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;marker:none;marker-start:none;marker-mid:none;marker-end:none" />
+      <path
+         d="m 298.0625,17.71875 c -58.68649,-6e-6 -106.25,47.579562 -106.25,106.28125 1e-5,58.71691 47.56351,106.3125 106.25,106.3125 58.67127,2e-5 106.25,-47.5956 106.25,-106.3125 10e-6,-58.701673 -47.57873,-106.28125 -106.25,-106.28125 z m -11.8125,34.875 h 31.34375 v 142.6875 H 280.1875 V 93.5625 h -16.03125 z"
+         id="path238"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd"
+         sodipodi:nodetypes="sssssccccccc" />
+    </g>
+  </g>
+</svg>

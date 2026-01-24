@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.0"
+   width="212.49445"
+   height="212.59842"
+   id="svg4069"
+   sodipodi:docname="logo_bbc_radio_4.svg"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.87526739"
+     inkscape:cx="-7.426302"
+     inkscape:cy="111.39453"
+     inkscape:window-width="1920"
+     inkscape:window-height="1131"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g4127" />
+  <defs
+     id="defs4071" />
+  <g
+     transform="translate(-211.52316,-199.86812)"
+     id="layer1">
+    <g
+       transform="matrix(0.5544991,0,0,0.5544991,26.493737,193.57802)"
+       id="g4127">
+      <rect
+         width="224.3526"
+         height="276.17157"
+         x="408.66327"
+         y="61.913158"
+         id="rect4125"
+         style="display:inline;overflow:visible;visibility:visible;opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;marker:none;marker-start:none;marker-mid:none;marker-end:none" />
+      <path
+         d="m 525.3125,11.34375 c -105.84539,0 -191.625,85.838339 -191.625,191.71875 -10e-6,105.8804 85.77962,191.6875 191.625,191.6875 105.81911,0 191.59375,-85.80709 191.59375,-191.6875 0,-105.880418 -85.77463,-191.71875 -191.59375,-191.71875 z M 545.375,66.875 h 45.0625 l -0.0937,154.875 38.96875,-0.0937 -0.0312,57.5625 H 590.3125 l 0.125,49.375 -69.84375,0.0625 L 520.5,284.25 c 10e-6,0 -0.0703,-4.89234 -5.9375,-5.09375 l -99.84375,0.0625 L 414.75,238.25 c 0.0175,-5.97226 2.96717,-14.75871 6.53125,-19.53125 l 106.75,-143.1875 c 3.58161,-4.781303 11.37151,-8.673764 17.34375,-8.65625 z m -18.90625,111.59375 c -15.1583,0.32401 -27.22528,12.9042 -26.875,28.0625 0.33277,13.15294 10.17603,23.94692 23.03125,26.25 l 9.875,1.75 c -2.57457,17.47014 -9.08707,30.56891 -23.78125,41.375 19.79949,-8.792 34.98568,-27.75528 42,-47.84375 7.02309,-20.11473 3.02793,-50.14544 -24.25,-49.59375 z"
+         id="path376"
+         style="fill:#002c5a" />
+    </g>
+  </g>
+</svg>
