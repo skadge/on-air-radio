@@ -5,13 +5,13 @@ plugins {
 
 android {
     namespace = "org.guakamole.onair"
-    compileSdk = 33
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "org.guakamole.onair"
         minSdk = 26
-        targetSdk = 33
-        versionCode = 1
+        targetSdk = 35
+        versionCode = 2
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
