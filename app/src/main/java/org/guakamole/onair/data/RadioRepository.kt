@@ -19,16 +19,6 @@ object RadioRepository {
         private val baseStations: List<RadioStation> =
                 listOf(
                         RadioStation(
-                                id = "1live",
-                                name = "1LIVE",
-                                streamUrl = "https://wdr-1live-live.icecastssl.wdr.de/wdr/1live/live/mp3/128/stream.mp3",
-                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/1LIVE_Logo.svg/200px-1LIVE_Logo.svg.png",
-                                logoResId = 0,
-                                description = "Das junge Radio des WDR",
-                                genre = R.string.genre_pop_rock,
-                                country = R.string.country_germany
-                        ),
-                        RadioStation(
                                 id = "antenne_bayern",
                                 name = "Antenne Bayern",
                                 streamUrl = "https://stream.antenne.de/antenne",
@@ -73,7 +63,7 @@ object RadioRepository {
                                 name = "BBC Radio 3",
                                 streamUrl = "http://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_three/bbc_radio_three.isml/bbc_radio_three-audio%3d96000.norewind.m3u8",
                                 logoUrl = "https://cdn-radiotime-logos.tunein.com/s24941q.png",
-                                logoResId = 0,
+                                logoResId = R.drawable.logo_bbc_radio_3,
                                 description = "Classical, jazz, world music, arts and drama",
                                 genre = R.string.genre_classical,
                                 country = R.string.country_uk
@@ -103,7 +93,7 @@ object RadioRepository {
                                 name = "BBC Radio 6 Music",
                                 streamUrl = "https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d96000.norewind.m3u8",
                                 logoUrl = "https://cdn-radiotime-logos.tunein.com/s24944q.png",
-                                logoResId = 0,
+                                logoResId = R.drawable.logo_bbc_6music,
                                 description = "The place for alternative music",
                                 genre = R.string.genre_alternative,
                                 country = R.string.country_uk
@@ -153,7 +143,7 @@ object RadioRepository {
                                 name = "COPE",
                                 streamUrl = "https://flucast23-h.akamaihd.net/COPEMADRID_SC",
                                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Cope_logo.svg/200px-Cope_logo.svg.png",
-                                logoResId = 0,
+                                logoResId = R.drawable.logo_cope,
                                 description = "Radio COPE - Cadena de Ondas Populares Españolas",
                                 genre = R.string.genre_news_talk,
                                 country = R.string.country_spain
@@ -253,7 +243,7 @@ object RadioRepository {
                                 name = "KCRW 89.9",
                                 streamUrl = "https://kcrw.streamguys1.com/kcrw_128k_mp3_on_air",
                                 logoUrl = "https://cdn-radiotime-logos.tunein.com/s24748q.png",
-                                logoResId = 0,
+                                logoResId = R.drawable.logo_kcrw,
                                 description = "Music, news, and culture from LA",
                                 genre = R.string.genre_eclectic,
                                 country = R.string.country_usa
@@ -273,7 +263,7 @@ object RadioRepository {
                                 name = "LBC",
                                 streamUrl = "http://icecast.thisisdax.com/LBCUKMP3",
                                 logoUrl = "https://cdn-radiotime-logos.tunein.com/s25071q.png",
-                                logoResId = 0,
+                                logoResId = R.drawable.logo_lbc,
                                 description = "Leading Britain's Conversation",
                                 genre = R.string.genre_news_talk,
                                 country = R.string.country_uk
@@ -293,7 +283,7 @@ object RadioRepository {
                                 name = "Nostalgie",
                                 streamUrl = "https://scdn.nrjaudio.fm/adwz2/fr/30601/mp3_128.mp3",
                                 logoUrl = "https://upload.wikimedia.org/wikipedia/fr/thumb/e/ed/Logo_Nostalgie_2001.svg/200px-Logo_Nostalgie_2001.svg.png",
-                                logoResId = 0,
+                                logoResId = R.drawable.logo_nostalgie,
                                 description = "Que des tubes",
                                 genre = R.string.genre_oldies,
                                 country = R.string.country_france
@@ -323,7 +313,7 @@ object RadioRepository {
                                 name = "NRJ",
                                 streamUrl = "https://scdn.nrjaudio.fm/adwz2/fr/30001/mp3_128.mp3",
                                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/NRJ_logo.svg/200px-NRJ_logo.svg.png",
-                                logoResId = 0,
+                                logoResId = R.drawable.logo_nrj,
                                 description = "Hit Music Only",
                                 genre = R.string.genre_hits,
                                 country = R.string.country_france
@@ -363,7 +353,7 @@ object RadioRepository {
                                 name = "Radio 105",
                                 streamUrl = "https://icecast.unitedradio.it/Radio105.aac",
                                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Radio_105_logo.svg/200px-Radio_105_logo.svg.png",
-                                logoResId = 0,
+                                logoResId = R.drawable.logo_radio_105,
                                 description = "La radio che suona la musica",
                                 genre = R.string.genre_hits,
                                 country = R.string.country_italy
@@ -423,7 +413,7 @@ object RadioRepository {
                                 name = "RDS",
                                 streamUrl = "https://streamcdnm9-dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S44552214/uKpgwOHmle0S/playlist.m3u8",
                                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/RDS_logo.svg/200px-RDS_logo.svg.png",
-                                logoResId = 0,
+                                logoResId = R.drawable.logo_rds,
                                 description = "Radio Dimensione Suono - 100% Grandi Successi",
                                 genre = R.string.genre_hits,
                                 country = R.string.country_italy
@@ -507,6 +497,16 @@ object RadioRepository {
                                 description = "La radio jazz",
                                 genre = R.string.genre_jazz,
                                 country = R.string.country_france
+                        ),
+                        RadioStation(
+                                id = "wdr1",
+                                name = "WDR 1",
+                                streamUrl = "https://wdr-1live-live.icecastssl.wdr.de/wdr/1live/live/mp3/128/stream.mp3",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/1LIVE_Logo.svg/200px-1LIVE_Logo.svg.png",
+                                logoResId = R.drawable.logo_wdr1,
+                                description = "Das junge Radio des WDR",
+                                genre = R.string.genre_pop_rock,
+                                country = R.string.country_germany
                         ),
                         RadioStation(
                                 id = "wdr_2",

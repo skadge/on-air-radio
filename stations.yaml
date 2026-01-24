@@ -452,8 +452,8 @@ stations:
     genre: pop_rock
     country: germany
 
-  - id: 1live
-    name: 1LIVE
+  - id: wdr1
+    name: WDR 1
     stream_url: https://wdr-1live-live.icecastssl.wdr.de/wdr/1live/live/mp3/128/stream.mp3
     logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/1LIVE_Logo.svg/200px-1LIVE_Logo.svg.png
     logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/f/fb/WDR_1LIVE_Logo_2016.svg
