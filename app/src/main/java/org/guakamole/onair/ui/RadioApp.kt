@@ -1,6 +1,7 @@
 package org.guakamole.onair.ui
 
 import androidx.compose.animation.*
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -9,9 +10,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -118,7 +122,7 @@ fun RadioApp(
                 topBar = {
                         if (currentScreen == Screen.StationList) {
                                 Column {
-                                        HomeTopBar()
+                                        HomeTopBar(isLive = isPlaying && !isBuffering)
                                         FilterBar(
                                                 selectedRegions = selectedRegions,
                                                 onRegionsChange = { selectedRegions = it },
@@ -306,7 +310,7 @@ fun MiniPlayer(
 }
 
 @Composable
-fun HomeTopBar() {
+fun HomeTopBar(isLive: Boolean = false) {
         val gradient =
                 Brush.verticalGradient(
                         colors =
@@ -316,6 +320,24 @@ fun HomeTopBar() {
                                 )
                 )
 
+        val scaleAnim = remember { Animatable(1f) }
+        LaunchedEffect(isLive) {
+                if (isLive) {
+                        repeat(3) {
+                                scaleAnim.animateTo(
+                                        targetValue = 1.2f,
+                                        animationSpec = tween(800, easing = EaseInOut)
+                                )
+                                scaleAnim.animateTo(
+                                        targetValue = 1f,
+                                        animationSpec = tween(800, easing = EaseInOut)
+                                )
+                        }
+                } else {
+                        scaleAnim.snapTo(1f)
+                }
+        }
+
         Box(
                 modifier =
                         Modifier.fillMaxWidth()
@@ -324,7 +346,12 @@ fun HomeTopBar() {
                                 .padding(horizontal = 24.dp, vertical = 20.dp)
         ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                        Box(modifier = Modifier.size(20.dp).background(Color.Red, CircleShape))
+                        Box(
+                                modifier =
+                                        Modifier.size(20.dp)
+                                                .scale(scaleAnim.value)
+                                                .background(Color.Red, CircleShape)
+                        )
                         Spacer(modifier = Modifier.width(6.dp))
                         Text(
                                 text = "on aiR",
@@ -337,4 +364,4 @@ fun HomeTopBar() {
                         )
                 }
         }
-}
+
