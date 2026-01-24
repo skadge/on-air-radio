@@ -42,19 +42,24 @@ fun NowPlayingScreen(
         onBackToList: () -> Unit,
         modifier: Modifier = Modifier
 ) {
-        // Pulsing animation for playing state
-        val infiniteTransition = rememberInfiniteTransition(label = "pulse")
-        val scale by
-                infiniteTransition.animateFloat(
-                        initialValue = 1f,
-                        targetValue = 1.05f,
-                        animationSpec =
-                                infiniteRepeatable(
-                                        animation = tween(1000, easing = EaseInOut),
-                                        repeatMode = RepeatMode.Reverse
-                                ),
-                        label = "scale"
-                )
+        // Pulsing animation for playing state (limited to 3 cycles)
+        val scaleAnim = remember { Animatable(1f) }
+        LaunchedEffect(station?.id, isPlaying, isBuffering) {
+                if (isPlaying && !isBuffering) {
+                        repeat(3) {
+                                scaleAnim.animateTo(
+                                        targetValue = 1.05f,
+                                        animationSpec = tween(1000, easing = EaseInOut)
+                                )
+                                scaleAnim.animateTo(
+                                        targetValue = 1f,
+                                        animationSpec = tween(1000, easing = EaseInOut)
+                                )
+                        }
+                } else {
+                        scaleAnim.snapTo(1f)
+                }
+        }
 
         Column(
                 modifier =
@@ -93,11 +98,7 @@ fun NowPlayingScreen(
                 if (station != null) {
                         // Station Logo with animation
                         Surface(
-                                modifier =
-                                        Modifier.size(260.dp)
-                                                .scale(
-                                                        if (isPlaying && !isBuffering) scale else 1f
-                                                ),
+                                modifier = Modifier.size(260.dp).scale(scaleAnim.value),
                                 shape = RoundedCornerShape(32.dp),
                                 shadowElevation = 24.dp,
                                 color = MaterialTheme.colorScheme.surface
