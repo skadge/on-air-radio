@@ -1,4 +1,4 @@
-package org.guakamole.worldradio
+package org.guakamole.onair
 
 import android.app.Application
 import coil.ImageLoader
@@ -6,7 +6,7 @@ import coil.ImageLoaderFactory
 import coil.decode.SvgDecoder
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
-import org.guakamole.worldradio.data.RadioRepository
+import org.guakamole.onair.data.RadioRepository
 
 class RadioApplication : Application(), ImageLoaderFactory {
 

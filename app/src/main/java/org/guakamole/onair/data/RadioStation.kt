@@ -1,4 +1,4 @@
-package org.guakamole.worldradio.data
+package org.guakamole.onair.data
 
 import androidx.annotation.StringRes
 

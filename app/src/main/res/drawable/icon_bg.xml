@@ -10,13 +10,12 @@
       android:strokeColor="#00000000">
     <aapt:attr name="android:fillColor">
       <gradient 
-          android:startX="87"
-          android:startY="87"
-          android:endX="21"
-          android:endY="21"
-          android:type="linear">
-        <item android:offset="0" android:color="#FFD3DE1C"/>
-        <item android:offset="1" android:color="#FFF3F39D"/>
+          android:centerX="54"
+          android:centerY="54"
+          android:gradientRadius="76.37"
+          android:type="radial">
+        <item android:offset="0" android:color="#FF6F788B"/>
+        <item android:offset="1" android:color="#FF323E4E"/>
       </gradient>
     </aapt:attr>
   </path>

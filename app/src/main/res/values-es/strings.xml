@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">WorldRadio</string>
+    <string name="app_name">on aiR</string>
     <string name="now_playing">Reproduciendo ahora</string>
     <string name="stations">Emisoras</string>
     <string name="play">Reproducir</string>

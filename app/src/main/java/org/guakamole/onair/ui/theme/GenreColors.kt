@@ -1,7 +1,7 @@
-package org.guakamole.worldradio.ui.theme
+package org.guakamole.onair.ui.theme
 
 import androidx.compose.ui.graphics.Color
-import org.guakamole.worldradio.R
+import org.guakamole.onair.R
 
 object GenreColors {
     fun getColorForGenre(genreResId: Int): Color {

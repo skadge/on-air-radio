@@ -1,4 +1,4 @@
-package org.guakamole.worldradio
+package org.guakamole.onair
 
 import android.content.ComponentName
 import android.graphics.Color
@@ -15,11 +15,11 @@ import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.MoreExecutors
-import org.guakamole.worldradio.data.RadioRepository
-import org.guakamole.worldradio.data.RadioStation
-import org.guakamole.worldradio.service.RadioPlaybackService
-import org.guakamole.worldradio.ui.RadioApp
-import org.guakamole.worldradio.ui.theme.RadioTheme
+import org.guakamole.onair.data.RadioRepository
+import org.guakamole.onair.data.RadioStation
+import org.guakamole.onair.service.RadioPlaybackService
+import org.guakamole.onair.ui.RadioApp
+import org.guakamole.onair.ui.theme.RadioTheme
 
 class MainActivity : ComponentActivity() {
 

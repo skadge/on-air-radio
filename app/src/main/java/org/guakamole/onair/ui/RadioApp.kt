@@ -1,4 +1,4 @@
-package org.guakamole.worldradio.ui
+package org.guakamole.onair.ui
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
@@ -23,9 +23,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import org.guakamole.worldradio.R
-import org.guakamole.worldradio.data.RadioRepository
-import org.guakamole.worldradio.data.RadioStation
+import org.guakamole.onair.R
+import org.guakamole.onair.data.FilterData
+import org.guakamole.onair.data.RadioRepository
+import org.guakamole.onair.data.RadioStation
 
 enum class Screen {
         StationList,

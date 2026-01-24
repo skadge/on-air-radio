@@ -1,4 +1,4 @@
-package org.guakamole.worldradio.service
+package org.guakamole.onair.service
 
 import android.app.PendingIntent
 import android.content.Intent
@@ -29,9 +29,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import org.guakamole.worldradio.MainActivity
-import org.guakamole.worldradio.data.RadioRepository
-import org.guakamole.worldradio.data.RadioStation
+import org.guakamole.onair.MainActivity
+import org.guakamole.onair.data.RadioRepository
+import org.guakamole.onair.data.RadioStation
 
 /** Media playback service that supports both in-app playback and Android Auto */
 @OptIn(UnstableApi::class)

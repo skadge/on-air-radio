@@ -1,8 +1,8 @@
-package org.guakamole.worldradio.data
+package org.guakamole.onair.data
 
 import android.content.Context
 import android.content.SharedPreferences
-import org.guakamole.worldradio.R
+import org.guakamole.onair.R
 
 /** Repository providing a curated list of public radio stations */
 object RadioRepository {

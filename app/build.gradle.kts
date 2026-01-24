@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "org.guakamole.worldradio"
+    namespace = "org.guakamole.onair"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "org.guakamole.worldradio"
+        applicationId = "org.guakamole.onair"
         minSdk = 26
         targetSdk = 33
         versionCode = 1
