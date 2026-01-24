@@ -50,6 +50,60 @@ fun RadioApp(
         var currentScreen by remember { mutableStateOf(Screen.StationList) }
         var refreshTrigger by remember { mutableStateOf(0) }
         val stations = remember(refreshTrigger) { RadioRepository.stations }
+
+        var selectedRegions by remember { mutableStateOf(setOf<String>()) }
+        var selectedStyles by remember { mutableStateOf(setOf<String>()) }
+
+        val filteredStations =
+                remember(stations, selectedRegions, selectedStyles) {
+                        stations.filter { station ->
+                                val regionMatch =
+                                        if (selectedRegions.isEmpty() ||
+                                                        selectedRegions.contains("world")
+                                        ) {
+                                                true
+                                        } else {
+                                                selectedRegions.any { regId ->
+                                                        val filterItem =
+                                                                FilterData.regions.find {
+                                                                        it.id == regId
+                                                                }
+                                                        filterItem?.let {
+                                                                if (it.countries.isEmpty()) {
+                                                                        station.country ==
+                                                                                it.nameRes
+                                                                } else {
+                                                                        it.countries.contains(
+                                                                                station.country
+                                                                        )
+                                                                }
+                                                        }
+                                                                ?: false
+                                                }
+                                        }
+
+                                val styleMatch =
+                                        if (selectedStyles.isEmpty() ||
+                                                        selectedStyles.contains("world")
+                                        ) {
+                                                true
+                                        } else {
+                                                selectedStyles.any { styleId ->
+                                                        val filterItem =
+                                                                FilterData.styles.find {
+                                                                        it.id == styleId
+                                                                }
+                                                        filterItem?.let {
+                                                                station.genre == it.nameRes
+                                                        }
+                                                                ?: false
+                                                }
+                                        }
+
+                                regionMatch && styleMatch
+                        }
+                }
+
         val currentStation = currentStationId?.let { id -> stations.find { it.id == id } }
 
         // Navigate to now playing when a station starts
@@ -63,7 +117,15 @@ fun RadioApp(
                 modifier = modifier,
                 topBar = {
                         if (currentScreen == Screen.StationList) {
-                                HomeTopBar()
+                                Column {
+                                        HomeTopBar()
+                                        FilterBar(
+                                                selectedRegions = selectedRegions,
+                                                onRegionsChange = { selectedRegions = it },
+                                                selectedStyles = selectedStyles,
+                                                onStylesChange = { selectedStyles = it }
+                                        )
+                                }
                         }
                 },
                 bottomBar = {
@@ -95,7 +157,7 @@ fun RadioApp(
                         when (screen) {
                                 Screen.StationList -> {
                                         StationListScreen(
-                                                stations = stations,
+                                                stations = filteredStations,
                                                 currentStationId = currentStationId,
                                                 onStationClick = { station ->
                                                         onStationSelect(station)
@@ -261,33 +323,18 @@ fun HomeTopBar() {
                                 .statusBarsPadding()
                                 .padding(horizontal = 24.dp, vertical = 20.dp)
         ) {
-                Column {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                        Box(modifier = Modifier.size(20.dp).background(Color.Red, CircleShape))
+                        Spacer(modifier = Modifier.width(6.dp))
                         Text(
-                                text = "WorldRadio",
+                                text = "on aiR",
                                 style =
                                         MaterialTheme.typography.headlineLarge.copy(
                                                 fontWeight = FontWeight.Black,
                                                 letterSpacing = (-1).sp
                                         ),
-                                color = MaterialTheme.colorScheme.onBackground
+                                color = Color.Red
                         )
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                                Box(
-                                        modifier =
-                                                Modifier.size(8.dp)
-                                                        .background(Color.Red, CircleShape)
-                                )
-                                Spacer(modifier = Modifier.width(6.dp))
-                                Text(
-                                        text = stringResource(R.string.on_air).uppercase(),
-                                        style =
-                                                MaterialTheme.typography.labelMedium.copy(
-                                                        fontWeight = FontWeight.Bold,
-                                                        letterSpacing = 2.sp
-                                                ),
-                                        color = Color.Red
-                                )
-                        }
                 }
         }
 }

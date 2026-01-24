@@ -23,6 +23,13 @@
     <string name="station_logo_description">%1$s logo</string>
     <string name="radio">Radio</string>
     <string name="on_air">on air</string>
+    <string name="world">World</string>
+    <string name="region_europe">Europe</string>
+    <string name="region_north_america">North America</string>
+    <string name="region">Region</string>
+    <string name="style">Style</string>
+    <string name="filter_by_region">Filter by Region</string>
+    <string name="filter_by_style">Filter by Style</string>
 
     <!-- Countries -->
     <string name="country_uk">UK</string>
