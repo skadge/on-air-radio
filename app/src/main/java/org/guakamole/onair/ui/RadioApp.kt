@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -15,7 +16,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -24,7 +24,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import org.guakamole.onair.R
@@ -57,9 +56,10 @@ fun RadioApp(
 
         var selectedRegions by remember { mutableStateOf(setOf<String>()) }
         var selectedStyles by remember { mutableStateOf(setOf<String>()) }
+        var searchQuery by remember { mutableStateOf("") }
 
         val filteredStations =
-                remember(stations, selectedRegions, selectedStyles) {
+                remember(stations, selectedRegions, selectedStyles, searchQuery) {
                         stations.filter { station ->
                                 val regionMatch =
                                         if (selectedRegions.isEmpty() ||
@@ -104,7 +104,21 @@ fun RadioApp(
                                                 }
                                         }
 
-                                regionMatch && styleMatch
+                                val searchMatch =
+                                        if (searchQuery.isBlank()) {
+                                                true
+                                        } else {
+                                                station.name.contains(
+                                                        searchQuery,
+                                                        ignoreCase = true
+                                                ) ||
+                                                        station.description.contains(
+                                                                searchQuery,
+                                                                ignoreCase = true
+                                                        )
+                                        }
+
+                                regionMatch && styleMatch && searchMatch
                         }
                 }
 
@@ -122,7 +136,10 @@ fun RadioApp(
                 topBar = {
                         if (currentScreen == Screen.StationList) {
                                 Column {
-                                        HomeTopBar(isLive = isPlaying && !isBuffering)
+                                        SearchTopBar(
+                                                query = searchQuery,
+                                                onQueryChange = { searchQuery = it }
+                                        )
                                         FilterBar(
                                                 selectedRegions = selectedRegions,
                                                 onRegionsChange = { selectedRegions = it },
@@ -330,8 +347,9 @@ fun MiniPlayer(
         }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeTopBar(isLive: Boolean = false) {
+fun SearchTopBar(query: String, onQueryChange: (String) -> Unit, modifier: Modifier = Modifier) {
         val gradient =
                 Brush.verticalGradient(
                         colors =
@@ -341,48 +359,65 @@ fun HomeTopBar(isLive: Boolean = false) {
                                 )
                 )
 
-        val scaleAnim = remember { Animatable(1f) }
-        LaunchedEffect(isLive) {
-                if (isLive) {
-                        repeat(3) {
-                                scaleAnim.animateTo(
-                                        targetValue = 1.2f,
-                                        animationSpec = tween(800, easing = EaseInOut)
-                                )
-                                scaleAnim.animateTo(
-                                        targetValue = 1f,
-                                        animationSpec = tween(800, easing = EaseInOut)
-                                )
-                        }
-                } else {
-                        scaleAnim.snapTo(1f)
-                }
-        }
-
         Box(
                 modifier =
                         Modifier.fillMaxWidth()
                                 .background(gradient)
                                 .statusBarsPadding()
-                                .padding(horizontal = 24.dp, vertical = 20.dp)
+                                .padding(horizontal = 16.dp, vertical = 8.dp)
         ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                        Box(
-                                modifier =
-                                        Modifier.size(20.dp)
-                                                .scale(scaleAnim.value)
-                                                .background(Color.Red, CircleShape)
-                        )
-                        Spacer(modifier = Modifier.width(6.dp))
-                        Text(
-                                text = "on aiR",
-                                style =
-                                        MaterialTheme.typography.headlineLarge.copy(
-                                                fontWeight = FontWeight.Black,
-                                                letterSpacing = (-1).sp
-                                        ),
-                                color = Color.Red
-                        )
-                }
+                OutlinedTextField(
+                        value = query,
+                        onValueChange = onQueryChange,
+                        modifier = Modifier.fillMaxWidth().height(56.dp),
+                        placeholder = {
+                                Text(
+                                        text = stringResource(R.string.search_stations),
+                                        style = MaterialTheme.typography.bodyLarge,
+                                        color =
+                                                MaterialTheme.colorScheme.onSurfaceVariant.copy(
+                                                        alpha = 0.6f
+                                                )
+                                )
+                        },
+                        leadingIcon = {
+                                Icon(
+                                        imageVector = Icons.Default.Search,
+                                        contentDescription = null,
+                                        tint = MaterialTheme.colorScheme.primary
+                                )
+                        },
+                        trailingIcon = {
+                                if (query.isNotEmpty()) {
+                                        IconButton(onClick = { onQueryChange("") }) {
+                                                Icon(
+                                                        imageVector = Icons.Default.Close,
+                                                        contentDescription = "Clear search",
+                                                        tint =
+                                                                MaterialTheme.colorScheme
+                                                                        .onSurfaceVariant
+                                                )
+                                        }
+                                }
+                        },
+                        colors =
+                                TextFieldDefaults.outlinedTextFieldColors(
+                                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+                                        unfocusedBorderColor =
+                                                MaterialTheme.colorScheme.outline.copy(
+                                                        alpha = 0.3f
+                                                ),
+                                        containerColor =
+                                                MaterialTheme.colorScheme.surfaceVariant.copy(
+                                                        alpha = 0.5f
+                                                )
+                                ),
+                        shape = RoundedCornerShape(28.dp),
+                        singleLine = true,
+                        textStyle =
+                                MaterialTheme.typography.bodyLarge.copy(
+                                        color = MaterialTheme.colorScheme.onSurface
+                                )
+                )
         }
 }
