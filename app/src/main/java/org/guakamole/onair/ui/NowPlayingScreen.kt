@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -152,12 +153,13 @@ fun NowPlayingScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 if (station != null) {
+
                         // Station Logo with animation
                         Surface(
                                 modifier = Modifier.size(260.dp).scale(scaleAnim.value),
                                 shape = RoundedCornerShape(32.dp),
-                                shadowElevation = 24.dp,
-                                color = MaterialTheme.colorScheme.surface
+                                shadowElevation = 0.dp,
+                                color = Color.Transparent
                         ) {
                                 val placeholder = rememberVectorPainter(Icons.Default.Radio)
                                 AsyncImage(
