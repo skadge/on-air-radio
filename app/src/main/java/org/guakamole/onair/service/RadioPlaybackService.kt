@@ -72,6 +72,66 @@ class RadioPlaybackService : MediaLibraryService() {
                     override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
                         mediaItem?.mediaMetadata?.artworkUri?.let { uri -> loadAndSetArtwork(uri) }
                     }
+
+                    override fun onMediaMetadataChanged(mediaMetadata: MediaMetadata) {
+                        android.util.Log.d(
+                                "MetadataDebug",
+                                "Service: onMediaMetadataChanged: title=${mediaMetadata.title}"
+                        )
+                    }
+
+                    override fun onMetadata(metadata: androidx.media3.common.Metadata) {
+                        for (i in 0 until metadata.length()) {
+                            val entry = metadata.get(i)
+                            if (entry is androidx.media3.extractor.metadata.icy.IcyInfo) {
+                                val icyTitle = entry.title
+                                if (!icyTitle.isNullOrBlank()) {
+                                    android.util.Log.d(
+                                            "MetadataDebug",
+                                            "Service: Updating player metadata with ICY title: $icyTitle"
+                                    )
+                                    player?.let { p ->
+                                        val currentItem = p.currentMediaItem ?: return@let
+                                        if (currentItem.mediaMetadata.title != icyTitle) {
+                                            // When showing song title, we want the subtitle
+                                            // (Artist) to be the Station Name
+                                            // instead of the Genre, so it shows "Title" / "Station
+                                            // Name" in notification
+                                            val station =
+                                                    RadioRepository.getStationById(
+                                                            currentItem.mediaId
+                                                    )
+                                            val artist =
+                                                    station?.name
+                                                            ?: currentItem.mediaMetadata.artist
+
+                                            val newMetadata =
+                                                    currentItem
+                                                            .mediaMetadata
+                                                            .buildUpon()
+                                                            .setTitle(icyTitle)
+                                                            .setArtist(artist)
+                                                            .setSubtitle(artist)
+                                                            .build()
+                                            val newItem =
+                                                    currentItem
+                                                            .buildUpon()
+                                                            .setMediaMetadata(newMetadata)
+                                                            .build()
+
+                                            // Update the item without resetting position to keep
+                                            // playback smooth
+                                            p.setMediaItem(newItem, /* resetPosition= */ false)
+                                            android.util.Log.d(
+                                                    "MetadataDebug",
+                                                    "Service: Updated MediaItem metadata: Title=$icyTitle, Artist=$artist, Subtitle=$artist"
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
         )
 

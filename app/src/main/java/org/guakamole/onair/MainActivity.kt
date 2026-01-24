@@ -59,6 +59,10 @@ class MainActivity : ComponentActivity() {
                             override fun onMediaMetadataChanged(metadata: MediaMetadata) {
                                 // Stream metadata (song title) from ICY headers
                                 currentTitle = metadata.title?.toString()
+                                android.util.Log.d(
+                                        "MetadataDebug",
+                                        "Main: Metadata received. Title: $currentTitle"
+                                )
                             }
                         }
 
@@ -73,6 +77,7 @@ class MainActivity : ComponentActivity() {
                     currentStationId = controller.currentMediaItem?.mediaId
                     isPlaying = controller.isPlaying
                     isBuffering = controller.playbackState == Player.STATE_BUFFERING
+                    currentTitle = controller.currentMediaItem?.mediaMetadata?.title?.toString()
                 }
             }
 
@@ -148,7 +153,12 @@ class MainActivity : ComponentActivity() {
                         var isBuffering by remember {
                             mutableStateOf(mediaController?.playbackState == Player.STATE_BUFFERING)
                         }
-                        var currentTitle by remember { mutableStateOf<String?>(null) }
+                        var currentTitle by remember {
+                            mutableStateOf(
+                                    mediaController?.currentMediaItem?.mediaMetadata?.title
+                                            ?.toString()
+                            )
+                        }
 
                         DisposableEffect(mediaController) {
                             val listener =
@@ -250,8 +260,6 @@ class MainActivity : ComponentActivity() {
                             .setMediaMetadata(
                                     MediaMetadata.Builder()
                                             .setTitle(station.name)
-                                            .setSubtitle(station.description)
-                                            .setArtist(getString(station.genre))
                                             .setArtworkUri(Uri.parse(station.logoUrl))
                                             .build()
                             )

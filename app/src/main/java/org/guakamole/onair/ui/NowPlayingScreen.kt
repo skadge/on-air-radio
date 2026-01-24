@@ -1,5 +1,6 @@
 package org.guakamole.onair.ui
 
+import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -202,7 +203,7 @@ fun NowPlayingScreen(
 
                         // Current Title (from stream metadata) or description
                         Text(
-                                text = currentTitle ?: station.description,
+                                text = station.description,
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
                                 textAlign = TextAlign.Center,
@@ -222,6 +223,61 @@ fun NowPlayingScreen(
                                         onClick = {},
                                         label = { Text(stringResource(station.country)) }
                                 )
+                        }
+
+                        // Dedicated Song Title Box
+                        val showTitle =
+                                !currentTitle.isNullOrBlank() && currentTitle != station.name
+
+                        SideEffect {
+                                android.util.Log.d(
+                                        "MetadataDebug",
+                                        "UI: station=${station.name}, title='$currentTitle', show=$showTitle"
+                                )
+                        }
+
+                        AnimatedVisibility(
+                                visible = showTitle,
+                                enter = fadeIn() + expandVertically(),
+                                exit = fadeOut() + shrinkVertically()
+                        ) {
+                                Spacer(modifier = Modifier.height(24.dp))
+                                Surface(
+                                        color =
+                                                MaterialTheme.colorScheme.secondaryContainer.copy(
+                                                        alpha = 0.5f
+                                                ),
+                                        shape = RoundedCornerShape(12.dp),
+                                        modifier = Modifier.fillMaxWidth()
+                                ) {
+                                        Row(
+                                                modifier = Modifier.padding(12.dp),
+                                                verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                                Icon(
+                                                        imageVector = Icons.Default.MusicNote,
+                                                        contentDescription = null,
+                                                        tint = MaterialTheme.colorScheme.primary,
+                                                        modifier = Modifier.size(24.dp)
+                                                )
+                                                Spacer(modifier = Modifier.width(12.dp))
+                                                Text(
+                                                        text = currentTitle ?: "",
+                                                        style =
+                                                                MaterialTheme.typography.bodyMedium
+                                                                        .copy(
+                                                                                fontWeight =
+                                                                                        FontWeight
+                                                                                                .Medium
+                                                                        ),
+                                                        color =
+                                                                MaterialTheme.colorScheme
+                                                                        .onSecondaryContainer,
+                                                        maxLines = 2,
+                                                        overflow = TextOverflow.Ellipsis
+                                                )
+                                        }
+                                }
                         }
 
                         Spacer(modifier = Modifier.weight(1f))

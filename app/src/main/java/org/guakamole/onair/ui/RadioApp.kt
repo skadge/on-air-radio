@@ -133,12 +133,12 @@ fun RadioApp(
                         }
                 },
                 bottomBar = {
-                        // Mini player when on station list and something is playing
                         if (currentScreen == Screen.StationList && currentStation != null) {
                                 MiniPlayer(
                                         station = currentStation,
                                         isPlaying = isPlaying,
                                         isBuffering = isBuffering,
+                                        currentTitle = currentTitle,
                                         onPlayPause = onPlayPause,
                                         onClick = { currentScreen = Screen.NowPlaying }
                                 )
@@ -225,6 +225,7 @@ fun MiniPlayer(
         station: RadioStation,
         isPlaying: Boolean,
         isBuffering: Boolean,
+        currentTitle: String?,
         onPlayPause: () -> Unit,
         onClick: () -> Unit,
         modifier: Modifier = Modifier
@@ -279,10 +280,18 @@ fun MiniPlayer(
                                         maxLines = 1,
                                         overflow = TextOverflow.Ellipsis
                                 )
+                                val displayTitle =
+                                        if (!currentTitle.isNullOrBlank() &&
+                                                        currentTitle != station.name
+                                        ) {
+                                                currentTitle
+                                        } else {
+                                                stringResource(station.country)
+                                        }
                                 Text(
                                         text =
                                                 if (isBuffering) stringResource(R.string.buffering)
-                                                else stringResource(station.country),
+                                                else displayTitle,
                                         style = MaterialTheme.typography.bodySmall,
                                         color = Color.White.copy(alpha = 0.7f),
                                         maxLines = 1
