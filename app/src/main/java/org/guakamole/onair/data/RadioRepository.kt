@@ -78,6 +78,7 @@ object RadioRepository {
                                         "https://icecast.radiofrance.fr/franceculture-midfi.mp3",
                                 logoUrl =
                                         "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/France_Culture_logo_2021.svg/250px-France_Culture_logo_2021.svg.png",
+                                logoResId = R.drawable.logo_france_culture,
                                 description = "Culture et savoirs",
                                 genre = R.string.genre_culture,
                                 country = R.string.country_france
@@ -135,7 +136,7 @@ object RadioRepository {
                                 streamUrl = "https://kexp-mp3-128.streamguys1.com/kexp128.mp3",
                                 logoUrl =
                                         "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/KEXP_logo.svg/200px-KEXP_logo.svg.png",
-                                //logoResId = R.drawable.logo_kexp,
+                                logoResId = R.drawable.logo_kexp,
                                 description = "Where the music matters",
                                 genre = R.string.genre_alternative,
                                 country = R.string.country_usa
@@ -149,7 +150,7 @@ object RadioRepository {
                                         "https://wdr-wdr3-live.icecastssl.wdr.de/wdr/wdr3/live/mp3/128/stream.mp3",
                                 logoUrl =
                                         "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/WDR_3_logo_2012.svg/200px-WDR_3_logo_2012.svg.png",
-                                //logoResId = R.drawable.logo_wdr3,
+                                logoResId = R.drawable.logo_wdr3,
                                 description = "Kultur und Klassik",
                                 genre = R.string.genre_classical_culture,
                                 country = R.string.country_germany
@@ -161,7 +162,7 @@ object RadioRepository {
                                         "https://st01.sslstream.dlf.de/dlf/01/128/mp3/stream.mp3",
                                 logoUrl =
                                         "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Deutschlandfunk_Logo_2017.svg/200px-Deutschlandfunk_Logo_2017.svg.png",
-                                //logoResId = R.drawable.logo_deutschlandfunk,
+                                logoResId = R.drawable.logo_deutschlandradio,
                                 description = "Nachrichten und Kultur",
                                 genre = R.string.genre_news_culture,
                                 country = R.string.country_germany
