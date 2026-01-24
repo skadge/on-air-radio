@@ -45,13 +45,13 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:zoom="2.8007501"
-     inkscape:cx="61.233596"
-     inkscape:cy="-10.532893"
+     inkscape:zoom="3.8343966"
+     inkscape:cx="80.195147"
+     inkscape:cy="27.774905"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g32"
      inkscape:showpageshadow="2"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1" />
@@ -63,15 +63,6 @@
     <g
        id="g1"
        transform="translate(0,53.5176)">
-      <g
-         transform="translate(144.41879,344.04288)"
-         style="fill:#ffffff;fill-rule:evenodd;stroke:none"
-         id="g8">
-        <path
-           d="m 0,56.6386 c 0,0 162.591,0 162.591,0 0,0 0,-56.6386 0,-56.6386 C 162.591,0 0,0 0,0 Z"
-           id="path10"
-           inkscape:connector-curvature="0" />
-      </g>
       <g
          transform="translate(146.23819,345.87978)"
          style="fill:#ff330d;fill-rule:evenodd;stroke:none"

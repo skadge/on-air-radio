@@ -1,6 +1,6 @@
 // AUTO-GENERATED from stations.yaml - DO NOT EDIT MANUALLY
 // Run: ./gradlew buildStations (or python scripts/build_stations.py)
-// Generated with 17 stations
+// Generated with 42 stations
 
 package org.guakamole.onair.data
 
@@ -187,6 +187,256 @@ object RadioRepository {
                                 description = "Atmospheric textures with minimal beats",
                                 genre = R.string.genre_ambient,
                                 country = R.string.country_usa
+                        ),
+                        RadioStation(
+                                id = "rtl_102_5",
+                                name = "RTL 102.5",
+                                streamUrl = "https://streamcdnb4-dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S97044836/tbbP8T1ZRPBL/playlist_audio.m3u8",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/RTL_102.5_logo.svg/200px-RTL_102.5_logo.svg.png",
+                                logoResId = R.drawable.logo_rtl_102_5,
+                                description = "La radio italiana più ascoltata",
+                                genre = R.string.genre_hits,
+                                country = R.string.country_italy
+                        ),
+                        RadioStation(
+                                id = "rds",
+                                name = "RDS",
+                                streamUrl = "https://streamcdnm9-dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S44552214/uKpgwOHmle0S/playlist.m3u8",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/RDS_logo.svg/200px-RDS_logo.svg.png",
+                                logoResId = 0,
+                                description = "Radio Dimensione Suono - 100% Grandi Successi",
+                                genre = R.string.genre_hits,
+                                country = R.string.country_italy
+                        ),
+                        RadioStation(
+                                id = "radio_deejay",
+                                name = "Radio Deejay",
+                                streamUrl = "https://streamcdnm24-dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S56912040/bMtRaShKbDaq/playlist.m3u8",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Radio_DeeJay_logo.svg/200px-Radio_DeeJay_logo.svg.png",
+                                logoResId = 0,
+                                description = "La radio che libera la musica",
+                                genre = R.string.genre_hits,
+                                country = R.string.country_italy
+                        ),
+                        RadioStation(
+                                id = "radio_italia",
+                                name = "Radio Italia",
+                                streamUrl = "https://stream4.xdevel.com/audio0s976608-1379/stream/icecast.audio",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Logo_Radio_Italia.svg/200px-Logo_Radio_Italia.svg.png",
+                                logoResId = R.drawable.logo_radio_italia,
+                                description = "Solo musica italiana",
+                                genre = R.string.genre_hits,
+                                country = R.string.country_italy
+                        ),
+                        RadioStation(
+                                id = "radio_105",
+                                name = "Radio 105",
+                                streamUrl = "https://icecast.unitedradio.it/Radio105.aac",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Radio_105_logo.svg/200px-Radio_105_logo.svg.png",
+                                logoResId = 0,
+                                description = "La radio che suona la musica",
+                                genre = R.string.genre_hits,
+                                country = R.string.country_italy
+                        ),
+                        RadioStation(
+                                id = "cadena_ser",
+                                name = "Cadena SER",
+                                streamUrl = "https://playerservices.streamtheworld.com/api/livestream-redirect/CADENASER.mp3",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Cadena_SER_logo.svg/200px-Cadena_SER_logo.svg.png",
+                                logoResId = R.drawable.logo_cadena_ser,
+                                description = "La radio líder en España",
+                                genre = R.string.genre_news_talk,
+                                country = R.string.country_spain
+                        ),
+                        RadioStation(
+                                id = "los40",
+                                name = "LOS40",
+                                streamUrl = "https://playerservices.streamtheworld.com/api/livestream-redirect/LOS40.mp3",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/LOS40_logo.svg/200px-LOS40_logo.svg.png",
+                                logoResId = R.drawable.logo_los40,
+                                description = "La radio de los éxitos",
+                                genre = R.string.genre_hits,
+                                country = R.string.country_spain
+                        ),
+                        RadioStation(
+                                id = "cope",
+                                name = "COPE",
+                                streamUrl = "https://flucast23-h.akamaihd.net/COPEMADRID_SC",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Cope_logo.svg/200px-Cope_logo.svg.png",
+                                logoResId = 0,
+                                description = "Radio COPE - Cadena de Ondas Populares Españolas",
+                                genre = R.string.genre_news_talk,
+                                country = R.string.country_spain
+                        ),
+                        RadioStation(
+                                id = "onda_cero",
+                                name = "Onda Cero",
+                                streamUrl = "https://atres-live.ondacero.es/live/ondacero/bitrate_1.m3u8",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Onda_Cero_logo.svg/200px-Onda_Cero_logo.svg.png",
+                                logoResId = R.drawable.logo_onda_cero,
+                                description = "Radio en español",
+                                genre = R.string.genre_variety,
+                                country = R.string.country_spain
+                        ),
+                        RadioStation(
+                                id = "cadena_dial",
+                                name = "Cadena Dial",
+                                streamUrl = "https://playerservices.streamtheworld.com/api/livestream-redirect/CADENADIAL.mp3",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Cadena_Dial_logo.svg/200px-Cadena_Dial_logo.svg.png",
+                                logoResId = R.drawable.logo_cadena_dial,
+                                description = "La radio de las baladas",
+                                genre = R.string.genre_adult_contemporary,
+                                country = R.string.country_spain
+                        ),
+                        RadioStation(
+                                id = "npo_radio_2",
+                                name = "NPO Radio 2",
+                                streamUrl = "http://icecast.omroep.nl/radio2-bb-mp3",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/NPO_Radio_2_logo.svg/200px-NPO_Radio_2_logo.svg.png",
+                                logoResId = 0,
+                                description = "De beste muziekmix",
+                                genre = R.string.genre_variety,
+                                country = R.string.country_netherlands
+                        ),
+                        RadioStation(
+                                id = "sky_radio",
+                                name = "Sky Radio",
+                                streamUrl = "https://playerservices.streamtheworld.com/api/livestream-redirect/SRGSTR01.mp3",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Sky_Radio_logo.svg/200px-Sky_Radio_logo.svg.png",
+                                logoResId = R.drawable.logo_sky_radio,
+                                description = "The feel good station",
+                                genre = R.string.genre_adult_contemporary,
+                                country = R.string.country_netherlands
+                        ),
+                        RadioStation(
+                                id = "radio_10",
+                                name = "Radio 10",
+                                streamUrl = "https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO10.mp3",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Radio_10_logo.svg/200px-Radio_10_logo.svg.png",
+                                logoResId = R.drawable.logo_radio_10,
+                                description = "Gewoon de beste hits",
+                                genre = R.string.genre_oldies,
+                                country = R.string.country_netherlands
+                        ),
+                        RadioStation(
+                                id = "qmusic",
+                                name = "Qmusic",
+                                streamUrl = "https://icecast-qmusicnl-cdp.triple-it.nl/qmusic.mp3",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Qmusic_logo.svg/200px-Qmusic_logo.svg.png",
+                                logoResId = R.drawable.logo_qmusic,
+                                description = "Q sounds better with you",
+                                genre = R.string.genre_hits,
+                                country = R.string.country_netherlands
+                        ),
+                        RadioStation(
+                                id = "radio_538",
+                                name = "Radio 538",
+                                streamUrl = "https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO538.mp3",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Radio_538_logo.svg/200px-Radio_538_logo.svg.png",
+                                logoResId = 0,
+                                description = "De nummer 1 hits",
+                                genre = R.string.genre_hits,
+                                country = R.string.country_netherlands
+                        ),
+                        RadioStation(
+                                id = "bayern_1",
+                                name = "Bayern 1",
+                                streamUrl = "https://dispatcher.rndfnk.com/br/br1/obb/mp3/mid",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Bayern_1_Logo.svg/200px-Bayern_1_Logo.svg.png",
+                                logoResId = 0,
+                                description = "Die beste Musik für Bayern",
+                                genre = R.string.genre_oldies,
+                                country = R.string.country_germany
+                        ),
+                        RadioStation(
+                                id = "wdr_2",
+                                name = "WDR 2",
+                                streamUrl = "https://wdr-wdr2-rheinland.icecastssl.wdr.de/wdr/wdr2/rheinland/mp3/128/stream.mp3",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/WDR_2_logo.svg/200px-WDR_2_logo.svg.png",
+                                logoResId = 0,
+                                description = "Musik, Infos, Podcasts",
+                                genre = R.string.genre_adult_contemporary,
+                                country = R.string.country_germany
+                        ),
+                        RadioStation(
+                                id = "swr3",
+                                name = "SWR3",
+                                streamUrl = "https://liveradio.swr.de/sw282p3/swr3/play.mp3",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/SWR3_Logo.svg/200px-SWR3_Logo.svg.png",
+                                logoResId = 0,
+                                description = "Pop und mehr",
+                                genre = R.string.genre_pop_rock,
+                                country = R.string.country_germany
+                        ),
+                        RadioStation(
+                                id = "1live",
+                                name = "1LIVE",
+                                streamUrl = "https://wdr-1live-live.icecastssl.wdr.de/wdr/1live/live/mp3/128/stream.mp3",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/1LIVE_Logo.svg/200px-1LIVE_Logo.svg.png",
+                                logoResId = 0,
+                                description = "Das junge Radio des WDR",
+                                genre = R.string.genre_pop_rock,
+                                country = R.string.country_germany
+                        ),
+                        RadioStation(
+                                id = "antenne_bayern",
+                                name = "Antenne Bayern",
+                                streamUrl = "https://stream.antenne.de/antenne",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Antenne_Bayern_logo.svg/200px-Antenne_Bayern_logo.svg.png",
+                                logoResId = 0,
+                                description = "Hits für Bayern",
+                                genre = R.string.genre_hits,
+                                country = R.string.country_germany
+                        ),
+                        RadioStation(
+                                id = "rtl",
+                                name = "RTL",
+                                streamUrl = "http://streaming.radio.rtl.fr/rtl-1-44-128",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/RTL-Logo.svg/200px-RTL-Logo.svg.png",
+                                logoResId = 0,
+                                description = "On a tous une bonne raison d'écouter RTL",
+                                genre = R.string.genre_news_talk,
+                                country = R.string.country_france
+                        ),
+                        RadioStation(
+                                id = "nrj",
+                                name = "NRJ",
+                                streamUrl = "https://scdn.nrjaudio.fm/adwz2/fr/30001/mp3_128.mp3",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/NRJ_logo.svg/200px-NRJ_logo.svg.png",
+                                logoResId = 0,
+                                description = "Hit Music Only",
+                                genre = R.string.genre_hits,
+                                country = R.string.country_france
+                        ),
+                        RadioStation(
+                                id = "franceinfo",
+                                name = "Franceinfo",
+                                streamUrl = "https://icecast.radiofrance.fr/franceinfo-midfi.mp3",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/France_Info_2016.svg/200px-France_Info_2016.svg.png",
+                                logoResId = 0,
+                                description = "L'info en continu",
+                                genre = R.string.genre_news,
+                                country = R.string.country_france
+                        ),
+                        RadioStation(
+                                id = "nostalgie",
+                                name = "Nostalgie",
+                                streamUrl = "https://scdn.nrjaudio.fm/adwz2/fr/30601/mp3_128.mp3",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/fr/thumb/e/ed/Logo_Nostalgie_2001.svg/200px-Logo_Nostalgie_2001.svg.png",
+                                logoResId = 0,
+                                description = "Que des tubes",
+                                genre = R.string.genre_oldies,
+                                country = R.string.country_france
+                        ),
+                        RadioStation(
+                                id = "rmc",
+                                name = "RMC",
+                                streamUrl = "https://audio.bfmtv.com/bfmbusiness/rmc_info-smil",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/RMC_logo.svg/200px-RMC_logo.svg.png",
+                                logoResId = 0,
+                                description = "Info Talk Sport",
+                                genre = R.string.genre_news_talk,
+                                country = R.string.country_france
                         )
                 )
 

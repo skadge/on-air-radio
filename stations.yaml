@@ -20,12 +20,18 @@ constants:
     jazz: genre_jazz
     ambient_chill: genre_ambient_chill
     ambient: genre_ambient
+    hits: genre_hits
+    oldies: genre_oldies
+    variety: genre_variety
 
   countries:
     uk: country_uk
     france: country_france
     usa: country_usa
     germany: country_germany
+    italy: country_italy
+    spain: country_spain
+    netherlands: country_netherlands
 
 # Station definitions
 stations:
@@ -153,7 +159,7 @@ stations:
     name: Jazz Radio
     stream_url: https://jazzradio.ice.infomaniak.ch/jazzradio-high.mp3
     logo_url: https://upload.wikimedia.org/wikipedia/fr/thumb/2/24/Logo_Jazz_Radio.svg/200px-Logo_Jazz_Radio.svg.png
-    logo_svg_url: https://upload.wikimedia.org/wikipedia/fr/2/24/Logo_Jazz_Radio.svg
+    # No SVG available on Wikimedia Commons
     description: 100% Jazz
     genre: jazz
     country: france
@@ -162,7 +168,7 @@ stations:
     name: TSF Jazz
     stream_url: https://tsfjazz.ice.infomaniak.ch/tsfjazz-high.mp3
     logo_url: https://upload.wikimedia.org/wikipedia/fr/thumb/4/44/TSF_Jazz_logo.svg/200px-TSF_Jazz_logo.svg.png
-    logo_svg_url: https://upload.wikimedia.org/wikipedia/fr/4/44/TSF_Jazz_logo.svg
+    # No SVG available on Wikimedia Commons
     description: La radio jazz
     genre: jazz
     country: france
@@ -183,3 +189,232 @@ stations:
     description: Atmospheric textures with minimal beats
     genre: ambient
     country: usa
+
+  # ============ Italy ============
+  - id: rtl_102_5
+    name: RTL 102.5
+    stream_url: https://streamcdnb4-dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S97044836/tbbP8T1ZRPBL/playlist_audio.m3u8
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/RTL_102.5_logo.svg/200px-RTL_102.5_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/0/0e/RTL_102.5_logo.svg
+    description: La radio italiana più ascoltata
+    genre: hits
+    country: italy
+
+  - id: rds
+    name: RDS
+    stream_url: https://streamcdnm9-dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S44552214/uKpgwOHmle0S/playlist.m3u8
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/RDS_logo.svg/200px-RDS_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/2/2a/RDS_logo.svg
+    description: Radio Dimensione Suono - 100% Grandi Successi
+    genre: hits
+    country: italy
+
+  - id: radio_deejay
+    name: Radio Deejay
+    stream_url: https://streamcdnm24-dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S56912040/bMtRaShKbDaq/playlist.m3u8
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Radio_DeeJay_logo.svg/200px-Radio_DeeJay_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/9/93/Logo_Deejay.svg
+    description: La radio che libera la musica
+    genre: hits
+    country: italy
+
+  - id: radio_italia
+    name: Radio Italia
+    stream_url: https://stream4.xdevel.com/audio0s976608-1379/stream/icecast.audio
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Logo_Radio_Italia.svg/200px-Logo_Radio_Italia.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/0/06/Radio_Italia_logo_%282020%29.svg
+    description: Solo musica italiana
+    genre: hits
+    country: italy
+
+  - id: radio_105
+    name: Radio 105
+    stream_url: https://icecast.unitedradio.it/Radio105.aac
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Radio_105_logo.svg/200px-Radio_105_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/5/50/Radio_105_logo.svg
+    description: La radio che suona la musica
+    genre: hits
+    country: italy
+
+  # ============ Spain ============
+  - id: cadena_ser
+    name: Cadena SER
+    stream_url: https://playerservices.streamtheworld.com/api/livestream-redirect/CADENASER.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Cadena_SER_logo.svg/200px-Cadena_SER_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/2/28/Cadena_Ser_logo.svg
+    description: La radio líder en España
+    genre: news_talk
+    country: spain
+
+  - id: los40
+    name: LOS40
+    stream_url: https://playerservices.streamtheworld.com/api/livestream-redirect/LOS40.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/LOS40_logo.svg/200px-LOS40_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/8/80/Los_40.svg
+    description: La radio de los éxitos
+    genre: hits
+    country: spain
+
+  - id: cope
+    name: COPE
+    stream_url: https://flucast23-h.akamaihd.net/COPEMADRID_SC
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Cope_logo.svg/200px-Cope_logo.svg.png
+    # No SVG available on Wikimedia Commons
+    description: Radio COPE - Cadena de Ondas Populares Españolas
+    genre: news_talk
+    country: spain
+
+  - id: onda_cero
+    name: Onda Cero
+    stream_url: https://atres-live.ondacero.es/live/ondacero/bitrate_1.m3u8
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Onda_Cero_logo.svg/200px-Onda_Cero_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/b/bf/Onda_Cero_logo.svg
+    description: Radio en español
+    genre: variety
+    country: spain
+
+  - id: cadena_dial
+    name: Cadena Dial
+    stream_url: https://playerservices.streamtheworld.com/api/livestream-redirect/CADENADIAL.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Cadena_Dial_logo.svg/200px-Cadena_Dial_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/d/d1/Cadena_Dial_2019_logo.svg
+    description: La radio de las baladas
+    genre: adult_contemporary
+    country: spain
+
+  # ============ Netherlands ============
+  - id: npo_radio_2
+    name: NPO Radio 2
+    stream_url: http://icecast.omroep.nl/radio2-bb-mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/NPO_Radio_2_logo.svg/200px-NPO_Radio_2_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/f/f4/NPO_Radio_2_logo.svg
+    description: De beste muziekmix
+    genre: variety
+    country: netherlands
+
+  - id: sky_radio
+    name: Sky Radio
+    stream_url: https://playerservices.streamtheworld.com/api/livestream-redirect/SRGSTR01.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Sky_Radio_logo.svg/200px-Sky_Radio_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/1/12/Sky_Radio_logo_2019.svg
+    description: The feel good station
+    genre: adult_contemporary
+    country: netherlands
+
+  - id: radio_10
+    name: Radio 10
+    stream_url: https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO10.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Radio_10_logo.svg/200px-Radio_10_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/1/19/Radio_10_logo_2019.svg
+    description: Gewoon de beste hits
+    genre: oldies
+    country: netherlands
+
+  - id: qmusic
+    name: Qmusic
+    stream_url: https://icecast-qmusicnl-cdp.triple-it.nl/qmusic.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Qmusic_logo.svg/200px-Qmusic_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/7/70/Qmusic_logo.svg
+    description: Q sounds better with you
+    genre: hits
+    country: netherlands
+
+  - id: radio_538
+    name: Radio 538
+    stream_url: https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO538.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Radio_538_logo.svg/200px-Radio_538_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/e/ea/Logo_Radio538.svg
+    description: De nummer 1 hits
+    genre: hits
+    country: netherlands
+
+  # ============ Germany (additional) ============
+  - id: bayern_1
+    name: Bayern 1
+    stream_url: https://dispatcher.rndfnk.com/br/br1/obb/mp3/mid
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Bayern_1_Logo.svg/200px-Bayern_1_Logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/f/f8/Bayern1-logo.svg
+    description: Die beste Musik für Bayern
+    genre: oldies
+    country: germany
+
+  - id: wdr_2
+    name: WDR 2
+    stream_url: https://wdr-wdr2-rheinland.icecastssl.wdr.de/wdr/wdr2/rheinland/mp3/128/stream.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/WDR_2_logo.svg/200px-WDR_2_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/7/78/WDR_2_logo.svg
+    description: Musik, Infos, Podcasts
+    genre: adult_contemporary
+    country: germany
+
+  - id: swr3
+    name: SWR3
+    stream_url: https://liveradio.swr.de/sw282p3/swr3/play.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/SWR3_Logo.svg/200px-SWR3_Logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/5/50/Swr3-logo.svg
+    description: Pop und mehr
+    genre: pop_rock
+    country: germany
+
+  - id: 1live
+    name: 1LIVE
+    stream_url: https://wdr-1live-live.icecastssl.wdr.de/wdr/1live/live/mp3/128/stream.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/1LIVE_Logo.svg/200px-1LIVE_Logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/f/fb/WDR_1LIVE_Logo_2016.svg
+    description: Das junge Radio des WDR
+    genre: pop_rock
+    country: germany
+
+  - id: antenne_bayern
+    name: Antenne Bayern
+    stream_url: https://stream.antenne.de/antenne
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Antenne_Bayern_logo.svg/200px-Antenne_Bayern_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/a/a1/Antenne_Bayern_logo.svg
+    description: Hits für Bayern
+    genre: hits
+    country: germany
+
+  # ============ France (additional) ============
+  - id: rtl
+    name: RTL
+    stream_url: http://streaming.radio.rtl.fr/rtl-1-44-128
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/RTL-Logo.svg/200px-RTL-Logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/5/51/RTL_logo.svg
+    description: On a tous une bonne raison d'écouter RTL
+    genre: news_talk
+    country: france
+
+  - id: nrj
+    name: NRJ
+    stream_url: https://scdn.nrjaudio.fm/adwz2/fr/30001/mp3_128.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/NRJ_logo.svg/200px-NRJ_logo.svg.png
+    # No SVG available on Wikimedia Commons
+    description: Hit Music Only
+    genre: hits
+    country: france
+
+  - id: franceinfo
+    name: Franceinfo
+    stream_url: https://icecast.radiofrance.fr/franceinfo-midfi.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/France_Info_2016.svg/200px-France_Info_2016.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/0/03/Franceinfo.svg
+    description: L'info en continu
+    genre: news
+    country: france
+
+  - id: nostalgie
+    name: Nostalgie
+    stream_url: https://scdn.nrjaudio.fm/adwz2/fr/30601/mp3_128.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/fr/thumb/e/ed/Logo_Nostalgie_2001.svg/200px-Logo_Nostalgie_2001.svg.png
+    description: Que des tubes
+    genre: oldies
+    country: france
+
+  - id: rmc
+    name: RMC
+    stream_url: https://audio.bfmtv.com/bfmbusiness/rmc_info-smil
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/RMC_logo.svg/200px-RMC_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/2/20/RMC_2025.svg
+    description: Info Talk Sport
+    genre: news_talk
+    country: france
