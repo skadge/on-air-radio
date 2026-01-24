@@ -112,6 +112,7 @@ def convert_svg_to_vector(svg_path: Path, force: bool = False, verbose: bool = F
     """
     Convert SVG to Android Vector Drawable XML.
     Uses a simple Python-based conversion for common SVG patterns.
+    Re-converts if the SVG file is newer than the existing XML.
     """
     xml_path = DRAWABLE_DIR / svg_path.name.replace('.svg', '.xml')
     
@@ -120,6 +121,8 @@ def convert_svg_to_vector(svg_path: Path, force: bool = False, verbose: bool = F
         if xml_path.stat().st_mtime >= svg_path.stat().st_mtime:
             log(f"  ✓ Vector XML up-to-date: {xml_path.name}", verbose)
             return xml_path
+        else:
+            log(f"  ↻ SVG is newer, re-converting: {svg_path.name}", verbose, force=True)
     
     if dry_run:
         log(f"  [DRY-RUN] Would convert: {svg_path.name} -> {xml_path.name}", verbose, force=True)
@@ -408,7 +411,7 @@ def validate_stream(station: dict, verbose: bool = False) -> tuple[bool, str]:
 def generate_repository(data: dict, dry_run: bool = False, verbose: bool = False) -> bool:
     """Generate RadioRepository.kt from station data."""
     constants = data['constants']
-    stations = data['stations']
+    stations = sorted(data['stations'], key=lambda x: x['name'].lower())
     
     # Build station entries
     station_entries = []

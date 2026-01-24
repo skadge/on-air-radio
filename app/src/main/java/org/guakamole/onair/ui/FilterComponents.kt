@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.guakamole.onair.data.FilterData
 import org.guakamole.onair.data.FilterItem
+import org.guakamole.onair.ui.theme.GenreColors
 
 @Composable
 fun FilterBar(
@@ -49,6 +50,7 @@ fun FilterBar(
                 items = FilterData.styles,
                 selectedIds = selectedStyles,
                 onSelectionChange = onStylesChange,
+                showGenreDots = true,
                 modifier = Modifier.weight(1f)
         )
     }
@@ -61,6 +63,7 @@ fun FilterDropdown(
         items: List<FilterItem>,
         selectedIds: Set<String>,
         onSelectionChange: (Set<String>) -> Unit,
+        showGenreDots: Boolean = false,
         modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -134,6 +137,21 @@ fun FilterDropdown(
                 DropdownMenuItem(
                         text = {
                             Row(verticalAlignment = Alignment.CenterVertically) {
+                                if (showGenreDots && item.id != "world") {
+                                    Box(
+                                            modifier =
+                                                    Modifier.padding(end = 8.dp)
+                                                            .size(8.dp)
+                                                            .background(
+                                                                    color =
+                                                                            GenreColors
+                                                                                    .getColorForGenre(
+                                                                                            item.nameRes
+                                                                                    ),
+                                                                    shape = RoundedCornerShape(4.dp)
+                                                            )
+                                    )
+                                }
                                 Text(
                                         text = stringResource(item.nameRes),
                                         style = MaterialTheme.typography.bodyMedium,

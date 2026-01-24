@@ -183,7 +183,7 @@ fun StationCard(
                                                 ) // Less aggressive offset
                                                 .size(70.dp)
                                                 .rotate(-25f), // Handled by parent clip
-                                contentScale = ContentScale.Crop
+                                contentScale = ContentScale.Fit
                         )
 
                         // Country and Favorite Icon

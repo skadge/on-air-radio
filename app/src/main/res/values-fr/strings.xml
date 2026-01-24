@@ -29,6 +29,9 @@
     <string name="country_france">France</string>
     <string name="country_usa">États-Unis</string>
     <string name="country_germany">Allemagne</string>
+    <string name="country_italy">Italie</string>
+    <string name="country_spain">Espagne</string>
+    <string name="country_netherlands">Pays-Bas</string>
 
     <!-- Genres -->
     <string name="genre_pop_rock">Pop/Rock</string>
@@ -46,4 +49,7 @@
     <string name="genre_jazz">Jazz</string>
     <string name="genre_ambient_chill">Ambiance/Chill</string>
     <string name="genre_ambient">Ambiance</string>
+    <string name="genre_hits">Hits</string>
+    <string name="genre_oldies">Oldies</string>
+    <string name="genre_variety">Variété</string>
 </resources>

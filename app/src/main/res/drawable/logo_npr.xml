@@ -4,11 +4,6 @@
     android:viewportWidth="160"
     android:viewportHeight="160">
   <path
-      android:pathData="m-1.82,108.32c0,0 162.59,0 162.59,0 0,0 0,-56.64 0,-56.64C160.77,51.68 -1.82,51.68 -1.82,51.68Z"
-      android:fillColor="#ffffff"
-      android:strokeColor="#00000000"
-      android:fillType="evenOdd"/>
-  <path
       android:pathData="m0,106.51c0,0 52.99,0 52.99,0 0,0 0,-52.99 0,-52.99C52.99,53.52 0,53.52 0,53.52Z"
       android:fillColor="#ff330d"
       android:strokeColor="#00000000"
