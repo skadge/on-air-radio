@@ -6,7 +6,7 @@ import shutil
 
 # Wikidata API requires a User-Agent header
 HEADERS = {
-    "User-Agent": "OnAirRadioBot/0.1 (https://github.com/skadge/radio; contact@example.com) python-requests/2.x"
+    "User-Agent": "OnAirRadioBot/0.1 (https://github.com/skadge/radio; skadge@guakamole.org) python-requests/2.x"
 }
 
 COUNTRY_MAP = {
