@@ -24,13 +24,35 @@ object FilterData {
                                                 R.string.country_germany,
                                                 R.string.country_italy,
                                                 R.string.country_spain,
-                                                R.string.country_netherlands
+                                                R.string.country_netherlands,
+                                                R.string.country_russia,
+                                                R.string.country_poland,
+                                                R.string.country_switzerland,
+                                                R.string.country_czech_republic,
+                                                R.string.country_greece,
+                                                R.string.country_ukraine,
+                                                R.string.country_austria
                                         )
                         ),
                         FilterItem(
                                 "north_america",
                                 R.string.region_north_america,
-                                countries = listOf(R.string.country_usa)
+                                countries =
+                                        listOf(
+                                                R.string.country_usa,
+                                                R.string.country_canada,
+                                                R.string.country_mexico
+                                        )
+                        ),
+                        FilterItem(
+                                "south_america",
+                                R.string.region_south_america,
+                                countries = listOf(R.string.country_brazil)
+                        ),
+                        FilterItem(
+                                "asia",
+                                R.string.region_asia,
+                                countries = listOf(R.string.country_india, R.string.country_china)
                         ),
                         // Individual countries
                         FilterItem("uk", R.string.country_uk),
@@ -39,7 +61,19 @@ object FilterData {
                         FilterItem("germany", R.string.country_germany),
                         FilterItem("italy", R.string.country_italy),
                         FilterItem("spain", R.string.country_spain),
-                        FilterItem("netherlands", R.string.country_netherlands)
+                        FilterItem("netherlands", R.string.country_netherlands),
+                        FilterItem("russia", R.string.country_russia),
+                        FilterItem("india", R.string.country_india),
+                        FilterItem("poland", R.string.country_poland),
+                        FilterItem("china", R.string.country_china),
+                        FilterItem("switzerland", R.string.country_switzerland),
+                        FilterItem("czech_republic", R.string.country_czech_republic),
+                        FilterItem("canada", R.string.country_canada),
+                        FilterItem("greece", R.string.country_greece),
+                        FilterItem("ukraine", R.string.country_ukraine),
+                        FilterItem("brazil", R.string.country_brazil),
+                        FilterItem("austria", R.string.country_austria),
+                        FilterItem("mexico", R.string.country_mexico)
                 )
 
         val styles =

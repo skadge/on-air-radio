@@ -23,6 +23,10 @@
     <string name="station_logo_description">Logo di %1$s</string>
     <string name="radio">Radio</string>
     <string name="on_air">in onda</string>
+    <string name="region_europe">Europa</string>
+    <string name="region_north_america">Nord America</string>
+    <string name="region_south_america">Sud America</string>
+    <string name="region_asia">Asia</string>
     <string name="region">Regione</string>
     <string name="style">Stile</string>
 
@@ -34,6 +38,18 @@
     <string name="country_italy">Italia</string>
     <string name="country_spain">Spagna</string>
     <string name="country_netherlands">Paesi Bassi</string>
+    <string name="country_russia">Russia</string>
+    <string name="country_india">India</string>
+    <string name="country_poland">Polonia</string>
+    <string name="country_china">Cina</string>
+    <string name="country_switzerland">Svizzera</string>
+    <string name="country_czech_republic">Repubblica Ceca</string>
+    <string name="country_canada">Canada</string>
+    <string name="country_greece">Grecia</string>
+    <string name="country_ukraine">Ucraina</string>
+    <string name="country_brazil">Brasile</string>
+    <string name="country_austria">Austria</string>
+    <string name="country_mexico">Messico</string>
 
     <!-- Tags -->
     <string name="tag_pop">Pop</string>

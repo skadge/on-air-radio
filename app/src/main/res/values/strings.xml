@@ -26,6 +26,8 @@
     <string name="world">World</string>
     <string name="region_europe">Europe</string>
     <string name="region_north_america">North America</string>
+    <string name="region_south_america">South America</string>
+    <string name="region_asia">Asia</string>
     <string name="region">Region</string>
     <string name="style">Style</string>
     <string name="filter_by_region">Filter by Region</string>
@@ -39,6 +41,18 @@
     <string name="country_italy">Italy</string>
     <string name="country_spain">Spain</string>
     <string name="country_netherlands">Netherlands</string>
+    <string name="country_russia">Russia</string>
+    <string name="country_india">India</string>
+    <string name="country_poland">Poland</string>
+    <string name="country_china">China</string>
+    <string name="country_switzerland">Switzerland</string>
+    <string name="country_czech_republic">Czech Republic</string>
+    <string name="country_canada">Canada</string>
+    <string name="country_greece">Greece</string>
+    <string name="country_ukraine">Ukraine</string>
+    <string name="country_brazil">Brazil</string>
+    <string name="country_austria">Austria</string>
+    <string name="country_mexico">Mexico</string>
 
     <!-- Tags -->
     <string name="tag_pop">Pop</string>
