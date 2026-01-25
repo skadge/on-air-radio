@@ -15,6 +15,7 @@ data class RadioStation(
         val isFavorite: Boolean = false,
         val popularity: Int = 0,
         val tags: String = "",
+        val websiteUrl: String = "",
         val metadataType: String? = null,
         val metadataParam: String? = null
 )

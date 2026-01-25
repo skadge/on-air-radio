@@ -431,6 +431,7 @@ def generate_repository(data: dict, dry_run: bool = False, verbose: bool = False
         name = station['name'].replace('"', '\\"')
         description = station.get('description', '').replace('"', '\\"')
         tags = station.get('tags', '').replace('"', '\\"')
+        website_url = station.get('website_url', '').replace('"', '\\"')
         popularity = station.get('popularity', 0)
         
         entry = f'''                        RadioStation(
@@ -444,6 +445,7 @@ def generate_repository(data: dict, dry_run: bool = False, verbose: bool = False
                                 country = {country_res},
                                 popularity = {popularity},
                                 tags = "{tags}",
+                                websiteUrl = "{website_url}",
                                 metadataType = {f'"{station["metadata_type"]}"' if "metadata_type" in station else "null"},
                                 metadataParam = {f'"{station["metadata_param"]}"' if "metadata_param" in station else "null"}
                         )'''
