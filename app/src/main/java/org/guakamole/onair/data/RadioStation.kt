@@ -14,5 +14,7 @@ data class RadioStation(
         @StringRes val country: Int = 0,
         val isFavorite: Boolean = false,
         val popularity: Int = 0,
-        val tags: String = ""
+        val tags: String = "",
+        val metadataType: String? = null,
+        val metadataParam: String? = null
 )

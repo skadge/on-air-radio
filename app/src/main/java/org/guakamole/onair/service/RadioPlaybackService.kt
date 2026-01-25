@@ -28,9 +28,6 @@ import com.google.common.collect.ImmutableList
 import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
 import java.io.ByteArrayOutputStream
-import java.net.HttpURLConnection
-import java.net.URL
-import java.util.Scanner
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -43,7 +40,7 @@ import org.guakamole.onair.MainActivity
 import org.guakamole.onair.billing.PremiumManager
 import org.guakamole.onair.data.RadioRepository
 import org.guakamole.onair.data.RadioStation
-import org.json.JSONObject
+import org.guakamole.onair.metadata.MetadataProviderFactory
 
 /** Media playback service that supports both in-app playback and Android Auto */
 @OptIn(UnstableApi::class)
@@ -54,17 +51,8 @@ class RadioPlaybackService : MediaLibraryService() {
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     private lateinit var imageLoader: ImageLoader
     private var metadataPollingJob: Job? = null
-    private var currentPollingRmsId: String? = null
-
-    private val bbcRmsIdMap =
-            mapOf(
-                    "bbc_radio_1" to "bbc_radio_one",
-                    "bbc_radio_2" to "bbc_radio_two",
-                    "bbc_radio_3" to "bbc_radio_three",
-                    "bbc_radio_4" to "bbc_radio_fourfm",
-                    "bbc_radio_5_live" to "bbc_radio_five_live",
-                    "bbc_6music" to "bbc_6music"
-            )
+    private var currentPollingParam: String? = null
+    private var currentPollingType: String? = null
 
     companion object {
         private const val ROOT_ID = "root"
@@ -209,71 +197,57 @@ class RadioPlaybackService : MediaLibraryService() {
     }
 
     private fun startMetadataPolling(stationId: String?) {
-        val rmsId = bbcRmsIdMap[stationId]
-        if (rmsId == null) {
+        val station = stationId?.let { RadioRepository.getStationById(it) }
+        val type = station?.metadataType
+        val param = station?.metadataParam
+
+        if (type == null || param == null) {
             metadataPollingJob?.cancel()
-            currentPollingRmsId = null
+            currentPollingType = null
+            currentPollingParam = null
             return
         }
 
-        // If we're already polling this station, don't restart
-        if (rmsId == currentPollingRmsId && metadataPollingJob?.isActive == true) {
+        // If we're already polling this with the same param, don't restart
+        if (type == currentPollingType &&
+                        param == currentPollingParam &&
+                        metadataPollingJob?.isActive == true
+        ) {
             return
         }
 
         metadataPollingJob?.cancel()
-        currentPollingRmsId = rmsId
+        currentPollingType = type
+        currentPollingParam = param
 
-        android.util.Log.d("MetadataDebug", "Starting metadata polling for BBC: $rmsId")
+        val provider = MetadataProviderFactory.getProvider(type)
+        if (provider == null) {
+            android.util.Log.w("MetadataDebug", "No provider found for type: $type")
+            return
+        }
+
+        android.util.Log.d("MetadataDebug", "Starting metadata polling ($type) with param: $param")
         metadataPollingJob =
                 serviceScope.launch(Dispatchers.IO) {
                     while (true) {
                         try {
-                            val url =
-                                    URL(
-                                            "https://rms.api.bbc.co.uk/v2/services/$rmsId/segments/latest"
+                            val result = provider.fetchMetadata(param)
+                            if (result != null) {
+                                withContext(Dispatchers.Main) {
+                                    android.util.Log.d(
+                                            "MetadataDebug",
+                                            "Polled metadata: ${result.artist} - ${result.title}"
                                     )
-                            val connection = url.openConnection() as HttpURLConnection
-                            connection.requestMethod = "GET"
-                            connection.connectTimeout = 5000
-                            connection.readTimeout = 5000
-
-                            if (connection.responseCode == 200) {
-                                val response =
-                                        Scanner(connection.inputStream).useDelimiter("\\A").next()
-                                val json = JSONObject(response)
-                                val dataArray = json.getJSONArray("data")
-                                if (dataArray.length() > 0) {
-                                    val latest = dataArray.getJSONObject(0)
-                                    if (latest.optJSONObject("offset")?.optBoolean("now_playing") ==
-                                                    true
-                                    ) {
-                                        val titles = latest.getJSONObject("titles")
-                                        val artist = titles.optString("primary")
-                                        val title = titles.optString("secondary")
-
-                                        if (!title.isNullOrBlank()) {
-                                            withContext(Dispatchers.Main) {
-                                                android.util.Log.d(
-                                                        "MetadataDebug",
-                                                        "Polled metadata: $artist - $title"
-                                                )
-                                                updatePlayerMetadata(
-                                                        title,
-                                                        if (artist.isNullOrBlank()) null else artist
-                                                )
-                                            }
-                                        }
-                                    }
+                                    updatePlayerMetadata(result.title, result.artist)
                                 }
                             }
                         } catch (e: kotlinx.coroutines.CancellationException) {
                             // Normal when changing stations or updating metadata
                             throw e
                         } catch (e: Exception) {
-                            android.util.Log.e("MetadataDebug", "Error polling BBC metadata", e)
+                            android.util.Log.e("MetadataDebug", "Error polling metadata ($type)", e)
                         }
-                        delay(5000)
+                        delay(30000)
                     }
                 }
     }

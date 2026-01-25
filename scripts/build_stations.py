@@ -444,7 +444,9 @@ def generate_repository(data: dict, dry_run: bool = False, verbose: bool = False
                                 genre = {genre_res},
                                 country = {country_res},
                                 popularity = {popularity},
-                                tags = "{tags}"
+                                tags = "{tags}",
+                                metadataType = {f'"{station["metadata_type"]}"' if "metadata_type" in station else "null"},
+                                metadataParam = {f'"{station["metadata_param"]}"' if "metadata_param" in station else "null"}
                         )'''
         station_entries.append(entry)
     

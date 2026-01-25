@@ -41,6 +41,8 @@ stations:
     country: uk
     tags: bbc,drama,news talk,news,talk
     popularity: 5873
+    metadata_type: bbc_rms
+    metadata_param: bbc_radio_fourfm
   - id: soma_groove
     name: SomaFM Groove Salad
     stream_url: https://ice1.somafm.com/groovesalad-128-mp3
@@ -60,6 +62,8 @@ stations:
     country: uk
     tags: bbc,indie,entertainment,music,rock,pop
     popularity: 2824
+    metadata_type: bbc_rms
+    metadata_param: bbc_radio_one
   - id: bbc_radio_5_live
     name: BBC Radio 5 Live
     stream_url: https://as-hls-ww-live.akamaized.net/pool_89021708/live/ww/bbc_radio_five_live/bbc_radio_five_live.isml/bbc_radio_five_live-audio%3d96000.norewind.m3u8
@@ -70,6 +74,8 @@ stations:
     country: uk
     tags: bbc,sport
     popularity: 1101
+    metadata_type: bbc_rms
+    metadata_param: bbc_radio_five_live
   - id: bbc_radio_3
     name: BBC Radio 3
     stream_url: https://as-hls-ww-live.akamaized.net/pool_23461179/live/ww/bbc_radio_three/bbc_radio_three.isml/bbc_radio_three-audio%3d96000.norewind.m3u8
@@ -80,6 +86,8 @@ stations:
     country: uk
     tags: bbc,classical
     popularity: 1028
+    metadata_type: bbc_rms
+    metadata_param: bbc_radio_three
   - id: nostalgie
     name: Nostalgie
     stream_url: https://scdn.nrjaudio.fm/adwz2/fr/30601/mp3_128.mp3
@@ -217,6 +225,8 @@ stations:
     country: uk
     tags: 320kbps,music,rock,indie,pop
     popularity: 203
+    metadata_type: bbc_rms
+    metadata_param: bbc_6music
   - id: rds
     name: RDS
     stream_url: https://icstream.rds.radio/rds64k
@@ -266,6 +276,8 @@ stations:
     country: uk
     tags: adult standards,bbc,interviews,variety,oldies
     popularity: 46
+    metadata_type: bbc_rms
+    metadata_param: bbc_radio_two
   - id: wnyc_fm
     name: WNYC 93.9 FM
     stream_url: https://fm939.wnyc.org/wnycfm.aac

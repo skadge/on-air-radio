@@ -28,7 +28,9 @@ object RadioRepository {
                                 genre = R.string.genre_hits,
                                 country = R.string.country_germany,
                                 popularity = 15,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "bayern_1",
@@ -40,7 +42,9 @@ object RadioRepository {
                                 genre = R.string.genre_oldies,
                                 country = R.string.country_germany,
                                 popularity = 207,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "bbc_radio_1",
@@ -52,7 +56,9 @@ object RadioRepository {
                                 genre = R.string.genre_pop_rock,
                                 country = R.string.country_uk,
                                 popularity = 2824,
-                                tags = "bbc,indie,entertainment,music,rock,pop"
+                                tags = "bbc,indie,entertainment,music,rock,pop",
+                                metadataType = "bbc_rms",
+                                metadataParam = "bbc_radio_one"
                         ),
                         RadioStation(
                                 id = "bbc_radio_2",
@@ -64,7 +70,9 @@ object RadioRepository {
                                 genre = R.string.genre_adult_contemporary,
                                 country = R.string.country_uk,
                                 popularity = 46,
-                                tags = "adult standards,bbc,interviews,variety,oldies"
+                                tags = "adult standards,bbc,interviews,variety,oldies",
+                                metadataType = "bbc_rms",
+                                metadataParam = "bbc_radio_two"
                         ),
                         RadioStation(
                                 id = "bbc_radio_3",
@@ -76,7 +84,9 @@ object RadioRepository {
                                 genre = R.string.genre_classical,
                                 country = R.string.country_uk,
                                 popularity = 1028,
-                                tags = "bbc,classical"
+                                tags = "bbc,classical",
+                                metadataType = "bbc_rms",
+                                metadataParam = "bbc_radio_three"
                         ),
                         RadioStation(
                                 id = "bbc_radio_4",
@@ -88,7 +98,9 @@ object RadioRepository {
                                 genre = R.string.genre_news_talk,
                                 country = R.string.country_uk,
                                 popularity = 5873,
-                                tags = "bbc,drama,news talk,news,talk"
+                                tags = "bbc,drama,news talk,news,talk",
+                                metadataType = "bbc_rms",
+                                metadataParam = "bbc_radio_fourfm"
                         ),
                         RadioStation(
                                 id = "bbc_radio_5_live",
@@ -100,7 +112,9 @@ object RadioRepository {
                                 genre = R.string.genre_news_talk,
                                 country = R.string.country_uk,
                                 popularity = 1101,
-                                tags = "bbc,sport"
+                                tags = "bbc,sport",
+                                metadataType = "bbc_rms",
+                                metadataParam = "bbc_radio_five_live"
                         ),
                         RadioStation(
                                 id = "bbc_6music",
@@ -112,7 +126,9 @@ object RadioRepository {
                                 genre = R.string.genre_alternative,
                                 country = R.string.country_uk,
                                 popularity = 203,
-                                tags = "320kbps,music,rock,indie,pop"
+                                tags = "320kbps,music,rock,indie,pop",
+                                metadataType = "bbc_rms",
+                                metadataParam = "bbc_6music"
                         ),
                         RadioStation(
                                 id = "cadena_dial",
@@ -124,7 +140,9 @@ object RadioRepository {
                                 genre = R.string.genre_adult_contemporary,
                                 country = R.string.country_spain,
                                 popularity = 274,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "cadena_ser",
@@ -136,7 +154,9 @@ object RadioRepository {
                                 genre = R.string.genre_news_talk,
                                 country = R.string.country_spain,
                                 popularity = 19,
-                                tags = "classical"
+                                tags = "classical",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "capital_fm",
@@ -148,7 +168,9 @@ object RadioRepository {
                                 genre = R.string.genre_hits,
                                 country = R.string.country_uk,
                                 popularity = 233,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "classic_fm",
@@ -160,7 +182,9 @@ object RadioRepository {
                                 genre = R.string.genre_classical,
                                 country = R.string.country_uk,
                                 popularity = 211,
-                                tags = "classic fm,classical"
+                                tags = "classic fm,classical",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "cope",
@@ -172,7 +196,9 @@ object RadioRepository {
                                 genre = R.string.genre_news_talk,
                                 country = R.string.country_spain,
                                 popularity = 20,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "deutschlandradio",
@@ -184,7 +210,9 @@ object RadioRepository {
                                 genre = R.string.genre_news_culture,
                                 country = R.string.country_germany,
                                 popularity = 31,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "fip",
@@ -196,7 +224,9 @@ object RadioRepository {
                                 genre = R.string.genre_eclectic,
                                 country = R.string.country_france,
                                 popularity = 241,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "france_culture",
@@ -208,7 +238,9 @@ object RadioRepository {
                                 genre = R.string.genre_culture,
                                 country = R.string.country_france,
                                 popularity = 13,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "france_inter",
@@ -220,7 +252,9 @@ object RadioRepository {
                                 genre = R.string.genre_talk_music,
                                 country = R.string.country_france,
                                 popularity = 11,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "france_musique",
@@ -232,7 +266,9 @@ object RadioRepository {
                                 genre = R.string.genre_classical,
                                 country = R.string.country_france,
                                 popularity = 673,
-                                tags = "musique,radio france,public radio,aac"
+                                tags = "musique,radio france,public radio,aac",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "franceinfo",
@@ -244,7 +280,9 @@ object RadioRepository {
                                 genre = R.string.genre_news,
                                 country = R.string.country_france,
                                 popularity = 0,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "heart_uk",
@@ -256,7 +294,9 @@ object RadioRepository {
                                 genre = R.string.genre_pop_rock,
                                 country = R.string.country_uk,
                                 popularity = 228,
-                                tags = "commercial,london,hot adult contemporary"
+                                tags = "commercial,london,hot adult contemporary",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "jazz_radio",
@@ -268,7 +308,9 @@ object RadioRepository {
                                 genre = R.string.genre_jazz,
                                 country = R.string.country_france,
                                 popularity = 482,
-                                tags = "soul,jazz"
+                                tags = "soul,jazz",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "jazz24",
@@ -280,7 +322,9 @@ object RadioRepository {
                                 genre = R.string.genre_jazz,
                                 country = R.string.country_usa,
                                 popularity = 57,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "kcrw",
@@ -292,7 +336,9 @@ object RadioRepository {
                                 genre = R.string.genre_eclectic,
                                 country = R.string.country_usa,
                                 popularity = 0,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "kexp",
@@ -304,7 +350,9 @@ object RadioRepository {
                                 genre = R.string.genre_alternative,
                                 country = R.string.country_usa,
                                 popularity = 0,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "lbc",
@@ -316,7 +364,9 @@ object RadioRepository {
                                 genre = R.string.genre_news_talk,
                                 country = R.string.country_uk,
                                 popularity = 0,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "los40",
@@ -328,7 +378,9 @@ object RadioRepository {
                                 genre = R.string.genre_hits,
                                 country = R.string.country_spain,
                                 popularity = 0,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "nostalgie",
@@ -340,7 +392,9 @@ object RadioRepository {
                                 genre = R.string.genre_oldies,
                                 country = R.string.country_france,
                                 popularity = 948,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "npo_radio_2",
@@ -352,7 +406,9 @@ object RadioRepository {
                                 genre = R.string.genre_variety,
                                 country = R.string.country_netherlands,
                                 popularity = 5,
-                                tags = "pop"
+                                tags = "pop",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "npr",
@@ -364,7 +420,9 @@ object RadioRepository {
                                 genre = R.string.genre_news,
                                 country = R.string.country_usa,
                                 popularity = 40,
-                                tags = "classical"
+                                tags = "classical",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "nrj",
@@ -376,7 +434,9 @@ object RadioRepository {
                                 genre = R.string.genre_hits,
                                 country = R.string.country_france,
                                 popularity = 9,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "onda_cero",
@@ -388,7 +448,9 @@ object RadioRepository {
                                 genre = R.string.genre_variety,
                                 country = R.string.country_spain,
                                 popularity = 1,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "qmusic",
@@ -400,7 +462,9 @@ object RadioRepository {
                                 genre = R.string.genre_hits,
                                 country = R.string.country_netherlands,
                                 popularity = 6,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "radio_10",
@@ -412,7 +476,9 @@ object RadioRepository {
                                 genre = R.string.genre_oldies,
                                 country = R.string.country_netherlands,
                                 popularity = 75,
-                                tags = "talk,news,noticias"
+                                tags = "talk,news,noticias",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "radio_105",
@@ -424,7 +490,9 @@ object RadioRepository {
                                 genre = R.string.genre_hits,
                                 country = R.string.country_italy,
                                 popularity = 3,
-                                tags = "information,rock,pop,folk,local news"
+                                tags = "information,rock,pop,folk,local news",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "radio_538",
@@ -436,7 +504,9 @@ object RadioRepository {
                                 genre = R.string.genre_hits,
                                 country = R.string.country_netherlands,
                                 popularity = 45,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "radio_deejay",
@@ -448,7 +518,9 @@ object RadioRepository {
                                 genre = R.string.genre_hits,
                                 country = R.string.country_italy,
                                 popularity = 533,
-                                tags = "m3u8,l'espresso,top 40,pop,electronica"
+                                tags = "m3u8,l'espresso,top 40,pop,electronica",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "radio_italia",
@@ -460,7 +532,9 @@ object RadioRepository {
                                 genre = R.string.genre_hits,
                                 country = R.string.country_italy,
                                 popularity = 0,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "radio_nova",
@@ -472,7 +546,9 @@ object RadioRepository {
                                 genre = R.string.genre_eclectic_world,
                                 country = R.string.country_france,
                                 popularity = 11,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "radio_paradise",
@@ -484,7 +560,9 @@ object RadioRepository {
                                 genre = R.string.genre_eclectic,
                                 country = R.string.country_usa,
                                 popularity = 15,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "rds",
@@ -496,7 +574,9 @@ object RadioRepository {
                                 genre = R.string.genre_hits,
                                 country = R.string.country_italy,
                                 popularity = 108,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "rmc",
@@ -508,7 +588,9 @@ object RadioRepository {
                                 genre = R.string.genre_news_talk,
                                 country = R.string.country_france,
                                 popularity = 20,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "rtl",
@@ -520,7 +602,9 @@ object RadioRepository {
                                 genre = R.string.genre_news_talk,
                                 country = R.string.country_france,
                                 popularity = 3,
-                                tags = "adult album alternative"
+                                tags = "adult album alternative",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "rtl_102_5",
@@ -532,7 +616,9 @@ object RadioRepository {
                                 genre = R.string.genre_hits,
                                 country = R.string.country_italy,
                                 popularity = 305,
-                                tags = "hits"
+                                tags = "hits",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "sky_radio",
@@ -544,7 +630,9 @@ object RadioRepository {
                                 genre = R.string.genre_adult_contemporary,
                                 country = R.string.country_netherlands,
                                 popularity = 3,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "soma_drone",
@@ -556,7 +644,9 @@ object RadioRepository {
                                 genre = R.string.genre_ambient,
                                 country = R.string.country_usa,
                                 popularity = 0,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "soma_groove",
@@ -568,7 +658,9 @@ object RadioRepository {
                                 genre = R.string.genre_ambient_chill,
                                 country = R.string.country_usa,
                                 popularity = 3144,
-                                tags = "sleep,lounge,ambient,downtempo,chillout,groove"
+                                tags = "sleep,lounge,ambient,downtempo,chillout,groove",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "swr3",
@@ -580,7 +672,9 @@ object RadioRepository {
                                 genre = R.string.genre_pop_rock,
                                 country = R.string.country_germany,
                                 popularity = 297,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "tsfjazz",
@@ -592,7 +686,9 @@ object RadioRepository {
                                 genre = R.string.genre_jazz,
                                 country = R.string.country_france,
                                 popularity = 43,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "wdr1",
@@ -604,7 +700,9 @@ object RadioRepository {
                                 genre = R.string.genre_pop_rock,
                                 country = R.string.country_germany,
                                 popularity = 85,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "wdr_2",
@@ -616,7 +714,9 @@ object RadioRepository {
                                 genre = R.string.genre_adult_contemporary,
                                 country = R.string.country_germany,
                                 popularity = 0,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "wdr3",
@@ -628,7 +728,9 @@ object RadioRepository {
                                 genre = R.string.genre_classical_culture,
                                 country = R.string.country_germany,
                                 popularity = 413,
-                                tags = "classical,classic"
+                                tags = "classical,classic",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "wnyc_fm",
@@ -640,7 +742,9 @@ object RadioRepository {
                                 genre = R.string.genre_news_talk,
                                 country = R.string.country_usa,
                                 popularity = 45,
-                                tags = "news"
+                                tags = "news",
+                                metadataType = null,
+                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "wqxr",
@@ -652,7 +756,9 @@ object RadioRepository {
                                 genre = R.string.genre_classical,
                                 country = R.string.country_usa,
                                 popularity = 0,
-                                tags = ""
+                                tags = "",
+                                metadataType = null,
+                                metadataParam = null
                         )
                 )
 
