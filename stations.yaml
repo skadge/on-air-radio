@@ -107,6 +107,8 @@ stations:
     country: france
     tags: musique,radio france,public radio,aac
     popularity: 673
+    metadata_type: radio_france
+    metadata_param: '4'
   - id: radio_deejay
     name: Radio Deejay
     stream_url: http://radiodeejay-lh.akamaihd.net/i/RadioDeejay_Live_1@189857/master.m3u8
@@ -176,6 +178,8 @@ stations:
     country: france
     tags: ''
     popularity: 241
+    metadata_type: radio_france
+    metadata_param: '7'
   - id: capital_fm
     name: Capital FM
     stream_url: http://5229.cloudrad.io:8316/;
@@ -385,6 +389,8 @@ stations:
     country: france
     tags: ''
     popularity: 13
+    metadata_type: radio_france
+    metadata_param: '3'
   - id: france_inter
     name: France Inter
     stream_url: https://icecast.radiofrance.fr/franceinter-midfi.mp3
@@ -395,6 +401,8 @@ stations:
     country: france
     tags: ''
     popularity: 11
+    metadata_type: radio_france
+    metadata_param: '1'
   - id: radio_nova
     name: Radio Nova
     stream_url: https://novazz.ice.infomaniak.ch/novazz-128.mp3
@@ -404,6 +412,8 @@ stations:
     country: france
     tags: ''
     popularity: 11
+    metadata_type: radio_nova
+    metadata_param: 'radio-nova'
   - id: nrj
     name: NRJ
     stream_url: https://scdn.nrjaudio.fm/adwz2/fr/30001/mp3_128.mp3
@@ -536,10 +546,12 @@ stations:
     genre: adult_contemporary
     country: germany
   - id: franceinfo
-    name: Franceinfo
+    name: France Info
     stream_url: https://icecast.radiofrance.fr/franceinfo-midfi.mp3
     logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/France_Info_2016.svg/200px-France_Info_2016.svg.png
     logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/0/03/Franceinfo.svg
     description: L'info en continu
     genre: news
     country: france
+    metadata_type: radio_france
+    metadata_param: '2'

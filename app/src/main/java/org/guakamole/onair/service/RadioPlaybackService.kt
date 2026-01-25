@@ -166,23 +166,34 @@ class RadioPlaybackService : MediaLibraryService() {
     private fun updatePlayerMetadata(titleArg: String?, artistArg: String?) {
         player?.let { p ->
             val currentItem = p.currentMediaItem ?: return@let
-            val newTitle = titleArg ?: currentItem.mediaMetadata.title.toString()
 
-            // Check if anything actually changed to avoid infinite loops or
-            // redundant updates
-            if (currentItem.mediaMetadata.title != newTitle ||
-                            (artistArg != null && currentItem.mediaMetadata.artist != artistArg)
-            ) {
+            var finalTitle = titleArg ?: currentItem.mediaMetadata.title?.toString()
+            var finalArtist = artistArg
+
+            // Intelligent splitting for "Artist - Title" format common in ICY streams
+            if (finalArtist == null && finalTitle != null && finalTitle.contains(" - ")) {
+                val parts = finalTitle.split(" - ", limit = 2)
+                finalArtist = parts[0].trim()
+                finalTitle = parts[1].trim()
+            }
+
+            // Fallback for artist if still null
+            if (finalArtist == null) {
                 val station = RadioRepository.getStationById(currentItem.mediaId)
-                val artist = artistArg ?: station?.name ?: currentItem.mediaMetadata.artist
+                finalArtist = station?.name ?: currentItem.mediaMetadata.artist?.toString()
+            }
 
+            // Check if anything actually changed
+            if (currentItem.mediaMetadata.title?.toString() != finalTitle ||
+                            currentItem.mediaMetadata.artist?.toString() != finalArtist
+            ) {
                 val newMetadata =
                         currentItem
                                 .mediaMetadata
                                 .buildUpon()
-                                .setTitle(newTitle)
-                                .setArtist(artist)
-                                .setSubtitle(artist)
+                                .setTitle(finalTitle)
+                                .setArtist(finalArtist)
+                                .setSubtitle(finalArtist)
                                 .build()
 
                 val newItem = currentItem.buildUpon().setMediaMetadata(newMetadata).build()
@@ -190,7 +201,7 @@ class RadioPlaybackService : MediaLibraryService() {
                 p.setMediaItem(newItem, /* resetPosition= */ false)
                 android.util.Log.d(
                         "MetadataDebug",
-                        "Service: Updated MediaItem: Title=$newTitle, Artist=$artist"
+                        "Service: Updated MediaItem: Title=$finalTitle, Artist=$finalArtist"
                 )
             }
         }

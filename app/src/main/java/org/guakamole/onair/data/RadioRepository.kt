@@ -227,8 +227,8 @@ object RadioRepository {
                                 country = R.string.country_france,
                                 popularity = 241,
                                 tags = "",
-                                metadataType = null,
-                                metadataParam = null
+                                metadataType = "radio_france",
+                                metadataParam = "7"
                         ),
                         RadioStation(
                                 id = "france_culture",
@@ -241,8 +241,22 @@ object RadioRepository {
                                 country = R.string.country_france,
                                 popularity = 13,
                                 tags = "",
-                                metadataType = null,
-                                metadataParam = null
+                                metadataType = "radio_france",
+                                metadataParam = "3"
+                        ),
+                        RadioStation(
+                                id = "franceinfo",
+                                name = "France Info",
+                                streamUrl = "https://icecast.radiofrance.fr/franceinfo-midfi.mp3",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/France_Info_2016.svg/200px-France_Info_2016.svg.png",
+                                logoResId = R.drawable.logo_franceinfo,
+                                description = "L'info en continu",
+                                genre = R.string.genre_news,
+                                country = R.string.country_france,
+                                popularity = 0,
+                                tags = "",
+                                metadataType = "radio_france",
+                                metadataParam = "2"
                         ),
                         RadioStation(
                                 id = "france_inter",
@@ -255,8 +269,8 @@ object RadioRepository {
                                 country = R.string.country_france,
                                 popularity = 11,
                                 tags = "",
-                                metadataType = null,
-                                metadataParam = null
+                                metadataType = "radio_france",
+                                metadataParam = "1"
                         ),
                         RadioStation(
                                 id = "france_musique",
@@ -269,22 +283,8 @@ object RadioRepository {
                                 country = R.string.country_france,
                                 popularity = 673,
                                 tags = "musique,radio france,public radio,aac",
-                                metadataType = null,
-                                metadataParam = null
-                        ),
-                        RadioStation(
-                                id = "franceinfo",
-                                name = "Franceinfo",
-                                streamUrl = "https://icecast.radiofrance.fr/franceinfo-midfi.mp3",
-                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/France_Info_2016.svg/200px-France_Info_2016.svg.png",
-                                logoResId = R.drawable.logo_franceinfo,
-                                description = "L'info en continu",
-                                genre = R.string.genre_news,
-                                country = R.string.country_france,
-                                popularity = 0,
-                                tags = "",
-                                metadataType = null,
-                                metadataParam = null
+                                metadataType = "radio_france",
+                                metadataParam = "4"
                         ),
                         RadioStation(
                                 id = "heart_uk",
@@ -549,8 +549,8 @@ object RadioRepository {
                                 country = R.string.country_france,
                                 popularity = 11,
                                 tags = "",
-                                metadataType = null,
-                                metadataParam = null
+                                metadataType = "radio_nova",
+                                metadataParam = "radio-nova"
                         ),
                         RadioStation(
                                 id = "radio_paradise",
