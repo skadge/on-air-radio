@@ -29,6 +29,7 @@
     <string name="region_asia">Asia</string>
     <string name="region">Región</string>
     <string name="style">Estilo</string>
+    <string name="back">Atrás</string>
 
     <!-- Countries -->
     <string name="country_uk">UK</string>

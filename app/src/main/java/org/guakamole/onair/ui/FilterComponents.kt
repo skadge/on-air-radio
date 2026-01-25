@@ -5,10 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Public
-import androidx.compose.material.icons.filled.Style
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -21,7 +18,6 @@ import androidx.compose.ui.unit.sp
 import org.guakamole.onair.data.FilterData
 import org.guakamole.onair.data.FilterItem
 import org.guakamole.onair.data.RadioStation
-import org.guakamole.onair.ui.theme.TagColors
 
 @Composable
 fun FilterBar(
@@ -105,6 +101,7 @@ fun FilterDropdown(
         modifier: Modifier = Modifier
 ) {
         var expanded by remember { mutableStateOf(false) }
+        var drillDownRegionId by remember { mutableStateOf<String?>(null) }
 
         Box(modifier = modifier) {
                 Surface(
@@ -175,87 +172,228 @@ fun FilterDropdown(
 
                 DropdownMenu(
                         expanded = expanded,
-                        onDismissRequest = { expanded = false },
+                        onDismissRequest = {
+                                expanded = false
+                                drillDownRegionId = null
+                        },
                         modifier =
                                 Modifier.width(220.dp).background(MaterialTheme.colorScheme.surface)
                 ) {
-                        items.forEach { item ->
-                                val isSelected =
-                                        selectedIds.contains(item.id) ||
-                                                (item.id == "world" && selectedIds.isEmpty())
-                                val count = itemCounts[item.id] ?: 0
+                        if (drillDownRegionId == null) {
+                                // Top level list (Regions and World)
+                                items
+                                        .filter {
+                                                (it.isRegion && it.id != "world") ||
+                                                        it.id == "world"
+                                        }
+                                        .forEach { item ->
+                                                val isSelected =
+                                                        selectedIds.contains(item.id) ||
+                                                                (item.id == "world" &&
+                                                                        selectedIds.isEmpty())
+                                                val count = itemCounts[item.id] ?: 0
 
+                                                DropdownMenuItem(
+                                                        text = {
+                                                                Row(
+                                                                        verticalAlignment =
+                                                                                Alignment
+                                                                                        .CenterVertically
+                                                                ) {
+                                                                        Text(
+                                                                                text =
+                                                                                        stringResource(
+                                                                                                item.nameRes
+                                                                                        ),
+                                                                                style =
+                                                                                        MaterialTheme
+                                                                                                .typography
+                                                                                                .bodyMedium,
+                                                                                modifier =
+                                                                                        Modifier.weight(
+                                                                                                1f
+                                                                                        )
+                                                                        )
+                                                                        Surface(
+                                                                                shape =
+                                                                                        RoundedCornerShape(
+                                                                                                10.dp
+                                                                                        ),
+                                                                                color =
+                                                                                        MaterialTheme
+                                                                                                .colorScheme
+                                                                                                .surfaceVariant
+                                                                                                .copy(
+                                                                                                        alpha =
+                                                                                                                0.7f
+                                                                                                ),
+                                                                                modifier =
+                                                                                        Modifier.padding(
+                                                                                                horizontal =
+                                                                                                        4.dp
+                                                                                        )
+                                                                        ) {
+                                                                                Text(
+                                                                                        text =
+                                                                                                count.toString(),
+                                                                                        style =
+                                                                                                MaterialTheme
+                                                                                                        .typography
+                                                                                                        .labelSmall
+                                                                                                        .copy(
+                                                                                                                fontSize =
+                                                                                                                        10.sp
+                                                                                                        ),
+                                                                                        color =
+                                                                                                MaterialTheme
+                                                                                                        .colorScheme
+                                                                                                        .onSurfaceVariant,
+                                                                                        modifier =
+                                                                                                Modifier.padding(
+                                                                                                        horizontal =
+                                                                                                                6.dp,
+                                                                                                        vertical =
+                                                                                                                2.dp
+                                                                                                )
+                                                                                )
+                                                                        }
+                                                                        Spacer(
+                                                                                modifier =
+                                                                                        Modifier.width(
+                                                                                                8.dp
+                                                                                        )
+                                                                        )
+                                                                        if (item.isRegion) {
+                                                                                Icon(
+                                                                                        imageVector =
+                                                                                                Icons.Default
+                                                                                                        .KeyboardArrowRight,
+                                                                                        contentDescription =
+                                                                                                null,
+                                                                                        modifier =
+                                                                                                Modifier.size(
+                                                                                                        18.dp
+                                                                                                ),
+                                                                                        tint =
+                                                                                                MaterialTheme
+                                                                                                        .colorScheme
+                                                                                                        .onSurfaceVariant
+                                                                                )
+                                                                        } else if (isSelected) {
+                                                                                Icon(
+                                                                                        imageVector =
+                                                                                                Icons.Default
+                                                                                                        .Check,
+                                                                                        contentDescription =
+                                                                                                null,
+                                                                                        modifier =
+                                                                                                Modifier.size(
+                                                                                                        18.dp
+                                                                                                ),
+                                                                                        tint =
+                                                                                                MaterialTheme
+                                                                                                        .colorScheme
+                                                                                                        .primary
+                                                                                )
+                                                                        }
+                                                                }
+                                                        },
+                                                        onClick = {
+                                                                if (item.isRegion) {
+                                                                        drillDownRegionId = item.id
+                                                                } else {
+                                                                        onSelectionChange(
+                                                                                setOf("world")
+                                                                        )
+                                                                        expanded = false
+                                                                }
+                                                        }
+                                                )
+                                        }
+                        } else {
+                                // Drill down level (Countries in a region)
+                                val currentRegion = items.find { it.id == drillDownRegionId }
+                                val context = androidx.compose.ui.platform.LocalContext.current
+                                val subItems =
+                                        remember(drillDownRegionId, items) {
+                                                items
+                                                        .filter { item ->
+                                                                currentRegion?.countries?.contains(
+                                                                        item.nameRes
+                                                                ) == true && !item.isRegion
+                                                        }
+                                                        .sortedBy { context.getString(it.nameRes) }
+                                        }
+
+                                // Region-level toggle at the top
                                 DropdownMenuItem(
                                         text = {
                                                 Row(
                                                         verticalAlignment =
                                                                 Alignment.CenterVertically
                                                 ) {
-                                                        if (showGenreDots && item.tag.isNotEmpty()
-                                                        ) {
-                                                                Box(
-                                                                        modifier =
-                                                                                Modifier.padding(
-                                                                                                end =
-                                                                                                        8.dp
-                                                                                        )
-                                                                                        .size(8.dp)
-                                                                                        .background(
-                                                                                                color =
-                                                                                                        TagColors
-                                                                                                                .getColorForTag(
-                                                                                                                        item.tag
-                                                                                                                ),
-                                                                                                shape =
-                                                                                                        RoundedCornerShape(
-                                                                                                                4.dp
-                                                                                                        )
-                                                                                        )
-                                                                )
-                                                        }
+                                                        Icon(
+                                                                imageVector =
+                                                                        Icons.Default.ArrowBack,
+                                                                contentDescription = null,
+                                                                modifier = Modifier.size(18.dp)
+                                                        )
+                                                        Spacer(modifier = Modifier.width(8.dp))
                                                         Text(
-                                                                text = stringResource(item.nameRes),
+                                                                text =
+                                                                        stringResource(
+                                                                                org.guakamole
+                                                                                        .onair
+                                                                                        .R
+                                                                                        .string
+                                                                                        .back
+                                                                        ),
                                                                 style =
                                                                         MaterialTheme.typography
-                                                                                .bodyMedium,
-                                                                modifier = Modifier.weight(1f)
-                                                        )
-                                                        Surface(
-                                                                shape = RoundedCornerShape(10.dp),
+                                                                                .labelLarge,
                                                                 color =
                                                                         MaterialTheme.colorScheme
-                                                                                .surfaceVariant
-                                                                                .copy(alpha = 0.7f),
-                                                                modifier =
-                                                                        Modifier.padding(
-                                                                                horizontal = 4.dp
-                                                                        )
-                                                        ) {
-                                                                Text(
-                                                                        text = count.toString(),
-                                                                        style =
-                                                                                MaterialTheme
-                                                                                        .typography
-                                                                                        .labelSmall
-                                                                                        .copy(
-                                                                                                fontSize =
-                                                                                                        10.sp
-                                                                                        ),
-                                                                        color =
-                                                                                MaterialTheme
-                                                                                        .colorScheme
-                                                                                        .onSurfaceVariant,
-                                                                        modifier =
-                                                                                Modifier.padding(
-                                                                                        horizontal =
-                                                                                                6.dp,
-                                                                                        vertical =
-                                                                                                2.dp
-                                                                                )
-                                                                )
-                                                        }
-                                                        Spacer(modifier = Modifier.width(8.dp))
-                                                        if (isSelected) {
+                                                                                .primary
+                                                        )
+                                                }
+                                        },
+                                        onClick = { drillDownRegionId = null }
+                                )
+
+                                Divider(
+                                        modifier = Modifier.padding(vertical = 4.dp),
+                                        color = MaterialTheme.colorScheme.outlineVariant
+                                )
+
+                                // The region itself option
+                                val regionIsSelected = selectedIds.contains(drillDownRegionId)
+                                DropdownMenuItem(
+                                        text = {
+                                                Row(
+                                                        verticalAlignment =
+                                                                Alignment.CenterVertically
+                                                ) {
+                                                        Text(
+                                                                text =
+                                                                        stringResource(
+                                                                                currentRegion
+                                                                                        ?.nameRes
+                                                                                        ?: 0
+                                                                        ),
+                                                                style =
+                                                                        MaterialTheme.typography
+                                                                                .bodyMedium.copy(
+                                                                                fontWeight =
+                                                                                        androidx.compose
+                                                                                                .ui
+                                                                                                .text
+                                                                                                .font
+                                                                                                .FontWeight
+                                                                                                .Bold
+                                                                        ),
+                                                                modifier = Modifier.weight(1f)
+                                                        )
+                                                        if (regionIsSelected) {
                                                                 Icon(
                                                                         imageVector =
                                                                                 Icons.Default.Check,
@@ -269,32 +407,130 @@ fun FilterDropdown(
                                                                                         .colorScheme
                                                                                         .primary
                                                                 )
-                                                        } else {
-                                                                Spacer(
-                                                                        modifier =
-                                                                                Modifier.width(
-                                                                                        18.dp
-                                                                                )
-                                                                )
                                                         }
                                                 }
                                         },
                                         onClick = {
                                                 val newSelection = selectedIds.toMutableSet()
-                                                if (item.id == "world") {
-                                                        newSelection.clear()
-                                                        newSelection.add("world")
+                                                newSelection.remove("world")
+                                                if (regionIsSelected) {
+                                                        newSelection.remove(drillDownRegionId!!)
                                                 } else {
+                                                        // Deselect children when selecting parent
+                                                        // for clarity
+                                                        subItems.forEach {
+                                                                newSelection.remove(it.id)
+                                                        }
+                                                        newSelection.add(drillDownRegionId!!)
+                                                }
+                                                onSelectionChange(newSelection)
+                                        }
+                                )
+
+                                subItems.forEach { item ->
+                                        val isSelected = selectedIds.contains(item.id)
+                                        val count = itemCounts[item.id] ?: 0
+
+                                        DropdownMenuItem(
+                                                text = {
+                                                        Row(
+                                                                verticalAlignment =
+                                                                        Alignment.CenterVertically
+                                                        ) {
+                                                                Text(
+                                                                        text =
+                                                                                stringResource(
+                                                                                        item.nameRes
+                                                                                ),
+                                                                        style =
+                                                                                MaterialTheme
+                                                                                        .typography
+                                                                                        .bodyMedium,
+                                                                        modifier =
+                                                                                Modifier.weight(1f)
+                                                                )
+                                                                Surface(
+                                                                        shape =
+                                                                                RoundedCornerShape(
+                                                                                        10.dp
+                                                                                ),
+                                                                        color =
+                                                                                MaterialTheme
+                                                                                        .colorScheme
+                                                                                        .surfaceVariant
+                                                                                        .copy(
+                                                                                                alpha =
+                                                                                                        0.7f
+                                                                                        ),
+                                                                        modifier =
+                                                                                Modifier.padding(
+                                                                                        horizontal =
+                                                                                                4.dp
+                                                                                )
+                                                                ) {
+                                                                        Text(
+                                                                                text =
+                                                                                        count.toString(),
+                                                                                style =
+                                                                                        MaterialTheme
+                                                                                                .typography
+                                                                                                .labelSmall
+                                                                                                .copy(
+                                                                                                        fontSize =
+                                                                                                                10.sp
+                                                                                                ),
+                                                                                color =
+                                                                                        MaterialTheme
+                                                                                                .colorScheme
+                                                                                                .onSurfaceVariant,
+                                                                                modifier =
+                                                                                        Modifier.padding(
+                                                                                                horizontal =
+                                                                                                        6.dp,
+                                                                                                vertical =
+                                                                                                        2.dp
+                                                                                        )
+                                                                        )
+                                                                }
+                                                                Spacer(
+                                                                        modifier =
+                                                                                Modifier.width(8.dp)
+                                                                )
+                                                                if (isSelected) {
+                                                                        Icon(
+                                                                                imageVector =
+                                                                                        Icons.Default
+                                                                                                .Check,
+                                                                                contentDescription =
+                                                                                        null,
+                                                                                modifier =
+                                                                                        Modifier.size(
+                                                                                                18.dp
+                                                                                        ),
+                                                                                tint =
+                                                                                        MaterialTheme
+                                                                                                .colorScheme
+                                                                                                .primary
+                                                                        )
+                                                                }
+                                                        }
+                                                },
+                                                onClick = {
+                                                        val newSelection =
+                                                                selectedIds.toMutableSet()
                                                         newSelection.remove("world")
+                                                        newSelection.remove(
+                                                                drillDownRegionId!!
+                                                        ) // Deselect parent when selecting child
                                                         if (isSelected) {
                                                                 newSelection.remove(item.id)
                                                         } else {
                                                                 newSelection.add(item.id)
                                                         }
+                                                        onSelectionChange(newSelection)
                                                 }
-                                                onSelectionChange(newSelection)
-                                        }
-                                )
+                                        )
+                                }
                         }
                 }
         }

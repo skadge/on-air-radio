@@ -32,6 +32,7 @@
     <string name="style">Style</string>
     <string name="filter_by_region">Filter by Region</string>
     <string name="filter_by_style">Filter by Style</string>
+    <string name="back">Back</string>
 
     <!-- Countries -->
     <string name="country_uk">UK</string>

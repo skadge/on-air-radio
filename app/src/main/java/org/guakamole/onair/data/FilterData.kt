@@ -8,7 +8,10 @@ data class FilterItem(
         val iconRes: Int? = null,
         val countries: List<Int> = emptyList(), // For regions
         val tag: String = "" // For style filters
-)
+) {
+        val isRegion: Boolean
+                get() = countries.isNotEmpty()
+}
 
 object FilterData {
         val regions =
