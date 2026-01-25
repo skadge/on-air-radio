@@ -26,6 +26,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import org.guakamole.onair.BuildConfig
 import org.guakamole.onair.R
 import org.guakamole.onair.data.FilterData
 import org.guakamole.onair.data.RadioRepository
@@ -429,15 +430,20 @@ fun SearchTopBar(
                                                         )
                                                 }
                                         }
-                                        IconButton(onClick = onPremiumClick) {
-                                                Icon(
-                                                        imageVector = Icons.Default.Star,
-                                                        contentDescription =
-                                                                stringResource(
-                                                                        R.string.premium_features
-                                                                ),
-                                                        tint = MaterialTheme.colorScheme.primary
-                                                )
+                                        if (!BuildConfig.IS_FDROID_BUILD) {
+                                                IconButton(onClick = onPremiumClick) {
+                                                        Icon(
+                                                                imageVector = Icons.Default.Star,
+                                                                contentDescription =
+                                                                        stringResource(
+                                                                                R.string
+                                                                                        .premium_features
+                                                                        ),
+                                                                tint =
+                                                                        MaterialTheme.colorScheme
+                                                                                .primary
+                                                        )
+                                                }
                                         }
                                 }
                         },
