@@ -56,9 +56,12 @@ fun RadioApp(
         var refreshTrigger by remember { mutableStateOf(0) }
         val stations = remember(refreshTrigger) { RadioRepository.stations }
 
-        var selectedRegions by remember { mutableStateOf(setOf<String>()) }
-        var selectedStyles by remember { mutableStateOf(setOf<String>()) }
+        var selectedRegions by remember { mutableStateOf(RadioRepository.getSelectedRegions()) }
+        var selectedStyles by remember { mutableStateOf(RadioRepository.getSelectedStyles()) }
         var searchQuery by remember { mutableStateOf("") }
+
+        LaunchedEffect(selectedRegions) { RadioRepository.setSelectedRegions(selectedRegions) }
+        LaunchedEffect(selectedStyles) { RadioRepository.setSelectedStyles(selectedStyles) }
 
         val filteredStations =
                 remember(stations, selectedRegions, selectedStyles, searchQuery) {

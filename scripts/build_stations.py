@@ -468,6 +468,8 @@ object RadioRepository {{
 
         private const val PREFS_NAME = "radio_prefs"
         private const val FAVORITES_KEY = "favorite_stations"
+        private const val REGIONS_KEY = "selected_regions"
+        private const val STYLES_KEY = "selected_styles"
         private var prefs: SharedPreferences? = null
         private val favoriteIds = mutableSetOf<String>()
 
@@ -507,6 +509,22 @@ object RadioRepository {{
                 }}
 
                 prefs?.edit()?.putStringSet(FAVORITES_KEY, favoriteIds)?.apply()
+        }}
+
+        fun getSelectedRegions(): Set<String> {{
+                return prefs?.getStringSet(REGIONS_KEY, emptySet()) ?: emptySet()
+        }}
+
+        fun setSelectedRegions(regions: Set<String>) {{
+                prefs?.edit()?.putStringSet(REGIONS_KEY, regions)?.apply()
+        }}
+
+        fun getSelectedStyles(): Set<String> {{
+                return prefs?.getStringSet(STYLES_KEY, emptySet()) ?: emptySet()
+        }}
+
+        fun setSelectedStyles(styles: Set<String>) {{
+                prefs?.edit()?.putStringSet(STYLES_KEY, styles)?.apply()
         }}
 
         fun getStationById(id: String): RadioStation? {{
