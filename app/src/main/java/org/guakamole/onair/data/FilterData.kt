@@ -52,7 +52,7 @@ object FilterData {
                         FilterItem("news", R.string.tag_news, tag = "news"),
                         FilterItem("talk", R.string.tag_talk, tag = "talk"),
                         FilterItem("ambient", R.string.tag_ambient, tag = "ambient"),
-                        FilterItem("world", R.string.tag_world, tag = "world"),
+                        FilterItem("worldmusic", R.string.tag_world, tag = "world"),
                         FilterItem("oldies", R.string.tag_oldies, tag = "oldies")
                 )
 

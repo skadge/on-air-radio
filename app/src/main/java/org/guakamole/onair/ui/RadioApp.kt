@@ -93,9 +93,7 @@ fun RadioApp(
                                         }
 
                                 val styleMatch =
-                                        if (selectedStyles.isEmpty() ||
-                                                        selectedStyles.contains("world")
-                                        ) {
+                                        if (selectedStyles.isEmpty()) {
                                                 true
                                         } else {
                                                 selectedStyles.any { styleId ->
