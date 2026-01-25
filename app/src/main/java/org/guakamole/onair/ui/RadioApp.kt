@@ -33,7 +33,8 @@ import org.guakamole.onair.data.RadioStation
 
 enum class Screen {
         StationList,
-        NowPlaying
+        NowPlaying,
+        Premium
 }
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
@@ -138,7 +139,8 @@ fun RadioApp(
                                 Column {
                                         SearchTopBar(
                                                 query = searchQuery,
-                                                onQueryChange = { searchQuery = it }
+                                                onQueryChange = { searchQuery = it },
+                                                onPremiumClick = { currentScreen = Screen.Premium }
                                         )
                                         FilterBar(
                                                 selectedRegions = selectedRegions,
@@ -230,6 +232,11 @@ fun RadioApp(
                                                 onBackToList = {
                                                         currentScreen = Screen.StationList
                                                 }
+                                        )
+                                }
+                                Screen.Premium -> {
+                                        PremiumScreen(
+                                                onBack = { currentScreen = Screen.StationList }
                                         )
                                 }
                         }
@@ -349,7 +356,12 @@ fun MiniPlayer(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchTopBar(query: String, onQueryChange: (String) -> Unit, modifier: Modifier = Modifier) {
+fun SearchTopBar(
+        query: String,
+        onQueryChange: (String) -> Unit,
+        onPremiumClick: () -> Unit = {},
+        modifier: Modifier = Modifier
+) {
         val gradient =
                 Brush.verticalGradient(
                         colors =
@@ -388,14 +400,26 @@ fun SearchTopBar(query: String, onQueryChange: (String) -> Unit, modifier: Modif
                                 )
                         },
                         trailingIcon = {
-                                if (query.isNotEmpty()) {
-                                        IconButton(onClick = { onQueryChange("") }) {
+                                Row {
+                                        if (query.isNotEmpty()) {
+                                                IconButton(onClick = { onQueryChange("") }) {
+                                                        Icon(
+                                                                imageVector = Icons.Default.Close,
+                                                                contentDescription = "Clear search",
+                                                                tint =
+                                                                        MaterialTheme.colorScheme
+                                                                                .onSurfaceVariant
+                                                        )
+                                                }
+                                        }
+                                        IconButton(onClick = onPremiumClick) {
                                                 Icon(
-                                                        imageVector = Icons.Default.Close,
-                                                        contentDescription = "Clear search",
-                                                        tint =
-                                                                MaterialTheme.colorScheme
-                                                                        .onSurfaceVariant
+                                                        imageVector = Icons.Default.Star,
+                                                        contentDescription =
+                                                                stringResource(
+                                                                        R.string.premium_features
+                                                                ),
+                                                        tint = MaterialTheme.colorScheme.primary
                                                 )
                                         }
                                 }

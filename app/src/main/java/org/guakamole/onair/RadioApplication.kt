@@ -6,6 +6,7 @@ import coil.ImageLoaderFactory
 import coil.decode.SvgDecoder
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
+import org.guakamole.onair.billing.PremiumManager
 import org.guakamole.onair.data.RadioRepository
 
 class RadioApplication : Application(), ImageLoaderFactory {
@@ -13,6 +14,7 @@ class RadioApplication : Application(), ImageLoaderFactory {
     override fun onCreate() {
         super.onCreate()
         RadioRepository.initialize(this)
+        PremiumManager.getInstance(this) // Initialize billing
     }
 
     override fun newImageLoader(): ImageLoader {

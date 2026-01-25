@@ -62,4 +62,19 @@
     <string name="favorites">Favorites</string>
     <string name="all_stations">All Stations</string>
     <string name="search_stations">Search stations...</string>
+
+    <!-- Premium -->
+    <string name="premium_unlock">Unlock Premium</string>
+    <string name="premium_features">Premium Features</string>
+    <string name="premium_android_auto">Android Auto Support</string>
+    <string name="premium_android_auto_desc">Listen to your favorite stations in your car with Android Auto integration</string>
+    <string name="premium_required">Premium Required</string>
+    <string name="premium_required_desc">Upgrade to Premium to access Android Auto</string>
+    <string name="premium_purchase">Purchase</string>
+    <string name="premium_restore">Restore Purchase</string>
+    <string name="premium_already_owned">Premium Unlocked!</string>
+    <string name="premium_loading">Loading…</string>
+    <string name="premium_error">Could not connect to store</string>
+    <string name="premium_debug_enabled">Debug Premium: ON</string>
+    <string name="premium_debug_disabled">Debug Premium: OFF</string>
 </resources>

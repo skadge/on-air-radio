@@ -30,6 +30,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import org.guakamole.onair.MainActivity
+import org.guakamole.onair.billing.PremiumManager
 import org.guakamole.onair.data.RadioRepository
 import org.guakamole.onair.data.RadioStation
 
@@ -45,6 +46,8 @@ class RadioPlaybackService : MediaLibraryService() {
     companion object {
         private const val ROOT_ID = "root"
         private const val STATIONS_ID = "stations"
+        private const val PREMIUM_REQUIRED_ID = "premium_required"
+        private const val ANDROID_AUTO_PACKAGE = "com.google.android.projection.gearhead"
     }
 
     override fun onCreate() {
@@ -273,6 +276,11 @@ class RadioPlaybackService : MediaLibraryService() {
             return Futures.immediateFuture(LibraryResult.ofItem(rootItem, params))
         }
 
+        /** Check if the connecting client is Android Auto. */
+        private fun isAndroidAuto(controller: MediaSession.ControllerInfo): Boolean {
+            return controller.packageName == ANDROID_AUTO_PACKAGE
+        }
+
         override fun onGetChildren(
                 session: MediaLibrarySession,
                 browser: MediaSession.ControllerInfo,
@@ -281,6 +289,46 @@ class RadioPlaybackService : MediaLibraryService() {
                 pageSize: Int,
                 params: LibraryParams?
         ): ListenableFuture<LibraryResult<ImmutableList<MediaItem>>> {
+            // Gate Android Auto access for non-premium users
+            val isPremium = PremiumManager.getInstance(this@RadioPlaybackService).isPremium.value
+            val isAutoClient = isAndroidAuto(browser)
+
+            if (isAutoClient && !isPremium) {
+                // Return a "Premium Required" placeholder for Android Auto
+                val premiumItem =
+                        MediaItem.Builder()
+                                .setMediaId(PREMIUM_REQUIRED_ID)
+                                .setMediaMetadata(
+                                        MediaMetadata.Builder()
+                                                .setIsBrowsable(false)
+                                                .setIsPlayable(false)
+                                                .setMediaType(MediaMetadata.MEDIA_TYPE_MIXED)
+                                                .setTitle(
+                                                        getString(
+                                                                org.guakamole
+                                                                        .onair
+                                                                        .R
+                                                                        .string
+                                                                        .premium_required
+                                                        )
+                                                )
+                                                .setSubtitle(
+                                                        getString(
+                                                                org.guakamole
+                                                                        .onair
+                                                                        .R
+                                                                        .string
+                                                                        .premium_required_desc
+                                                        )
+                                                )
+                                                .build()
+                                )
+                                .build()
+                return Futures.immediateFuture(
+                        LibraryResult.ofItemList(ImmutableList.of(premiumItem), params)
+                )
+            }
+
             val children =
                     when (parentId) {
                         ROOT_ID -> {

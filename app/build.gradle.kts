@@ -66,6 +66,7 @@ android {
     
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     
     composeOptions {
@@ -105,6 +106,9 @@ dependencies {
     // Image loading
     implementation("io.coil-kt:coil-compose:2.4.0")
     implementation("io.coil-kt:coil-svg:2.4.0")
+    
+    // Google Play Billing
+    implementation("com.android.billingclient:billing-ktx:7.1.1")
     
     // Testing
     testImplementation("junit:junit:4.13.2")
