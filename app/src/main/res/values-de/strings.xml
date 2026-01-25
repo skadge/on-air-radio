@@ -47,6 +47,7 @@
     <string name="tag_world">Weltmusik</string>
     <string name="tag_oldies">Oldies</string>
     <string name="search_stations">Sender suchen...</string>
+    <string name="no_stations_found">Keine Sender entsprechen Ihren aktuellen Filtern.</string>
     <string name="favorites">Favoriten</string>
     <string name="all_stations">Alle Sender</string>
 </resources>

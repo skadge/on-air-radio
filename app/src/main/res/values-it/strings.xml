@@ -47,6 +47,7 @@
     <string name="tag_world">World</string>
     <string name="tag_oldies">Oldies</string>
     <string name="search_stations">Cerca stazioni...</string>
+    <string name="no_stations_found">Nessuna stazione corrisponde ai filtri selezionati.</string>
     <string name="favorites">Preferiti</string>
     <string name="all_stations">Tutte le stazioni</string>
 </resources>

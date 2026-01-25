@@ -45,8 +45,20 @@ fun StationListScreen(
         onFavoriteToggle: (RadioStation) -> Unit,
         modifier: Modifier = Modifier
 ) {
-        val gridState = rememberLazyGridState()
+        if (stations.isEmpty()) {
+                Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Text(
+                                text = stringResource(R.string.no_stations_found),
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.padding(32.dp),
+                                textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                        )
+                }
+                return
+        }
 
+        val gridState = rememberLazyGridState()
         val (favorites, others) = stations.partition { it.isFavorite }
         val hasFavorites = favorites.isNotEmpty()
 
