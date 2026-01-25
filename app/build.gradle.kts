@@ -55,6 +55,19 @@ android {
         }
     }
     
+    flavorDimensions += "distribution"
+    productFlavors {
+        create("playstore") {
+            dimension = "distribution"
+            buildConfigField("boolean", "IS_FDROID_BUILD", "false")
+        }
+        create("fdroid") {
+            dimension = "distribution"
+            applicationIdSuffix = ".fdroid"
+            buildConfigField("boolean", "IS_FDROID_BUILD", "true")
+        }
+    }
+    
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
