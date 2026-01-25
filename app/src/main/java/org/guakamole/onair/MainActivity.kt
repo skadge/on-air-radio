@@ -39,6 +39,7 @@ class MainActivity : ComponentActivity() {
             var isPlaying by remember { mutableStateOf(false) }
             var isBuffering by remember { mutableStateOf(false) }
             var currentTitle by remember { mutableStateOf<String?>(null) }
+            var currentArtist by remember { mutableStateOf<String?>(null) }
 
             // Setup player listener
             DisposableEffect(Unit) {
@@ -59,6 +60,7 @@ class MainActivity : ComponentActivity() {
                             override fun onMediaMetadataChanged(metadata: MediaMetadata) {
                                 // Stream metadata (song title) from ICY headers
                                 currentTitle = metadata.title?.toString()
+                                currentArtist = metadata.artist?.toString()
                                 android.util.Log.d(
                                         "MetadataDebug",
                                         "Main: Metadata received. Title: $currentTitle"
@@ -78,6 +80,7 @@ class MainActivity : ComponentActivity() {
                     isPlaying = controller.isPlaying
                     isBuffering = controller.playbackState == Player.STATE_BUFFERING
                     currentTitle = controller.currentMediaItem?.mediaMetadata?.title?.toString()
+                    currentArtist = controller.currentMediaItem?.mediaMetadata?.artist?.toString()
                 }
             }
 
@@ -87,6 +90,7 @@ class MainActivity : ComponentActivity() {
                         isPlaying = isPlaying,
                         isBuffering = isBuffering,
                         currentTitle = currentTitle,
+                        currentArtist = currentArtist,
                         onStationSelect = { station -> playStation(station) },
                         onPlayPause = {
                             mediaController?.let { controller ->
@@ -159,6 +163,12 @@ class MainActivity : ComponentActivity() {
                                             ?.toString()
                             )
                         }
+                        var currentArtist by remember {
+                            mutableStateOf(
+                                    mediaController?.currentMediaItem?.mediaMetadata?.artist
+                                            ?.toString()
+                            )
+                        }
 
                         DisposableEffect(mediaController) {
                             val listener =
@@ -182,6 +192,7 @@ class MainActivity : ComponentActivity() {
                                                 metadata: MediaMetadata
                                         ) {
                                             currentTitle = metadata.title?.toString()
+                                            currentArtist = metadata.artist?.toString()
                                         }
                                     }
 
@@ -196,6 +207,7 @@ class MainActivity : ComponentActivity() {
                                     isPlaying = isPlaying,
                                     isBuffering = isBuffering,
                                     currentTitle = currentTitle,
+                                    currentArtist = currentArtist,
                                     onStationSelect = { station -> playStation(station) },
                                     onPlayPause = {
                                         mediaController?.let { controller ->

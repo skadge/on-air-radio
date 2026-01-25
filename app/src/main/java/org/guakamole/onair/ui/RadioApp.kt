@@ -44,6 +44,7 @@ fun RadioApp(
         isPlaying: Boolean,
         isBuffering: Boolean,
         currentTitle: String?,
+        currentArtist: String?,
         onStationSelect: (RadioStation) -> Unit,
         onPlayPause: () -> Unit,
         onStop: () -> Unit,
@@ -162,6 +163,7 @@ fun RadioApp(
                                         isPlaying = isPlaying,
                                         isBuffering = isBuffering,
                                         currentTitle = currentTitle,
+                                        currentArtist = currentArtist,
                                         onPlayPause = onPlayPause,
                                         onClick = { currentScreen = Screen.NowPlaying }
                                 )
@@ -219,6 +221,7 @@ fun RadioApp(
                                                 isPlaying = isPlaying,
                                                 isBuffering = isBuffering,
                                                 currentTitle = currentTitle,
+                                                currentArtist = currentArtist,
                                                 previousStationName = prevStation?.name,
                                                 nextStationName = nextStation?.name,
                                                 onPlayPause = onPlayPause,
@@ -254,6 +257,7 @@ fun MiniPlayer(
         isPlaying: Boolean,
         isBuffering: Boolean,
         currentTitle: String?,
+        currentArtist: String?,
         onPlayPause: () -> Unit,
         onClick: () -> Unit,
         modifier: Modifier = Modifier
@@ -312,7 +316,13 @@ fun MiniPlayer(
                                         if (!currentTitle.isNullOrBlank() &&
                                                         currentTitle != station.name
                                         ) {
-                                                currentTitle
+                                                if (!currentArtist.isNullOrBlank() &&
+                                                                currentArtist != station.name
+                                                ) {
+                                                        "$currentArtist - $currentTitle"
+                                                } else {
+                                                        currentTitle
+                                                }
                                         } else {
                                                 stringResource(station.country)
                                         }

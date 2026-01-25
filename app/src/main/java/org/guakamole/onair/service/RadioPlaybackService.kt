@@ -28,14 +28,22 @@ import com.google.common.collect.ImmutableList
 import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
 import java.io.ByteArrayOutputStream
+import java.net.HttpURLConnection
+import java.net.URL
+import java.util.Scanner
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.guakamole.onair.MainActivity
 import org.guakamole.onair.billing.PremiumManager
 import org.guakamole.onair.data.RadioRepository
 import org.guakamole.onair.data.RadioStation
+import org.json.JSONObject
 
 /** Media playback service that supports both in-app playback and Android Auto */
 @OptIn(UnstableApi::class)
@@ -45,6 +53,18 @@ class RadioPlaybackService : MediaLibraryService() {
     private var mediaLibrarySession: MediaLibrarySession? = null
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     private lateinit var imageLoader: ImageLoader
+    private var metadataPollingJob: Job? = null
+    private var currentPollingRmsId: String? = null
+
+    private val bbcRmsIdMap =
+            mapOf(
+                    "bbc_radio_1" to "bbc_radio_one",
+                    "bbc_radio_2" to "bbc_radio_two",
+                    "bbc_radio_3" to "bbc_radio_three",
+                    "bbc_radio_4" to "bbc_radio_fourfm",
+                    "bbc_radio_5_live" to "bbc_radio_five_live",
+                    "bbc_6music" to "bbc_6music"
+            )
 
     companion object {
         private const val ROOT_ID = "root"
@@ -86,22 +106,31 @@ class RadioPlaybackService : MediaLibraryService() {
                         .setHandleAudioBecomingNoisy(true)
                         .build()
 
+        // Removed: exoPlayer.addAnalyticsListener(EventLogger())
+
         exoPlayer.addListener(
                 object : Player.Listener {
                     override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
                         mediaItem?.mediaMetadata?.artworkUri?.let { uri -> loadAndSetArtwork(uri) }
+                        startMetadataPolling(mediaItem?.mediaId)
                     }
 
                     override fun onMediaMetadataChanged(mediaMetadata: MediaMetadata) {
                         android.util.Log.d(
                                 "MetadataDebug",
-                                "Service: onMediaMetadataChanged: title=${mediaMetadata.title}"
+                                "Service: onMediaMetadataChanged: title=${mediaMetadata.title}, artist=${mediaMetadata.artist}"
                         )
                     }
 
                     override fun onMetadata(metadata: androidx.media3.common.Metadata) {
                         for (i in 0 until metadata.length()) {
                             val entry = metadata.get(i)
+                            // Broad diagnostic logging for ALL metadata types
+                            android.util.Log.d(
+                                    "MetadataDebug",
+                                    "Service: Received metadata entry: type=${entry::class.java.simpleName}, content=$entry"
+                            )
+
                             if (entry is androidx.media3.extractor.metadata.icy.IcyInfo) {
                                 val icyTitle = entry.title
                                 if (!icyTitle.isNullOrBlank()) {
@@ -133,46 +162,6 @@ class RadioPlaybackService : MediaLibraryService() {
                         }
                     }
 
-                    private fun updatePlayerMetadata(titleArg: String?, artistArg: String?) {
-                        player?.let { p ->
-                            val currentItem = p.currentMediaItem ?: return@let
-                            val newTitle = titleArg ?: currentItem.mediaMetadata.title.toString()
-
-                            // Check if anything actually changed to avoid infinite loops or
-                            // redundant updates
-                            if (currentItem.mediaMetadata.title != newTitle ||
-                                            (artistArg != null &&
-                                                    currentItem.mediaMetadata.artist != artistArg)
-                            ) {
-                                val station = RadioRepository.getStationById(currentItem.mediaId)
-                                val artist =
-                                        artistArg
-                                                ?: station?.name ?: currentItem.mediaMetadata.artist
-
-                                val newMetadata =
-                                        currentItem
-                                                .mediaMetadata
-                                                .buildUpon()
-                                                .setTitle(newTitle)
-                                                .setArtist(artist)
-                                                .setSubtitle(artist)
-                                                .build()
-
-                                val newItem =
-                                        currentItem
-                                                .buildUpon()
-                                                .setMediaMetadata(newMetadata)
-                                                .build()
-
-                                p.setMediaItem(newItem, /* resetPosition= */ false)
-                                android.util.Log.d(
-                                        "MetadataDebug",
-                                        "Service: Updated MediaItem: Title=$newTitle, Artist=$artist"
-                                )
-                            }
-                        }
-                    }
-
                     override fun onPlayerError(error: androidx.media3.common.PlaybackException) {
                         android.util.Log.e(
                                 "RadioPlaybackService",
@@ -184,6 +173,109 @@ class RadioPlaybackService : MediaLibraryService() {
         )
 
         player = exoPlayer
+    }
+
+    private fun updatePlayerMetadata(titleArg: String?, artistArg: String?) {
+        player?.let { p ->
+            val currentItem = p.currentMediaItem ?: return@let
+            val newTitle = titleArg ?: currentItem.mediaMetadata.title.toString()
+
+            // Check if anything actually changed to avoid infinite loops or
+            // redundant updates
+            if (currentItem.mediaMetadata.title != newTitle ||
+                            (artistArg != null && currentItem.mediaMetadata.artist != artistArg)
+            ) {
+                val station = RadioRepository.getStationById(currentItem.mediaId)
+                val artist = artistArg ?: station?.name ?: currentItem.mediaMetadata.artist
+
+                val newMetadata =
+                        currentItem
+                                .mediaMetadata
+                                .buildUpon()
+                                .setTitle(newTitle)
+                                .setArtist(artist)
+                                .setSubtitle(artist)
+                                .build()
+
+                val newItem = currentItem.buildUpon().setMediaMetadata(newMetadata).build()
+
+                p.setMediaItem(newItem, /* resetPosition= */ false)
+                android.util.Log.d(
+                        "MetadataDebug",
+                        "Service: Updated MediaItem: Title=$newTitle, Artist=$artist"
+                )
+            }
+        }
+    }
+
+    private fun startMetadataPolling(stationId: String?) {
+        val rmsId = bbcRmsIdMap[stationId]
+        if (rmsId == null) {
+            metadataPollingJob?.cancel()
+            currentPollingRmsId = null
+            return
+        }
+
+        // If we're already polling this station, don't restart
+        if (rmsId == currentPollingRmsId && metadataPollingJob?.isActive == true) {
+            return
+        }
+
+        metadataPollingJob?.cancel()
+        currentPollingRmsId = rmsId
+
+        android.util.Log.d("MetadataDebug", "Starting metadata polling for BBC: $rmsId")
+        metadataPollingJob =
+                serviceScope.launch(Dispatchers.IO) {
+                    while (true) {
+                        try {
+                            val url =
+                                    URL(
+                                            "https://rms.api.bbc.co.uk/v2/services/$rmsId/segments/latest"
+                                    )
+                            val connection = url.openConnection() as HttpURLConnection
+                            connection.requestMethod = "GET"
+                            connection.connectTimeout = 5000
+                            connection.readTimeout = 5000
+
+                            if (connection.responseCode == 200) {
+                                val response =
+                                        Scanner(connection.inputStream).useDelimiter("\\A").next()
+                                val json = JSONObject(response)
+                                val dataArray = json.getJSONArray("data")
+                                if (dataArray.length() > 0) {
+                                    val latest = dataArray.getJSONObject(0)
+                                    if (latest.optJSONObject("offset")?.optBoolean("now_playing") ==
+                                                    true
+                                    ) {
+                                        val titles = latest.getJSONObject("titles")
+                                        val artist = titles.optString("primary")
+                                        val title = titles.optString("secondary")
+
+                                        if (!title.isNullOrBlank()) {
+                                            withContext(Dispatchers.Main) {
+                                                android.util.Log.d(
+                                                        "MetadataDebug",
+                                                        "Polled metadata: $artist - $title"
+                                                )
+                                                updatePlayerMetadata(
+                                                        title,
+                                                        if (artist.isNullOrBlank()) null else artist
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        } catch (e: kotlinx.coroutines.CancellationException) {
+                            // Normal when changing stations or updating metadata
+                            throw e
+                        } catch (e: Exception) {
+                            android.util.Log.e("MetadataDebug", "Error polling BBC metadata", e)
+                        }
+                        delay(5000)
+                    }
+                }
     }
 
     private fun loadAndSetArtwork(uri: Uri) {
@@ -248,6 +340,8 @@ class RadioPlaybackService : MediaLibraryService() {
     }
 
     override fun onDestroy() {
+        metadataPollingJob?.cancel()
+        serviceScope.cancel()
         mediaLibrarySession?.run {
             player?.release()
             release()

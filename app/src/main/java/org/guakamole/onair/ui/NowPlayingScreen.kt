@@ -35,6 +35,7 @@ fun NowPlayingScreen(
         isPlaying: Boolean,
         isBuffering: Boolean,
         currentTitle: String?,
+        currentArtist: String?,
         previousStationName: String?,
         nextStationName: String?,
         onPlayPause: () -> Unit,
@@ -263,21 +264,44 @@ fun NowPlayingScreen(
                                                         modifier = Modifier.size(24.dp)
                                                 )
                                                 Spacer(modifier = Modifier.width(12.dp))
-                                                Text(
-                                                        text = currentTitle ?: "",
-                                                        style =
-                                                                MaterialTheme.typography.bodyMedium
-                                                                        .copy(
+                                                Column {
+                                                        Text(
+                                                                text = currentTitle ?: "",
+                                                                style =
+                                                                        MaterialTheme.typography
+                                                                                .bodyLarge.copy(
                                                                                 fontWeight =
                                                                                         FontWeight
-                                                                                                .Medium
+                                                                                                .Bold
                                                                         ),
-                                                        color =
-                                                                MaterialTheme.colorScheme
-                                                                        .onSecondaryContainer,
-                                                        maxLines = 2,
-                                                        overflow = TextOverflow.Ellipsis
-                                                )
+                                                                color =
+                                                                        MaterialTheme.colorScheme
+                                                                                .onSecondaryContainer,
+                                                                maxLines = 1,
+                                                                overflow = TextOverflow.Ellipsis
+                                                        )
+                                                        if (!currentArtist.isNullOrBlank()) {
+                                                                Text(
+                                                                        text = currentArtist,
+                                                                        style =
+                                                                                MaterialTheme
+                                                                                        .typography
+                                                                                        .bodySmall,
+                                                                        color =
+                                                                                MaterialTheme
+                                                                                        .colorScheme
+                                                                                        .onSecondaryContainer
+                                                                                        .copy(
+                                                                                                alpha =
+                                                                                                        0.7f
+                                                                                        ),
+                                                                        maxLines = 1,
+                                                                        overflow =
+                                                                                TextOverflow
+                                                                                        .Ellipsis
+                                                                )
+                                                        }
+                                                }
                                         }
                                 }
                         }
