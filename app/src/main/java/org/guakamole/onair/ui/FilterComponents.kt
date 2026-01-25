@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.guakamole.onair.data.FilterData
 import org.guakamole.onair.data.FilterItem
+import org.guakamole.onair.data.RadioStation
 import org.guakamole.onair.ui.theme.TagColors
 
 @Composable
@@ -28,8 +29,42 @@ fun FilterBar(
         onRegionsChange: (Set<String>) -> Unit,
         selectedStyles: Set<String>,
         onStylesChange: (Set<String>) -> Unit,
+        stations: List<RadioStation> = emptyList(),
         modifier: Modifier = Modifier
 ) {
+        // Calculate region counts
+        val regionCounts =
+                remember(stations) {
+                        FilterData.regions.associate { item ->
+                                val count =
+                                        if (item.id == "world") {
+                                                stations.size
+                                        } else {
+                                                val countries =
+                                                        FilterData.getCountriesForFilter(item)
+                                                stations.count { station ->
+                                                        countries.contains(station.country)
+                                                }
+                                        }
+                                item.id to count
+                        }
+                }
+
+        // Calculate style counts
+        val styleCounts =
+                remember(stations) {
+                        FilterData.styles.associate { item ->
+                                val count =
+                                        stations.count { station ->
+                                                station.tags.contains(
+                                                        item.tag,
+                                                        ignoreCase = true
+                                                ) || station.primaryTag == item.tag
+                                        }
+                                item.id to count
+                        }
+                }
+
         Row(
                 modifier = modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -41,6 +76,7 @@ fun FilterBar(
                         items = FilterData.regions,
                         selectedIds = selectedRegions,
                         onSelectionChange = onRegionsChange,
+                        itemCounts = regionCounts,
                         modifier = Modifier.weight(1f)
                 )
 
@@ -51,6 +87,7 @@ fun FilterBar(
                         selectedIds = selectedStyles,
                         onSelectionChange = onStylesChange,
                         showGenreDots = true,
+                        itemCounts = styleCounts,
                         modifier = Modifier.weight(1f)
                 )
         }
@@ -64,6 +101,7 @@ fun FilterDropdown(
         selectedIds: Set<String>,
         onSelectionChange: (Set<String>) -> Unit,
         showGenreDots: Boolean = false,
+        itemCounts: Map<String, Int> = emptyMap(),
         modifier: Modifier = Modifier
 ) {
         var expanded by remember { mutableStateOf(false) }
@@ -139,12 +177,13 @@ fun FilterDropdown(
                         expanded = expanded,
                         onDismissRequest = { expanded = false },
                         modifier =
-                                Modifier.width(200.dp).background(MaterialTheme.colorScheme.surface)
+                                Modifier.width(220.dp).background(MaterialTheme.colorScheme.surface)
                 ) {
                         items.forEach { item ->
                                 val isSelected =
                                         selectedIds.contains(item.id) ||
                                                 (item.id == "world" && selectedIds.isEmpty())
+                                val count = itemCounts[item.id] ?: 0
 
                                 DropdownMenuItem(
                                         text = {
@@ -181,6 +220,41 @@ fun FilterDropdown(
                                                                                 .bodyMedium,
                                                                 modifier = Modifier.weight(1f)
                                                         )
+                                                        Surface(
+                                                                shape = RoundedCornerShape(10.dp),
+                                                                color =
+                                                                        MaterialTheme.colorScheme
+                                                                                .surfaceVariant
+                                                                                .copy(alpha = 0.7f),
+                                                                modifier =
+                                                                        Modifier.padding(
+                                                                                horizontal = 4.dp
+                                                                        )
+                                                        ) {
+                                                                Text(
+                                                                        text = count.toString(),
+                                                                        style =
+                                                                                MaterialTheme
+                                                                                        .typography
+                                                                                        .labelSmall
+                                                                                        .copy(
+                                                                                                fontSize =
+                                                                                                        10.sp
+                                                                                        ),
+                                                                        color =
+                                                                                MaterialTheme
+                                                                                        .colorScheme
+                                                                                        .onSurfaceVariant,
+                                                                        modifier =
+                                                                                Modifier.padding(
+                                                                                        horizontal =
+                                                                                                6.dp,
+                                                                                        vertical =
+                                                                                                2.dp
+                                                                                )
+                                                                )
+                                                        }
+                                                        Spacer(modifier = Modifier.width(8.dp))
                                                         if (isSelected) {
                                                                 Icon(
                                                                         imageVector =
@@ -194,6 +268,13 @@ fun FilterDropdown(
                                                                                 MaterialTheme
                                                                                         .colorScheme
                                                                                         .primary
+                                                                )
+                                                        } else {
+                                                                Spacer(
+                                                                        modifier =
+                                                                                Modifier.width(
+                                                                                        18.dp
+                                                                                )
                                                                 )
                                                         }
                                                 }
@@ -212,16 +293,6 @@ fun FilterDropdown(
                                                         }
                                                 }
                                                 onSelectionChange(newSelection)
-                                                // Immediate update is requested, so we don't close
-                                                // until clicked
-                                                // outside or manual choice
-                                                // but let's close for better UX or stay open for
-                                                // multi-select?
-                                                // The user said "as soon as I click eg a region,
-                                                // the list of visible
-                                                // stations immediately updates."
-                                                // Let's keep it open for multi-select but it
-                                                // updates the background.
                                         }
                                 )
                         }

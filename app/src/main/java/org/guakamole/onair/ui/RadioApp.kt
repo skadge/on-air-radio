@@ -158,7 +158,8 @@ fun RadioApp(
                                                 selectedRegions = selectedRegions,
                                                 onRegionsChange = { selectedRegions = it },
                                                 selectedStyles = selectedStyles,
-                                                onStylesChange = { selectedStyles = it }
+                                                onStylesChange = { selectedStyles = it },
+                                                stations = stations
                                         )
                                 }
                         }

@@ -23,8 +23,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -164,15 +167,35 @@ fun StationCard(
                         )
 
                         if (station.tags.isNotEmpty()) {
-                                val translatedTags =
-                                        station.tags
-                                                .split(",")
-                                                .map { tag -> translateTag(tag.trim()) }
-                                                .joinToString(" • ")
+                                val allTags = station.tags.split(",").map { it.trim() }
+                                // Put primary tag first, then other tags sorted
+                                val sortedTags =
+                                        if (station.primaryTag.isNotEmpty()) {
+                                                listOf(station.primaryTag) +
+                                                        allTags.filter { it != station.primaryTag }
+                                        } else {
+                                                allTags
+                                        }
+
+                                val annotatedText = buildAnnotatedString {
+                                        sortedTags.forEachIndexed { index, tag ->
+                                                if (index > 0) append(" • ")
+                                                if (tag == station.primaryTag) {
+                                                        withStyle(
+                                                                SpanStyle(
+                                                                        fontWeight = FontWeight.Bold
+                                                                )
+                                                        ) { append(translateTag(tag)) }
+                                                } else {
+                                                        append(translateTag(tag))
+                                                }
+                                        }
+                                }
+
                                 Text(
-                                        text = translatedTags,
+                                        text = annotatedText,
                                         style = MaterialTheme.typography.labelSmall,
-                                        color = Color.White.copy(alpha = 0.6f),
+                                        color = Color.White.copy(alpha = 0.7f),
                                         modifier =
                                                 Modifier.padding(start = 12.dp, top = 64.dp)
                                                         .align(Alignment.TopStart)
