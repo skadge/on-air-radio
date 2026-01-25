@@ -1,6 +1,6 @@
 // AUTO-GENERATED from stations.yaml - DO NOT EDIT MANUALLY
 // Run: ./gradlew buildStations (or python scripts/build_stations.py)
-// Generated with 243 stations
+// Generated with 225 stations
 
 package org.guakamole.onair.data
 
@@ -101,20 +101,6 @@ object RadioRepository {
                                 country = R.string.country_switzerland,
                                 popularity = 345,
                                 tags = "classical",
-                                metadataType = null,
-                                metadataParam = null
-                        ),
-                        RadioStation(
-                                id = "1live",
-                                name = "1LIVE",
-                                streamUrl = "http://wdr-edge-200e-dus-lg-cdn.cast.addradio.de/wdr/1live/live/mp3/128/stream.mp3?_art=dj0yJmlwPTkxLjEzMi4xNDUuMTE0JmlkPWljc2N4bC01cG0yM3ZkbmImdD0xNjAzNTYxOTU0JnM9Nzg2NmYyOWMjODczOWRmMTQ3ZjQ0NGRiNDBkNWFhZjVjMGQ4OTZiNTk",
-                                logoUrl = "https://www1.wdr.de/radio/1live/1live-logo-schwarz-100~_v-gseagaleriexl.jpg",
-                                logoResId = 0,
-                                description = "1LIVE from Germany",
-                                primaryTag = "rock",
-                                country = R.string.country_germany,
-                                popularity = 3122,
-                                tags = "rock",
                                 metadataType = null,
                                 metadataParam = null
                         ),
@@ -371,20 +357,6 @@ object RadioRepository {
                                 metadataParam = "bbc_radio_one"
                         ),
                         RadioStation(
-                                id = "bbc_radio_1_gb",
-                                name = "BBC Radio 1",
-                                streamUrl = "http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_p",
-                                logoUrl = "https://cdn-radiotime-logos.tunein.com/s24939q.png",
-                                logoResId = 0,
-                                description = "BBC Radio 1 from United Kingdom",
-                                primaryTag = "rock",
-                                country = R.string.country_uk,
-                                popularity = 2824,
-                                tags = "rock,pop",
-                                metadataType = null,
-                                metadataParam = null
-                        ),
-                        RadioStation(
                                 id = "bbc_radio_2",
                                 name = "BBC Radio 2",
                                 streamUrl = "https://as-hls-ww-live.akamaized.net/pool_74208725/live/ww/bbc_radio_two/bbc_radio_two.isml/bbc_radio_two-audio%3d128000.norewind.m3u8",
@@ -397,20 +369,6 @@ object RadioRepository {
                                 tags = "oldies,pop",
                                 metadataType = "bbc_rms",
                                 metadataParam = "bbc_radio_two"
-                        ),
-                        RadioStation(
-                                id = "bbc_radio_2_gb",
-                                name = "BBC Radio 2",
-                                streamUrl = "http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio2_mf_p",
-                                logoUrl = "https://cdn-radiotime-logos.tunein.com/s24940q.png",
-                                logoResId = 0,
-                                description = "BBC Radio 2 from United Kingdom",
-                                primaryTag = "oldies",
-                                country = R.string.country_uk,
-                                popularity = 1594,
-                                tags = "oldies",
-                                metadataType = null,
-                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "bbc_radio_3",
@@ -427,20 +385,6 @@ object RadioRepository {
                                 metadataParam = "bbc_radio_three"
                         ),
                         RadioStation(
-                                id = "bbc_radio_3_gb",
-                                name = "BBC Radio 3",
-                                streamUrl = "http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio3_mf_p",
-                                logoUrl = "https://cdn-radiotime-logos.tunein.com/s24941q.png",
-                                logoResId = 0,
-                                description = "BBC Radio 3 from United Kingdom",
-                                primaryTag = "classical",
-                                country = R.string.country_uk,
-                                popularity = 1028,
-                                tags = "classical",
-                                metadataType = null,
-                                metadataParam = null
-                        ),
-                        RadioStation(
                                 id = "bbc_radio_4",
                                 name = "BBC Radio 4",
                                 streamUrl = "https://as-hls-ww-live.akamaized.net/pool_55057080/live/ww/bbc_radio_fourfm/bbc_radio_fourfm.isml/bbc_radio_fourfm-audio%3d128000.norewind.m3u8",
@@ -453,20 +397,6 @@ object RadioRepository {
                                 tags = "news,talk",
                                 metadataType = "bbc_rms",
                                 metadataParam = "bbc_radio_fourfm"
-                        ),
-                        RadioStation(
-                                id = "bbc_radio_4_gb",
-                                name = "BBC Radio 4",
-                                streamUrl = "http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio4fm_mf_p",
-                                logoUrl = "https://cdn-radiotime-logos.tunein.com/s25419q.png",
-                                logoResId = 0,
-                                description = "BBC Radio 4 from United Kingdom",
-                                primaryTag = "talk",
-                                country = R.string.country_uk,
-                                popularity = 5873,
-                                tags = "talk,news",
-                                metadataType = null,
-                                metadataParam = null
                         ),
                         RadioStation(
                                 id = "bbc_radio_5_live",
@@ -1211,34 +1141,6 @@ object RadioRepository {
                                 metadataParam = "2"
                         ),
                         RadioStation(
-                                id = "france_info",
-                                name = "France Info",
-                                streamUrl = "http://icecast.radiofrance.fr/franceinfo-midfi.mp3",
-                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Franceinfo.svg/330px-Franceinfo.svg.png",
-                                logoResId = 0,
-                                description = "France Info from France",
-                                primaryTag = "news",
-                                country = R.string.country_france,
-                                popularity = 5100,
-                                tags = "news",
-                                metadataType = null,
-                                metadataParam = null
-                        ),
-                        RadioStation(
-                                id = "france_info_fr",
-                                name = "France Info",
-                                streamUrl = "http://icecast.radiofrance.fr/franceinfo-hifi.aac",
-                                logoUrl = "https://upload.wikimedia.org/wikipedia/fr/thumb/1/18/France_Info_-_2008.svg/1024px-France_Info_-_2008.svg.png",
-                                logoResId = 0,
-                                description = "France Info from France",
-                                primaryTag = "news",
-                                country = R.string.country_france,
-                                popularity = 1380,
-                                tags = "news",
-                                metadataType = null,
-                                metadataParam = null
-                        ),
-                        RadioStation(
                                 id = "france_inter",
                                 name = "France Inter",
                                 streamUrl = "https://icecast.radiofrance.fr/franceinter-midfi.mp3",
@@ -1799,20 +1701,6 @@ object RadioRepository {
                                 metadataParam = null
                         ),
                         RadioStation(
-                                id = "npo_radio_1_nl",
-                                name = "NPO Radio 1",
-                                streamUrl = "http://icecast.omroep.nl/radio1-sb-aac",
-                                logoUrl = "https://www.nporadio1.nl/templates/perfecttemplate/images/favicon.png",
-                                logoResId = 0,
-                                description = "NPO Radio 1 from Netherlands",
-                                primaryTag = "news",
-                                country = R.string.country_netherlands,
-                                popularity = 312,
-                                tags = "news",
-                                metadataType = null,
-                                metadataParam = null
-                        ),
-                        RadioStation(
                                 id = "npo_radio_2",
                                 name = "NPO Radio 2",
                                 streamUrl = "http://icecast.omroep.nl/radio2-bb-mp3",
@@ -1827,20 +1715,6 @@ object RadioRepository {
                                 metadataParam = null
                         ),
                         RadioStation(
-                                id = "npo_radio_2_nl",
-                                name = "NPO Radio 2",
-                                streamUrl = "http://icecast.omroep.nl:80/radio2-bb-mp3",
-                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/NPO_Radio_2_logo.svg/640px-NPO_Radio_2_logo.svg.png",
-                                logoResId = 0,
-                                description = "NPO Radio 2 from Netherlands",
-                                primaryTag = "talk",
-                                country = R.string.country_netherlands,
-                                popularity = 675,
-                                tags = "talk",
-                                metadataType = null,
-                                metadataParam = null
-                        ),
-                        RadioStation(
                                 id = "npo_radio_2_soul_jazz",
                                 name = "NPO Radio 2 Soul & Jazz",
                                 streamUrl = "http://icecast.omroep.nl/radio6-bb-mp3",
@@ -1851,20 +1725,6 @@ object RadioRepository {
                                 country = R.string.country_netherlands,
                                 popularity = 246,
                                 tags = "jazz",
-                                metadataType = null,
-                                metadataParam = null
-                        ),
-                        RadioStation(
-                                id = "npr_24_hour_program_stream",
-                                name = "NPR 24 Hour Program Stream",
-                                streamUrl = "http://npr-ice.streamguys1.com/live.mp3",
-                                logoUrl = "https://media.npr.org/chrome_svg/npr-logo.svg",
-                                logoResId = 0,
-                                description = "NPR 24 Hour Program Stream from United States of America",
-                                primaryTag = "talk",
-                                country = R.string.country_usa,
-                                popularity = 825,
-                                tags = "talk,news",
                                 metadataType = null,
                                 metadataParam = null
                         ),
@@ -1897,20 +1757,6 @@ object RadioRepository {
                                 metadataParam = null
                         ),
                         RadioStation(
-                                id = "oe1_austria",
-                                name = "OE1 Austria",
-                                streamUrl = "https://orf-live.ors-shoutcast.at/oe1-q2a",
-                                logoUrl = "https://oe1.orf.at/static/img/logo_oe1.png",
-                                logoResId = 0,
-                                description = "OE1 Austria from Austria",
-                                primaryTag = "jazz",
-                                country = R.string.country_austria,
-                                popularity = 398,
-                                tags = "jazz",
-                                metadataType = null,
-                                metadataParam = null
-                        ),
-                        RadioStation(
                                 id = "oldies_internet_radio",
                                 name = "Oldies Internet Radio",
                                 streamUrl = "http://162.244.81.98:8140/listen",
@@ -1935,20 +1781,6 @@ object RadioRepository {
                                 country = R.string.country_spain,
                                 popularity = 1,
                                 tags = "pop",
-                                metadataType = null,
-                                metadataParam = null
-                        ),
-                        RadioStation(
-                                id = "onda_cero_es",
-                                name = "Onda Cero",
-                                streamUrl = "http://icecast-streaming.nice264.com/ondacero",
-                                logoUrl = "http://static.ondacero.es/img/logo-ondacero.png",
-                                logoResId = 0,
-                                description = "Onda Cero from Spain",
-                                primaryTag = "news",
-                                country = R.string.country_spain,
-                                popularity = 1042,
-                                tags = "news",
                                 metadataType = null,
                                 metadataParam = null
                         ),
@@ -2233,20 +2065,6 @@ object RadioRepository {
                                 metadataParam = null
                         ),
                         RadioStation(
-                                id = "radio_fm4",
-                                name = "radio FM4",
-                                streamUrl = "https://orf-live.ors-shoutcast.at/fm4-q2a",
-                                logoUrl = "https://tubestatic.orf.at/mojo/1_3/storyserver//tube/fm4/images/touch-icon-android.png",
-                                logoResId = 0,
-                                description = "radio FM4 from Austria",
-                                primaryTag = "rock",
-                                country = R.string.country_austria,
-                                popularity = 194,
-                                tags = "rock",
-                                metadataType = null,
-                                metadataParam = null
-                        ),
-                        RadioStation(
                                 id = "radio_hindi_international",
                                 name = "Radio Hindi International",
                                 streamUrl = "http://radio.bongonet.net:8012/rhi",
@@ -2331,20 +2149,6 @@ object RadioRepository {
                                 metadataParam = "radio-nova"
                         ),
                         RadioStation(
-                                id = "radio_nova_fr",
-                                name = "Radio Nova",
-                                streamUrl = "http://novazz.ice.infomaniak.ch/novazz-128.mp3",
-                                logoUrl = "http://www.nova.fr/sites/default/files/styles/ratio_1_8_xl/public/2017-06/Grand_Mix_460x460.jpg?itok=f3KYi58S",
-                                logoResId = 0,
-                                description = "Radio Nova from France",
-                                primaryTag = "rock",
-                                country = R.string.country_france,
-                                popularity = 863,
-                                tags = "rock,pop,world",
-                                metadataType = null,
-                                metadataParam = null
-                        ),
-                        RadioStation(
                                 id = "radio_nowy_wiat",
                                 name = "Radio Nowy Świat",
                                 streamUrl = "https://stream.open.fm/368?type=.aac&user=800043471858&player_group=WWW",
@@ -2354,20 +2158,6 @@ object RadioRepository {
                                 primaryTag = "talk",
                                 country = R.string.country_poland,
                                 popularity = 620,
-                                tags = "talk,news",
-                                metadataType = null,
-                                metadataParam = null
-                        ),
-                        RadioStation(
-                                id = "radio_nowy_wiat_pl",
-                                name = "Radio Nowy Świat",
-                                streamUrl = "https://n08a-eu.rcs.revma.com/ypqt40u0x1zuv?rj-ttl=5&rj-tok=AAABdVau2WEAMBEdm2RsXuvEcg",
-                                logoUrl = "https://nowyswiat.online/wp-content/uploads/2019/03/logo-full-transparent.svg",
-                                logoResId = 0,
-                                description = "Radio Nowy Świat from Poland",
-                                primaryTag = "talk",
-                                country = R.string.country_poland,
-                                popularity = 321,
                                 tags = "talk,news",
                                 metadataType = null,
                                 metadataParam = null
@@ -2639,20 +2429,6 @@ object RadioRepository {
                                 metadataParam = null
                         ),
                         RadioStation(
-                                id = "rmc_fr",
-                                name = "RMC",
-                                streamUrl = "http://chai5she.cdn.dvmr.fr:80/rmcinfo",
-                                logoUrl = "http://static.bfmtv.com/ressources/img/header/rmc.png",
-                                logoResId = 0,
-                                description = "RMC from France",
-                                primaryTag = "news",
-                                country = R.string.country_france,
-                                popularity = 2522,
-                                tags = "news,talk",
-                                metadataType = null,
-                                metadataParam = null
-                        ),
-                        RadioStation(
                                 id = "rmf_classic",
                                 name = "RMF Classic",
                                 streamUrl = "http://31.192.216.8/RMFCLASSIC48",
@@ -2919,20 +2695,6 @@ object RadioRepository {
                                 metadataParam = null
                         ),
                         RadioStation(
-                                id = "somafm_groove_salad",
-                                name = "SomaFM Groove Salad",
-                                streamUrl = "http://ice3.somafm.com/groovesalad-128-mp3",
-                                logoUrl = "https://somafm.com/img3/groovesalad-400.jpg",
-                                logoResId = 0,
-                                description = "SomaFM Groove Salad from United States of America",
-                                primaryTag = "ambient",
-                                country = R.string.country_usa,
-                                popularity = 3144,
-                                tags = "ambient",
-                                metadataType = null,
-                                metadataParam = null
-                        ),
-                        RadioStation(
                                 id = "sportsflashes_all_sports_radio",
                                 name = "SportsFlashes all sports radio",
                                 streamUrl = "https://azura.shoutca.st/radio/8620/radio.mp3",
@@ -2994,13 +2756,13 @@ object RadioRepository {
                                 streamUrl = "http://swr-edge-20bc-fra-lg-cdn.cast.addradio.de/swr/swr3/live/mp3/128/stream.mp3?_art=dj0yJmlwPTQ1Ljc3LjYyLjE2MSZpZD1pY3NjeGwtYnpzZTMybGxiJnQ9MTYwMzU1OTcwMiZzPTc4NjZmMjljIzRkMGY1ZGI4MmYyYjA4NmIyMTU2MjJjNTliOGRmYTA4",
                                 logoUrl = "http://web.ard.de/static/imp/radionet_responsive/swr_swr3.png",
                                 logoResId = 0,
-                                description = "SWR 3 from Germany",
+                                description = "",
                                 primaryTag = "pop",
                                 country = R.string.country_germany,
                                 popularity = 4525,
                                 tags = "pop",
-                                metadataType = null,
-                                metadataParam = null
+                                metadataType = "None",
+                                metadataParam = "None"
                         ),
                         RadioStation(
                                 id = "swr3",
@@ -3130,14 +2892,14 @@ object RadioRepository {
                         ),
                         RadioStation(
                                 id = "wdr1",
-                                name = "WDR 1",
+                                name = "WDR 1LIVE",
                                 streamUrl = "https://wdr-1live-live.icecastssl.wdr.de/wdr/1live/live/mp3/128/stream.mp3",
                                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/1LIVE_Logo.svg/200px-1LIVE_Logo.svg.png",
                                 logoResId = R.drawable.logo_wdr1,
                                 description = "Das junge Radio des WDR",
                                 primaryTag = "rock",
                                 country = R.string.country_germany,
-                                popularity = 85,
+                                popularity = 3122,
                                 tags = "rock",
                                 metadataType = null,
                                 metadataParam = null
@@ -3302,13 +3064,13 @@ object RadioRepository {
                                 streamUrl = "http://kpradio.hostingradio.ru:8000/russia.radiokp128.mp3",
                                 logoUrl = "https://www.kp.ru/favicon.ico",
                                 logoResId = 0,
-                                description = "Радио «Комсомольская Правда» | КП Россия from Russia",
+                                description = "",
                                 primaryTag = "talk",
                                 country = R.string.country_russia,
                                 popularity = 1273,
                                 tags = "talk,news",
-                                metadataType = null,
-                                metadataParam = null
+                                metadataType = "None",
+                                metadataParam = "None"
                         ),
                         RadioStation(
                                 id = "_ru",
@@ -3316,13 +3078,13 @@ object RadioRepository {
                                 streamUrl = "http://89.208.99.16:8088/zvezda_128",
                                 logoUrl = "http://www.radiozvezda.ru///assets/favicon/apple-touch-icon.png",
                                 logoResId = 0,
-                                description = "Радио Звезда from Russia",
+                                description = "",
                                 primaryTag = "news",
                                 country = R.string.country_russia,
                                 popularity = 1077,
                                 tags = "news",
-                                metadataType = null,
-                                metadataParam = null
+                                metadataType = "None",
+                                metadataParam = "None"
                         ),
                         RadioStation(
                                 id = "",
@@ -3344,13 +3106,13 @@ object RadioRepository {
                                 streamUrl = "http://91.218.212.84:8000/radionv.mp3",
                                 logoUrl = "https://static.tildacdn.com/tild3734-3631-4235-b935-323762313966/favicon.ico",
                                 logoResId = 0,
-                                description = "Радио НВ from Ukraine",
+                                description = "",
                                 primaryTag = "news",
                                 country = R.string.country_ukraine,
                                 popularity = 494,
                                 tags = "news",
-                                metadataType = null,
-                                metadataParam = null
+                                metadataType = "None",
+                                metadataParam = "None"
                         ),
                         RadioStation(
                                 id = "radio_svoboda_rfe_rl_russian_ch_4",
@@ -3405,20 +3167,6 @@ object RadioRepository {
                                 country = R.string.country_china,
                                 popularity = 803,
                                 tags = "classical",
-                                metadataType = null,
-                                metadataParam = null
-                        ),
-                        RadioStation(
-                                id = "_cn",
-                                name = "第一财经",
-                                streamUrl = "http://lhttp.qingting.fm/live/276/64k.mp3",
-                                logoUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1557641843392&di=fe2ba2a50691562adea01794a38b79b1&imgtype=0&src=http%3A%2F%2F9173197.s21i.faiusr.com%2F2%2FABUIABACGAAg48yFyAUovIynyQYwrgM4jgI.jpg",
-                                logoResId = 0,
-                                description = "第一财经 from China",
-                                primaryTag = "news",
-                                country = R.string.country_china,
-                                popularity = 328,
-                                tags = "news",
                                 metadataType = null,
                                 metadataParam = null
                         )
