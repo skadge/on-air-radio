@@ -527,7 +527,7 @@ class RadioPlaybackService : MediaLibraryService() {
                         MediaMetadata.Builder()
                                 .setTitle(station.name)
                                 .setSubtitle(station.description)
-                                .setArtist(getString(station.genre))
+                                .setArtist(station.name)
                                 .setArtworkUri(
                                         if (station.logoResId != 0) {
                                             Uri.parse(

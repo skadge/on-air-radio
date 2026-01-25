@@ -220,7 +220,13 @@ fun NowPlayingScreen(
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                                 SuggestionChip(
                                         onClick = {},
-                                        label = { Text(stringResource(station.genre)) }
+                                        label = {
+                                                Text(
+                                                        station.primaryTag.replaceFirstChar {
+                                                                it.uppercase()
+                                                        }
+                                                )
+                                        }
                                 )
                                 SuggestionChip(
                                         onClick = {},

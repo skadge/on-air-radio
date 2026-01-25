@@ -6,7 +6,8 @@ data class FilterItem(
         val id: String,
         val nameRes: Int,
         val iconRes: Int? = null,
-        val countries: List<Int> = emptyList() // For regions
+        val countries: List<Int> = emptyList(), // For regions
+        val tag: String = "" // For style filters
 )
 
 object FilterData {
@@ -43,14 +44,16 @@ object FilterData {
 
         val styles =
                 listOf(
-                        FilterItem("pop_rock", R.string.genre_pop_rock),
-                        FilterItem("hits", R.string.genre_hits),
-                        FilterItem("oldies", R.string.genre_oldies),
-                        FilterItem("jazz", R.string.genre_jazz),
-                        FilterItem("classical", R.string.genre_classical),
-                        FilterItem("news", R.string.genre_news),
-                        FilterItem("ambient", R.string.genre_ambient),
-                        FilterItem("eclectic", R.string.genre_eclectic)
+                        FilterItem("pop", R.string.tag_pop, tag = "pop"),
+                        FilterItem("rock", R.string.tag_rock, tag = "rock"),
+                        FilterItem("hits", R.string.tag_hits, tag = "hits"),
+                        FilterItem("jazz", R.string.tag_jazz, tag = "jazz"),
+                        FilterItem("classical", R.string.tag_classical, tag = "classical"),
+                        FilterItem("news", R.string.tag_news, tag = "news"),
+                        FilterItem("talk", R.string.tag_talk, tag = "talk"),
+                        FilterItem("ambient", R.string.tag_ambient, tag = "ambient"),
+                        FilterItem("world", R.string.tag_world, tag = "world"),
+                        FilterItem("oldies", R.string.tag_oldies, tag = "oldies")
                 )
 
         // Helper to get all countries covered by a filter item (region or country)
@@ -59,9 +62,4 @@ object FilterData {
                 if (item.countries.isNotEmpty()) return item.countries
                 return listOf(item.nameRes)
         }
-
-        // Helper to check if a station matches any of the selected styles
-        // Since some stations have combined genres (e.g. genre_pop_rock),
-        // we might need a more flexible check or just exact match if we simplify.
-        // For now, let's assume exact match with the resource ID.
 }

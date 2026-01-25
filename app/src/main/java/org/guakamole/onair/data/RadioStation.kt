@@ -10,7 +10,7 @@ data class RadioStation(
         val logoUrl: String,
         val logoResId: Int = 0,
         val description: String = "",
-        @StringRes val genre: Int = 0,
+        val primaryTag: String = "",
         @StringRes val country: Int = 0,
         val isFavorite: Boolean = false,
         val popularity: Int = 0,

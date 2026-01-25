@@ -104,7 +104,10 @@ fun RadioApp(
                                                                         it.id == styleId
                                                                 }
                                                         filterItem?.let {
-                                                                station.genre == it.nameRes
+                                                                station.tags.contains(
+                                                                        it.tag,
+                                                                        ignoreCase = true
+                                                                ) || station.primaryTag == it.tag
                                                         }
                                                                 ?: false
                                                 }

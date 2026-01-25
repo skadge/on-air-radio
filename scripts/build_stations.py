@@ -417,11 +417,10 @@ def generate_repository(data: dict, dry_run: bool = False, verbose: bool = False
     # Build station entries
     station_entries = []
     for station in stations:
-        genre_key = station.get('genre', '')
+        primary_tag = station.get('primary_tag', '')
         country_key = station.get('country', '')
         
-        # Map to R.string references
-        genre_res = f"R.string.{constants['genres'].get(genre_key, 'genre_' + genre_key)}" if genre_key else "0"
+        # Map country to R.string reference
         country_res = f"R.string.{constants['countries'].get(country_key, 'country_' + country_key)}" if country_key else "0"
         
         # Check if logo XML exists
@@ -441,7 +440,7 @@ def generate_repository(data: dict, dry_run: bool = False, verbose: bool = False
                                 logoUrl = "{station.get('logo_url', '')}",
                                 logoResId = {logo_res_id},
                                 description = "{description}",
-                                genre = {genre_res},
+                                primaryTag = "{primary_tag}",
                                 country = {country_res},
                                 popularity = {popularity},
                                 tags = "{tags}",

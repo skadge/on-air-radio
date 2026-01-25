@@ -31,7 +31,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import org.guakamole.onair.R
 import org.guakamole.onair.data.RadioStation
-import org.guakamole.onair.ui.theme.GenreColors
+import org.guakamole.onair.ui.theme.TagColors
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -109,7 +109,7 @@ fun StationCard(
         onFavoriteClick: () -> Unit,
         modifier: Modifier = Modifier
 ) {
-        val baseColor = GenreColors.getColorForGenre(station.genre)
+        val baseColor = TagColors.getColorForTag(station.primaryTag)
         val gradient =
                 Brush.verticalGradient(
                         colors =
@@ -164,8 +164,13 @@ fun StationCard(
                         )
 
                         if (station.tags.isNotEmpty()) {
+                                val translatedTags =
+                                        station.tags
+                                                .split(",")
+                                                .map { tag -> translateTag(tag.trim()) }
+                                                .joinToString(" • ")
                                 Text(
-                                        text = station.tags.replace(",", " • "),
+                                        text = translatedTags,
                                         style = MaterialTheme.typography.labelSmall,
                                         color = Color.White.copy(alpha = 0.6f),
                                         modifier =
@@ -242,5 +247,22 @@ fun StationCard(
                                 )
                         }
                 }
+        }
+}
+
+@Composable
+private fun translateTag(tag: String): String {
+        return when (tag.lowercase()) {
+                "pop" -> stringResource(R.string.tag_pop)
+                "rock" -> stringResource(R.string.tag_rock)
+                "hits" -> stringResource(R.string.tag_hits)
+                "jazz" -> stringResource(R.string.tag_jazz)
+                "classical" -> stringResource(R.string.tag_classical)
+                "news" -> stringResource(R.string.tag_news)
+                "talk" -> stringResource(R.string.tag_talk)
+                "ambient" -> stringResource(R.string.tag_ambient)
+                "world" -> stringResource(R.string.tag_world)
+                "oldies" -> stringResource(R.string.tag_oldies)
+                else -> tag.replaceFirstChar { it.uppercase() }
         }
 }

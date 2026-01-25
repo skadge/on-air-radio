@@ -35,25 +35,17 @@
     <string name="country_spain">Spagna</string>
     <string name="country_netherlands">Paesi Bassi</string>
 
-    <!-- Genres -->
-    <string name="genre_pop_rock">Pop/Rock</string>
-    <string name="genre_adult_contemporary">Adult Contemporary</string>
-    <string name="genre_news_talk">News/Talk</string>
-    <string name="genre_classical">Classica</string>
-    <string name="genre_talk_music">Talk/Musica</string>
-    <string name="genre_culture">Cultura</string>
-    <string name="genre_eclectic">Eclettica</string>
-    <string name="genre_eclectic_world">Eclettica/World</string>
-    <string name="genre_news">News</string>
-    <string name="genre_alternative">Alternative</string>
-    <string name="genre_classical_culture">Classica/Cultura</string>
-    <string name="genre_news_culture">News/Cultura</string>
-    <string name="genre_jazz">Jazz</string>
-    <string name="genre_ambient_chill">Ambient/Chill</string>
-    <string name="genre_ambient">Ambient</string>
-    <string name="genre_hits">Hits</string>
-    <string name="genre_oldies">Oldies</string>
-    <string name="genre_variety">Varietà</string>
+    <!-- Tags -->
+    <string name="tag_pop">Pop</string>
+    <string name="tag_rock">Rock</string>
+    <string name="tag_hits">Hits</string>
+    <string name="tag_jazz">Jazz</string>
+    <string name="tag_classical">Classica</string>
+    <string name="tag_news">News</string>
+    <string name="tag_talk">Talk</string>
+    <string name="tag_ambient">Ambient</string>
+    <string name="tag_world">World</string>
+    <string name="tag_oldies">Oldies</string>
     <string name="search_stations">Cerca stazioni...</string>
     <string name="favorites">Preferiti</string>
     <string name="all_stations">Tutte le stazioni</string>
