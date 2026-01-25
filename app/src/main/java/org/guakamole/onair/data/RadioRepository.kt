@@ -26,7 +26,9 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_antenne_bayern,
                                 description = "Hits für Bayern",
                                 genre = R.string.genre_hits,
-                                country = R.string.country_germany
+                                country = R.string.country_germany,
+                                popularity = 15,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "bayern_1",
@@ -36,7 +38,9 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_bayern_1,
                                 description = "Die beste Musik für Bayern",
                                 genre = R.string.genre_oldies,
-                                country = R.string.country_germany
+                                country = R.string.country_germany,
+                                popularity = 207,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "bbc_radio_1",
@@ -46,7 +50,9 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_bbc_radio_1,
                                 description = "The best new music and entertainment",
                                 genre = R.string.genre_pop_rock,
-                                country = R.string.country_uk
+                                country = R.string.country_uk,
+                                popularity = 2824,
+                                tags = "bbc,indie,entertainment,music,rock,pop"
                         ),
                         RadioStation(
                                 id = "bbc_radio_2",
@@ -56,17 +62,21 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_bbc_radio_2,
                                 description = "Great music, great variety",
                                 genre = R.string.genre_adult_contemporary,
-                                country = R.string.country_uk
+                                country = R.string.country_uk,
+                                popularity = 46,
+                                tags = "adult standards,bbc,interviews,variety,oldies"
                         ),
                         RadioStation(
                                 id = "bbc_radio_3",
                                 name = "BBC Radio 3",
-                                streamUrl = "http://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_three/bbc_radio_three.isml/bbc_radio_three-audio%3d96000.norewind.m3u8",
+                                streamUrl = "https://as-hls-ww-live.akamaized.net/pool_23461179/live/ww/bbc_radio_three/bbc_radio_three.isml/bbc_radio_three-audio%3d96000.norewind.m3u8",
                                 logoUrl = "https://cdn-radiotime-logos.tunein.com/s24941q.png",
                                 logoResId = R.drawable.logo_bbc_radio_3,
                                 description = "Classical, jazz, world music, arts and drama",
                                 genre = R.string.genre_classical,
-                                country = R.string.country_uk
+                                country = R.string.country_uk,
+                                popularity = 1028,
+                                tags = "bbc,classical"
                         ),
                         RadioStation(
                                 id = "bbc_radio_4",
@@ -76,27 +86,33 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_bbc_radio_4,
                                 description = "Intelligent speech radio",
                                 genre = R.string.genre_news_talk,
-                                country = R.string.country_uk
+                                country = R.string.country_uk,
+                                popularity = 5873,
+                                tags = "bbc,drama,news talk,news,talk"
                         ),
                         RadioStation(
                                 id = "bbc_radio_5_live",
                                 name = "BBC Radio 5 Live",
-                                streamUrl = "http://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_five_live/bbc_radio_five_live.isml/bbc_radio_five_live-audio=96000.m3u8",
+                                streamUrl = "https://as-hls-ww-live.akamaized.net/pool_89021708/live/ww/bbc_radio_five_live/bbc_radio_five_live.isml/bbc_radio_five_live-audio%3d96000.norewind.m3u8",
                                 logoUrl = "https://cdn-radiotime-logos.tunein.com/s24943q.png",
                                 logoResId = R.drawable.logo_bbc_radio_5_live,
                                 description = "Live news and live sport",
                                 genre = R.string.genre_news_talk,
-                                country = R.string.country_uk
+                                country = R.string.country_uk,
+                                popularity = 1101,
+                                tags = "bbc,sport"
                         ),
                         RadioStation(
                                 id = "bbc_6music",
                                 name = "BBC Radio 6 Music",
-                                streamUrl = "https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d96000.norewind.m3u8",
+                                streamUrl = "https://as-hls-ww-live.akamaized.net/pool_81827798/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d96000.norewind.m3u8",
                                 logoUrl = "https://cdn-radiotime-logos.tunein.com/s24944q.png",
                                 logoResId = R.drawable.logo_bbc_6music,
                                 description = "The place for alternative music",
                                 genre = R.string.genre_alternative,
-                                country = R.string.country_uk
+                                country = R.string.country_uk,
+                                popularity = 203,
+                                tags = "320kbps,music,rock,indie,pop"
                         ),
                         RadioStation(
                                 id = "cadena_dial",
@@ -106,7 +122,9 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_cadena_dial,
                                 description = "La radio de las baladas",
                                 genre = R.string.genre_adult_contemporary,
-                                country = R.string.country_spain
+                                country = R.string.country_spain,
+                                popularity = 274,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "cadena_ser",
@@ -116,17 +134,21 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_cadena_ser,
                                 description = "La radio líder en España",
                                 genre = R.string.genre_news_talk,
-                                country = R.string.country_spain
+                                country = R.string.country_spain,
+                                popularity = 19,
+                                tags = "classical"
                         ),
                         RadioStation(
                                 id = "capital_fm",
                                 name = "Capital FM",
-                                streamUrl = "http://icecast.thisisdax.com/CapitalUKMP3",
+                                streamUrl = "http://5229.cloudrad.io:8316/;",
                                 logoUrl = "https://cdn-radiotime-logos.tunein.com/s2728q.png",
                                 logoResId = R.drawable.logo_capital_fm,
                                 description = "The UK's No.1 Hit Music Station",
                                 genre = R.string.genre_hits,
-                                country = R.string.country_uk
+                                country = R.string.country_uk,
+                                popularity = 233,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "classic_fm",
@@ -136,17 +158,21 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_classic_fm,
                                 description = "The world's greatest music",
                                 genre = R.string.genre_classical,
-                                country = R.string.country_uk
+                                country = R.string.country_uk,
+                                popularity = 211,
+                                tags = "classic fm,classical"
                         ),
                         RadioStation(
                                 id = "cope",
                                 name = "COPE",
-                                streamUrl = "https://flucast23-h.akamaihd.net/COPEMADRID_SC",
+                                streamUrl = "https://flucast-m02-03.flumotion.com/cope/net1.mp3",
                                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Cope_logo.svg/200px-Cope_logo.svg.png",
                                 logoResId = R.drawable.logo_cope,
                                 description = "Radio COPE - Cadena de Ondas Populares Españolas",
                                 genre = R.string.genre_news_talk,
-                                country = R.string.country_spain
+                                country = R.string.country_spain,
+                                popularity = 20,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "deutschlandradio",
@@ -156,7 +182,9 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_deutschlandradio,
                                 description = "Nachrichten und Kultur",
                                 genre = R.string.genre_news_culture,
-                                country = R.string.country_germany
+                                country = R.string.country_germany,
+                                popularity = 31,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "fip",
@@ -166,7 +194,9 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_fip,
                                 description = "Éclectisme musical",
                                 genre = R.string.genre_eclectic,
-                                country = R.string.country_france
+                                country = R.string.country_france,
+                                popularity = 241,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "france_culture",
@@ -176,7 +206,9 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_france_culture,
                                 description = "Culture et savoirs",
                                 genre = R.string.genre_culture,
-                                country = R.string.country_france
+                                country = R.string.country_france,
+                                popularity = 13,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "france_inter",
@@ -186,7 +218,9 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_france_inter,
                                 description = "La radio de service public",
                                 genre = R.string.genre_talk_music,
-                                country = R.string.country_france
+                                country = R.string.country_france,
+                                popularity = 11,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "france_musique",
@@ -196,7 +230,9 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_france_musique,
                                 description = "La musique classique et plus",
                                 genre = R.string.genre_classical,
-                                country = R.string.country_france
+                                country = R.string.country_france,
+                                popularity = 673,
+                                tags = "musique,radio france,public radio,aac"
                         ),
                         RadioStation(
                                 id = "franceinfo",
@@ -206,17 +242,21 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_franceinfo,
                                 description = "L'info en continu",
                                 genre = R.string.genre_news,
-                                country = R.string.country_france
+                                country = R.string.country_france,
+                                popularity = 0,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "heart_uk",
                                 name = "Heart UK",
-                                streamUrl = "http://ice-sov.musicradio.com/HeartLondonMP3",
+                                streamUrl = "http://media-ice.musicradio.com/HeartUKMP3",
                                 logoUrl = "https://cdn-radiotime-logos.tunein.com/s121960q.png",
                                 logoResId = R.drawable.logo_heart_uk,
                                 description = "Turn up the feel good",
                                 genre = R.string.genre_pop_rock,
-                                country = R.string.country_uk
+                                country = R.string.country_uk,
+                                popularity = 228,
+                                tags = "commercial,london,hot adult contemporary"
                         ),
                         RadioStation(
                                 id = "jazz_radio",
@@ -226,27 +266,33 @@ object RadioRepository {
                                 logoResId = 0,
                                 description = "100% Jazz",
                                 genre = R.string.genre_jazz,
-                                country = R.string.country_france
+                                country = R.string.country_france,
+                                popularity = 482,
+                                tags = "soul,jazz"
                         ),
                         RadioStation(
                                 id = "jazz24",
                                 name = "Jazz24",
                                 streamUrl = "https://knkx-live-a.edge.audiocdn.com/6285_128k",
-                                logoUrl = "https://cdn-radiotime-logos.tunein.com/s6861q.png",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/4/4e/KNKX_Logo.png",
                                 logoResId = 0,
                                 description = "Jazz from Seattle's KNKX",
                                 genre = R.string.genre_jazz,
-                                country = R.string.country_usa
+                                country = R.string.country_usa,
+                                popularity = 57,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "kcrw",
                                 name = "KCRW 89.9",
-                                streamUrl = "https://kcrw.streamguys1.com/kcrw_128k_mp3_on_air",
-                                logoUrl = "https://cdn-radiotime-logos.tunein.com/s24748q.png",
+                                streamUrl = "https://kcrw.streamguys1.com/kcrw_192k_mp3_on_air",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/KCRW_logo.svg/200px-KCRW_logo.svg.png",
                                 logoResId = R.drawable.logo_kcrw,
                                 description = "Music, news, and culture from LA",
                                 genre = R.string.genre_eclectic,
-                                country = R.string.country_usa
+                                country = R.string.country_usa,
+                                popularity = 0,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "kexp",
@@ -256,7 +302,9 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_kexp,
                                 description = "Where the music matters",
                                 genre = R.string.genre_alternative,
-                                country = R.string.country_usa
+                                country = R.string.country_usa,
+                                popularity = 0,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "lbc",
@@ -266,7 +314,9 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_lbc,
                                 description = "Leading Britain's Conversation",
                                 genre = R.string.genre_news_talk,
-                                country = R.string.country_uk
+                                country = R.string.country_uk,
+                                popularity = 0,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "los40",
@@ -276,7 +326,9 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_los40,
                                 description = "La radio de los éxitos",
                                 genre = R.string.genre_hits,
-                                country = R.string.country_spain
+                                country = R.string.country_spain,
+                                popularity = 0,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "nostalgie",
@@ -286,7 +338,9 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_nostalgie,
                                 description = "Que des tubes",
                                 genre = R.string.genre_oldies,
-                                country = R.string.country_france
+                                country = R.string.country_france,
+                                popularity = 948,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "npo_radio_2",
@@ -296,7 +350,9 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_npo_radio_2,
                                 description = "De beste muziekmix",
                                 genre = R.string.genre_variety,
-                                country = R.string.country_netherlands
+                                country = R.string.country_netherlands,
+                                popularity = 5,
+                                tags = "pop"
                         ),
                         RadioStation(
                                 id = "npr",
@@ -306,7 +362,9 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_npr,
                                 description = "National Public Radio",
                                 genre = R.string.genre_news,
-                                country = R.string.country_usa
+                                country = R.string.country_usa,
+                                popularity = 40,
+                                tags = "classical"
                         ),
                         RadioStation(
                                 id = "nrj",
@@ -316,7 +374,9 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_nrj,
                                 description = "Hit Music Only",
                                 genre = R.string.genre_hits,
-                                country = R.string.country_france
+                                country = R.string.country_france,
+                                popularity = 9,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "onda_cero",
@@ -326,17 +386,21 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_onda_cero,
                                 description = "Radio en español",
                                 genre = R.string.genre_variety,
-                                country = R.string.country_spain
+                                country = R.string.country_spain,
+                                popularity = 1,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "qmusic",
                                 name = "Qmusic",
-                                streamUrl = "https://icecast-qmusicnl-cdp.triple-it.nl/qmusic.mp3",
+                                streamUrl = "http://20723.live.streamtheworld.com/QMUSICAAC.aac",
                                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Qmusic_logo.svg/200px-Qmusic_logo.svg.png",
                                 logoResId = R.drawable.logo_qmusic,
                                 description = "Q sounds better with you",
                                 genre = R.string.genre_hits,
-                                country = R.string.country_netherlands
+                                country = R.string.country_netherlands,
+                                popularity = 6,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "radio_10",
@@ -346,7 +410,9 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_radio_10,
                                 description = "Gewoon de beste hits",
                                 genre = R.string.genre_oldies,
-                                country = R.string.country_netherlands
+                                country = R.string.country_netherlands,
+                                popularity = 75,
+                                tags = "talk,news,noticias"
                         ),
                         RadioStation(
                                 id = "radio_105",
@@ -356,7 +422,9 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_radio_105,
                                 description = "La radio che suona la musica",
                                 genre = R.string.genre_hits,
-                                country = R.string.country_italy
+                                country = R.string.country_italy,
+                                popularity = 3,
+                                tags = "information,rock,pop,folk,local news"
                         ),
                         RadioStation(
                                 id = "radio_538",
@@ -366,17 +434,21 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_radio_538,
                                 description = "De nummer 1 hits",
                                 genre = R.string.genre_hits,
-                                country = R.string.country_netherlands
+                                country = R.string.country_netherlands,
+                                popularity = 45,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "radio_deejay",
                                 name = "Radio Deejay",
-                                streamUrl = "https://streamcdnm24-dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S56912040/bMtRaShKbDaq/playlist.m3u8",
+                                streamUrl = "http://radiodeejay-lh.akamaihd.net/i/RadioDeejay_Live_1@189857/master.m3u8",
                                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Radio_DeeJay_logo.svg/200px-Radio_DeeJay_logo.svg.png",
                                 logoResId = R.drawable.logo_radio_deejay,
                                 description = "La radio che libera la musica",
                                 genre = R.string.genre_hits,
-                                country = R.string.country_italy
+                                country = R.string.country_italy,
+                                popularity = 533,
+                                tags = "m3u8,l'espresso,top 40,pop,electronica"
                         ),
                         RadioStation(
                                 id = "radio_italia",
@@ -386,7 +458,9 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_radio_italia,
                                 description = "Solo musica italiana",
                                 genre = R.string.genre_hits,
-                                country = R.string.country_italy
+                                country = R.string.country_italy,
+                                popularity = 0,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "radio_nova",
@@ -396,37 +470,45 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_radio_nova,
                                 description = "Le Grand Mix de Radio Nova",
                                 genre = R.string.genre_eclectic_world,
-                                country = R.string.country_france
+                                country = R.string.country_france,
+                                popularity = 11,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "radio_paradise",
                                 name = "Radio Paradise",
-                                streamUrl = "https://stream.radioparadise.com/mp3-128",
-                                logoUrl = "https://www.radioparadise.com/graphics/logo_rp_75.png",
+                                streamUrl = "http://stream-dc1.radioparadise.com/aac-320",
+                                logoUrl = "https://radioparadise.com/graphics/logo_rp_400.png",
                                 logoResId = 0,
                                 description = "Eclectic blend of music from California",
                                 genre = R.string.genre_eclectic,
-                                country = R.string.country_usa
+                                country = R.string.country_usa,
+                                popularity = 15,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "rds",
                                 name = "RDS",
-                                streamUrl = "https://streamcdnm9-dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S44552214/uKpgwOHmle0S/playlist.m3u8",
+                                streamUrl = "https://icstream.rds.radio/rds64k",
                                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/RDS_logo.svg/200px-RDS_logo.svg.png",
                                 logoResId = R.drawable.logo_rds,
                                 description = "Radio Dimensione Suono - 100% Grandi Successi",
                                 genre = R.string.genre_hits,
-                                country = R.string.country_italy
+                                country = R.string.country_italy,
+                                popularity = 108,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "rmc",
                                 name = "RMC",
-                                streamUrl = "https://audio.bfmtv.com/bfmbusiness/rmc_info-smil",
+                                streamUrl = "http://audio.bfmtv.com/rmcinfo_mp3",
                                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/RMC_logo.svg/200px-RMC_logo.svg.png",
                                 logoResId = R.drawable.logo_rmc,
                                 description = "Info Talk Sport",
                                 genre = R.string.genre_news_talk,
-                                country = R.string.country_france
+                                country = R.string.country_france,
+                                popularity = 20,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "rtl",
@@ -436,7 +518,9 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_rtl,
                                 description = "On a tous une bonne raison d'écouter RTL",
                                 genre = R.string.genre_news_talk,
-                                country = R.string.country_france
+                                country = R.string.country_france,
+                                popularity = 3,
+                                tags = "adult album alternative"
                         ),
                         RadioStation(
                                 id = "rtl_102_5",
@@ -446,7 +530,9 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_rtl_102_5,
                                 description = "La radio italiana più ascoltata",
                                 genre = R.string.genre_hits,
-                                country = R.string.country_italy
+                                country = R.string.country_italy,
+                                popularity = 305,
+                                tags = "hits"
                         ),
                         RadioStation(
                                 id = "sky_radio",
@@ -456,7 +542,9 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_sky_radio,
                                 description = "The feel good station",
                                 genre = R.string.genre_adult_contemporary,
-                                country = R.string.country_netherlands
+                                country = R.string.country_netherlands,
+                                popularity = 3,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "soma_drone",
@@ -466,7 +554,9 @@ object RadioRepository {
                                 logoResId = 0,
                                 description = "Atmospheric textures with minimal beats",
                                 genre = R.string.genre_ambient,
-                                country = R.string.country_usa
+                                country = R.string.country_usa,
+                                popularity = 0,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "soma_groove",
@@ -476,7 +566,9 @@ object RadioRepository {
                                 logoResId = 0,
                                 description = "A nicely chilled plate of ambient beats",
                                 genre = R.string.genre_ambient_chill,
-                                country = R.string.country_usa
+                                country = R.string.country_usa,
+                                popularity = 3144,
+                                tags = "sleep,lounge,ambient,downtempo,chillout,groove"
                         ),
                         RadioStation(
                                 id = "swr3",
@@ -486,7 +578,9 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_swr3,
                                 description = "Pop und mehr",
                                 genre = R.string.genre_pop_rock,
-                                country = R.string.country_germany
+                                country = R.string.country_germany,
+                                popularity = 297,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "tsfjazz",
@@ -496,7 +590,9 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_tsfjazz,
                                 description = "La radio jazz",
                                 genre = R.string.genre_jazz,
-                                country = R.string.country_france
+                                country = R.string.country_france,
+                                popularity = 43,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "wdr1",
@@ -506,7 +602,9 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_wdr1,
                                 description = "Das junge Radio des WDR",
                                 genre = R.string.genre_pop_rock,
-                                country = R.string.country_germany
+                                country = R.string.country_germany,
+                                popularity = 85,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "wdr_2",
@@ -516,7 +614,9 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_wdr_2,
                                 description = "Musik, Infos, Podcasts",
                                 genre = R.string.genre_adult_contemporary,
-                                country = R.string.country_germany
+                                country = R.string.country_germany,
+                                popularity = 0,
+                                tags = ""
                         ),
                         RadioStation(
                                 id = "wdr3",
@@ -526,27 +626,33 @@ object RadioRepository {
                                 logoResId = R.drawable.logo_wdr3,
                                 description = "Kultur und Klassik",
                                 genre = R.string.genre_classical_culture,
-                                country = R.string.country_germany
+                                country = R.string.country_germany,
+                                popularity = 413,
+                                tags = "classical,classic"
                         ),
                         RadioStation(
                                 id = "wnyc_fm",
                                 name = "WNYC 93.9 FM",
-                                streamUrl = "http://fm939.wnyc.org/wnycfm.mp3",
+                                streamUrl = "https://fm939.wnyc.org/wnycfm.aac",
                                 logoUrl = "https://cdn-radiotime-logos.tunein.com/s21606q.png",
                                 logoResId = 0,
                                 description = "New York's flagship public radio station",
                                 genre = R.string.genre_news_talk,
-                                country = R.string.country_usa
+                                country = R.string.country_usa,
+                                popularity = 45,
+                                tags = "news"
                         ),
                         RadioStation(
                                 id = "wqxr",
                                 name = "WQXR 105.9 FM",
-                                streamUrl = "http://stream.wqxr.org/wqxr.mp3",
-                                logoUrl = "https://cdn-radiotime-logos.tunein.com/s27341q.png",
+                                streamUrl = "https://wqxr.streamguys1.com/wqxr",
+                                logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/WQXR_logo.svg/200px-WQXR_logo.svg.png",
                                 logoResId = R.drawable.logo_wqxr,
                                 description = "New York's only dedicated classical station",
                                 genre = R.string.genre_classical,
-                                country = R.string.country_usa
+                                country = R.string.country_usa,
+                                popularity = 0,
+                                tags = ""
                         )
                 )
 

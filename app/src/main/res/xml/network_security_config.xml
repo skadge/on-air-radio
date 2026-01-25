@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Allow cleartext HTTP for radio stream domains that don't support HTTPS -->
+    <domain-config cleartextTrafficPermitted="true">
+        <!-- BBC radio streams -->
+        <domain includeSubdomains="true">bbci.co.uk</domain>
+        <domain includeSubdomains="true">bbc.co.uk</domain>
+        <!-- Other radio streams -->
+        <domain includeSubdomains="true">icecast.omroep.nl</domain>
+        <domain includeSubdomains="true">streaming.radio.rtl.fr</domain>
+        <domain includeSubdomains="true">streamer-01.rtl.fr</domain>
+        <domain includeSubdomains="true">stream-dc1.radioparadise.com</domain>
+        <domain includeSubdomains="true">cloudrad.io</domain>
+        <domain includeSubdomains="true">musicradio.com</domain>
+        <domain includeSubdomains="true">akamaihd.net</domain>
+        <domain includeSubdomains="true">thisisdax.com</domain>
+        <domain includeSubdomains="true">live.streamtheworld.com</domain>
+        <domain includeSubdomains="true">infomaniak.ch</domain>
+    </domain-config>
+</network-security-config>

@@ -163,6 +163,20 @@ fun StationCard(
                                 overflow = TextOverflow.Ellipsis
                         )
 
+                        if (station.tags.isNotEmpty()) {
+                                Text(
+                                        text = station.tags.replace(",", " • "),
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = Color.White.copy(alpha = 0.6f),
+                                        modifier =
+                                                Modifier.padding(start = 12.dp, top = 64.dp)
+                                                        .align(Alignment.TopStart)
+                                                        .fillMaxWidth(0.6f),
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis
+                                )
+                        }
+
                         // Angled Station Logo at bottom-right
                         AsyncImage(
                                 model =

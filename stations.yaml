@@ -2,7 +2,6 @@
 # This is the source of truth for all stations in the app.
 # Run `./gradlew buildStations` to regenerate code after changes.
 
-# Constants map to Android string resources (R.string.*)
 constants:
   genres:
     pop_rock: genre_pop_rock
@@ -23,7 +22,6 @@ constants:
     hits: genre_hits
     oldies: genre_oldies
     variety: genre_variety
-
   countries:
     uk: country_uk
     france: country_france
@@ -32,28 +30,7 @@ constants:
     italy: country_italy
     spain: country_spain
     netherlands: country_netherlands
-
-# Station definitions
 stations:
-  # ============ UK ============
-  - id: bbc_radio_1
-    name: BBC Radio 1
-    stream_url: https://as-hls-ww-live.akamaized.net/pool_01505109/live/ww/bbc_radio_one/bbc_radio_one.isml/bbc_radio_one-audio%3d96000.norewind.m3u8
-    logo_url: https://cdn-radiotime-logos.tunein.com/s24939q.png
-    logo_svg_url: https://upload.wikimedia.org/wikipedia/en/e/ea/BBC_Radio_1.svg
-    description: The best new music and entertainment
-    genre: pop_rock
-    country: uk
-
-  - id: bbc_radio_2
-    name: BBC Radio 2
-    stream_url: https://as-hls-ww-live.akamaized.net/pool_74208725/live/ww/bbc_radio_two/bbc_radio_two.isml/bbc_radio_two-audio%3d128000.norewind.m3u8
-    logo_url: https://cdn-radiotime-logos.tunein.com/s24940q.png
-    logo_svg_url: https://upload.wikimedia.org/wikipedia/en/8/8c/BBC_Radio_2.svg
-    description: Great music, great variety
-    genre: adult_contemporary
-    country: uk
-
   - id: bbc_radio_4
     name: BBC Radio 4
     stream_url: https://as-hls-ww-live.akamaized.net/pool_55057080/live/ww/bbc_radio_fourfm/bbc_radio_fourfm.isml/bbc_radio_fourfm-audio%3d128000.norewind.m3u8
@@ -62,88 +39,56 @@ stations:
     description: Intelligent speech radio
     genre: news_talk
     country: uk
-
-  - id: classic_fm
-    name: Classic FM
-    stream_url: https://media-ice.musicradio.com/ClassicFMMP3
-    logo_url: https://www.classicfm.com/assets_v4r/classic/img/favicon-196x196.png
-    description: "The world's greatest music"
-    genre: classical
+    tags: bbc,drama,news talk,news,talk
+    popularity: 5873
+  - id: soma_groove
+    name: SomaFM Groove Salad
+    stream_url: https://ice1.somafm.com/groovesalad-128-mp3
+    logo_url: https://somafm.com/img3/groovesalad-400.jpg
+    description: A nicely chilled plate of ambient beats
+    genre: ambient_chill
+    country: usa
+    tags: sleep,lounge,ambient,downtempo,chillout,groove
+    popularity: 3144
+  - id: bbc_radio_1
+    name: BBC Radio 1
+    stream_url: https://as-hls-ww-live.akamaized.net/pool_01505109/live/ww/bbc_radio_one/bbc_radio_one.isml/bbc_radio_one-audio%3d96000.norewind.m3u8
+    logo_url: https://cdn-radiotime-logos.tunein.com/s24939q.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/en/e/ea/BBC_Radio_1.svg
+    description: The best new music and entertainment
+    genre: pop_rock
     country: uk
-
-  - id: bbc_radio_3
-    name: BBC Radio 3
-    stream_url: http://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_three/bbc_radio_three.isml/bbc_radio_three-audio%3d96000.norewind.m3u8
-    logo_url: https://cdn-radiotime-logos.tunein.com/s24941q.png
-    logo_svg_url: https://en.wikipedia.org/wiki/Special:FilePath/BBC_Radio_3.svg
-    description: Classical, jazz, world music, arts and drama
-    genre: classical
-    country: uk
-
+    tags: bbc,indie,entertainment,music,rock,pop
+    popularity: 2824
   - id: bbc_radio_5_live
     name: BBC Radio 5 Live
-    stream_url: http://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_five_live/bbc_radio_five_live.isml/bbc_radio_five_live-audio=96000.m3u8
+    stream_url: https://as-hls-ww-live.akamaized.net/pool_89021708/live/ww/bbc_radio_five_live/bbc_radio_five_live.isml/bbc_radio_five_live-audio%3d96000.norewind.m3u8
     logo_url: https://cdn-radiotime-logos.tunein.com/s24943q.png
     logo_svg_url: https://en.wikipedia.org/wiki/Special:FilePath/BBC_Radio_5_Live.svg
     description: Live news and live sport
     genre: news_talk
     country: uk
-
-  - id: bbc_6music
-    name: BBC Radio 6 Music
-    stream_url: https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d96000.norewind.m3u8
-    logo_url: https://cdn-radiotime-logos.tunein.com/s24944q.png
-    logo_svg_url: https://en.wikipedia.org/wiki/Special:FilePath/BBC_Radio_6_Music.svg
-    description: The place for alternative music
-    genre: alternative
+    tags: bbc,sport
+    popularity: 1101
+  - id: bbc_radio_3
+    name: BBC Radio 3
+    stream_url: https://as-hls-ww-live.akamaized.net/pool_23461179/live/ww/bbc_radio_three/bbc_radio_three.isml/bbc_radio_three-audio%3d96000.norewind.m3u8
+    logo_url: https://cdn-radiotime-logos.tunein.com/s24941q.png
+    logo_svg_url: https://en.wikipedia.org/wiki/Special:FilePath/BBC_Radio_3.svg
+    description: Classical, jazz, world music, arts and drama
+    genre: classical
     country: uk
-
-  - id: capital_fm
-    name: Capital FM
-    stream_url: http://icecast.thisisdax.com/CapitalUKMP3
-    logo_url: https://cdn-radiotime-logos.tunein.com/s2728q.png
-    logo_svg_url: https://en.wikipedia.org/wiki/Special:FilePath/Logo_Capital_FM.svg
-    description: The UK's No.1 Hit Music Station
-    genre: hits
-    country: uk
-
-  - id: heart_uk
-    name: Heart UK
-    stream_url: http://ice-sov.musicradio.com/HeartLondonMP3
-    logo_url: https://cdn-radiotime-logos.tunein.com/s121960q.png
-    logo_svg_url: https://en.wikipedia.org/wiki/Special:FilePath/The_Heart_Network_logo.svg
-    description: Turn up the feel good
-    genre: pop_rock
-    country: uk
-
-  - id: lbc
-    name: LBC
-    stream_url: http://icecast.thisisdax.com/LBCUKMP3
-    logo_url: https://cdn-radiotime-logos.tunein.com/s25071q.png
-    logo_svg_url: https://en.wikipedia.org/wiki/Special:FilePath/LBC_logo.svg
-    description: Leading Britain's Conversation
-    genre: news_talk
-    country: uk
-
-  # ============ France ============
-  - id: france_inter
-    name: France Inter
-    stream_url: https://icecast.radiofrance.fr/franceinter-midfi.mp3
-    logo_url: https://www.lesentreprisesdupaysage.fr/content/uploads/2022/03/france_inter_logo_2021-svg-1024x1024.png
-    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/1/10/France_Inter_logo_2021.svg
-    description: La radio de service public
-    genre: talk_music
+    tags: bbc,classical
+    popularity: 1028
+  - id: nostalgie
+    name: Nostalgie
+    stream_url: https://scdn.nrjaudio.fm/adwz2/fr/30601/mp3_128.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/fr/thumb/e/ed/Logo_Nostalgie_2001.svg/200px-Logo_Nostalgie_2001.svg.png
+    description: Que des tubes
+    genre: oldies
     country: france
-
-  - id: france_culture
-    name: France Culture
-    stream_url: https://icecast.radiofrance.fr/franceculture-midfi.mp3
-    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/France_Culture_logo_2021.svg/250px-France_Culture_logo_2021.svg.png
-    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/d/d6/France_Culture_logo_2021.svg
-    description: Culture et savoirs
-    genre: culture
-    country: france
-
+    tags: ''
+    popularity: 948
   - id: france_musique
     name: France Musique
     stream_url: https://icecast.radiofrance.fr/francemusique-midfi.mp3
@@ -152,86 +97,27 @@ stations:
     description: La musique classique et plus
     genre: classical
     country: france
-
-  - id: fip
-    name: FIP
-    stream_url: https://icecast.radiofrance.fr/fip-midfi.mp3
-    logo_url: https://upload.wikimedia.org/wikipedia/commons/1/16/FIP_logo_2021.svg
-    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/1/16/FIP_logo_2021.svg
-    description: Éclectisme musical
-    genre: eclectic
-    country: france
-
-  - id: radio_nova
-    name: Radio Nova
-    stream_url: https://novazz.ice.infomaniak.ch/novazz-128.mp3
-    logo_url: https://www.nova.fr/wp-content/thumbnails/uploads/sites/2/2024/05/NOVA-nova-400x496-1-t-1700x1030.png
-    description: Le Grand Mix de Radio Nova
-    genre: eclectic_world
-    country: france
-
-  # ============ USA ============
-  - id: npr
-    name: NPR News
-    stream_url: https://npr-ice.streamguys1.com/live.mp3
-    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/National_Public_Radio_logo.svg/200px-National_Public_Radio_logo.svg.png
-    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/d/d7/National_Public_Radio_logo.svg
-    description: National Public Radio
-    genre: news
-    country: usa
-
-  - id: kexp
-    name: KEXP 90.3
-    stream_url: https://kexp-mp3-128.streamguys1.com/kexp128.mp3
-    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/KEXP_logo.svg/200px-KEXP_logo.svg.png
-    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/6/69/KEXP_logo.svg
-    description: Where the music matters
-    genre: alternative
-    country: usa
-
-  - id: wnyc_fm
-    name: WNYC 93.9 FM
-    stream_url: http://fm939.wnyc.org/wnycfm.mp3
-    logo_url: https://cdn-radiotime-logos.tunein.com/s21606q.png
-    logo_svg_url: https://en.wikipedia.org/wiki/Special:FilePath/WNYC_logo.svg
-    description: New York's flagship public radio station
-    genre: news_talk
-    country: usa
-
-  - id: wqxr
-    name: WQXR 105.9 FM
-    stream_url: http://stream.wqxr.org/wqxr.mp3
-    logo_url: https://cdn-radiotime-logos.tunein.com/s27341q.png
-    logo_svg_url: https://en.wikipedia.org/wiki/Special:FilePath/WQXR-FM_logo.svg
-    description: New York's only dedicated classical station
-    genre: classical
-    country: usa
-
-  - id: jazz24
-    name: Jazz24
-    stream_url: https://knkx-live-a.edge.audiocdn.com/6285_128k
-    logo_url: https://cdn-radiotime-logos.tunein.com/s6861q.png
-    description: "Jazz from Seattle's KNKX"
+    tags: musique,radio france,public radio,aac
+    popularity: 673
+  - id: radio_deejay
+    name: Radio Deejay
+    stream_url: http://radiodeejay-lh.akamaihd.net/i/RadioDeejay_Live_1@189857/master.m3u8
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Radio_DeeJay_logo.svg/200px-Radio_DeeJay_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/9/93/Logo_Deejay.svg
+    description: La radio che libera la musica
+    genre: hits
+    country: italy
+    tags: m3u8,l'espresso,top 40,pop,electronica
+    popularity: 533
+  - id: jazz_radio
+    name: Jazz Radio
+    stream_url: https://jazzradio.ice.infomaniak.ch/jazzradio-high.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/fr/thumb/2/24/Logo_Jazz_Radio.svg/200px-Logo_Jazz_Radio.svg.png
+    description: 100% Jazz
     genre: jazz
-    country: usa
-
-  - id: kcrw
-    name: KCRW 89.9
-    stream_url: https://kcrw.streamguys1.com/kcrw_128k_mp3_on_air
-    logo_url: https://cdn-radiotime-logos.tunein.com/s24748q.png
-    description: Music, news, and culture from LA
-    genre: eclectic
-    country: usa
-
-  - id: radio_paradise
-    name: Radio Paradise
-    stream_url: https://stream.radioparadise.com/mp3-128
-    logo_url: https://www.radioparadise.com/graphics/logo_rp_75.png
-    description: Eclectic blend of music from California
-    genre: eclectic
-    country: usa
-
-  # ============ Germany ============
+    country: france
+    tags: soul,jazz
+    popularity: 482
   - id: wdr3
     name: WDR 3
     stream_url: https://wdr-wdr3-live.icecastssl.wdr.de/wdr/wdr3/live/mp3/128/stream.mp3
@@ -240,53 +126,8 @@ stations:
     description: Kultur und Klassik
     genre: classical_culture
     country: germany
-
-  - id: deutschlandradio
-    name: Deutschlandfunk
-    stream_url: https://st01.sslstream.dlf.de/dlf/01/128/mp3/stream.mp3
-    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Deutschlandfunk_Logo_2017.svg/200px-Deutschlandfunk_Logo_2017.svg.png
-    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/1/14/Deutschlandfunk_Logo_2017.svg
-    description: Nachrichten und Kultur
-    genre: news_culture
-    country: germany
-
-  # ============ Jazz ============
-  - id: jazz_radio
-    name: Jazz Radio
-    stream_url: https://jazzradio.ice.infomaniak.ch/jazzradio-high.mp3
-    logo_url: https://upload.wikimedia.org/wikipedia/fr/thumb/2/24/Logo_Jazz_Radio.svg/200px-Logo_Jazz_Radio.svg.png
-    # No SVG available on Wikimedia Commons
-    description: 100% Jazz
-    genre: jazz
-    country: france
-
-  - id: tsfjazz
-    name: TSF Jazz
-    stream_url: https://tsfjazz.ice.infomaniak.ch/tsfjazz-high.mp3
-    logo_url: https://upload.wikimedia.org/wikipedia/fr/thumb/4/44/TSF_Jazz_logo.svg/200px-TSF_Jazz_logo.svg.png
-    # No SVG available on Wikimedia Commons
-    description: La radio jazz
-    genre: jazz
-    country: france
-
-  # ============ World / Ambient ============
-  - id: soma_groove
-    name: SomaFM Groove Salad
-    stream_url: https://ice1.somafm.com/groovesalad-128-mp3
-    logo_url: https://somafm.com/img3/groovesalad-400.jpg
-    description: A nicely chilled plate of ambient beats
-    genre: ambient_chill
-    country: usa
-
-  - id: soma_drone
-    name: SomaFM Drone Zone
-    stream_url: https://ice1.somafm.com/dronezone-128-mp3
-    logo_url: https://somafm.com/img3/dronezone-400.jpg
-    description: Atmospheric textures with minimal beats
-    genre: ambient
-    country: usa
-
-  # ============ Italy ============
+    tags: classical,classic
+    popularity: 413
   - id: rtl_102_5
     name: RTL 102.5
     stream_url: https://streamcdnb4-dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S97044836/tbbP8T1ZRPBL/playlist_audio.m3u8
@@ -295,154 +136,8 @@ stations:
     description: La radio italiana più ascoltata
     genre: hits
     country: italy
-
-  - id: rds
-    name: RDS
-    stream_url: https://streamcdnm9-dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S44552214/uKpgwOHmle0S/playlist.m3u8
-    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/RDS_logo.svg/200px-RDS_logo.svg.png
-    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/2/2a/RDS_logo.svg
-    description: Radio Dimensione Suono - 100% Grandi Successi
-    genre: hits
-    country: italy
-
-  - id: radio_deejay
-    name: Radio Deejay
-    stream_url: https://streamcdnm24-dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S56912040/bMtRaShKbDaq/playlist.m3u8
-    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Radio_DeeJay_logo.svg/200px-Radio_DeeJay_logo.svg.png
-    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/9/93/Logo_Deejay.svg
-    description: La radio che libera la musica
-    genre: hits
-    country: italy
-
-  - id: radio_italia
-    name: Radio Italia
-    stream_url: https://stream4.xdevel.com/audio0s976608-1379/stream/icecast.audio
-    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Logo_Radio_Italia.svg/200px-Logo_Radio_Italia.svg.png
-    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/0/06/Radio_Italia_logo_%282020%29.svg
-    description: Solo musica italiana
-    genre: hits
-    country: italy
-
-  - id: radio_105
-    name: Radio 105
-    stream_url: https://icecast.unitedradio.it/Radio105.aac
-    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Radio_105_logo.svg/200px-Radio_105_logo.svg.png
-    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/5/50/Radio_105_logo.svg
-    description: La radio che suona la musica
-    genre: hits
-    country: italy
-
-  # ============ Spain ============
-  - id: cadena_ser
-    name: Cadena SER
-    stream_url: https://playerservices.streamtheworld.com/api/livestream-redirect/CADENASER.mp3
-    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Cadena_SER_logo.svg/200px-Cadena_SER_logo.svg.png
-    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/2/28/Cadena_Ser_logo.svg
-    description: La radio líder en España
-    genre: news_talk
-    country: spain
-
-  - id: los40
-    name: LOS40
-    stream_url: https://playerservices.streamtheworld.com/api/livestream-redirect/LOS40.mp3
-    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/LOS40_logo.svg/200px-LOS40_logo.svg.png
-    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/8/80/Los_40.svg
-    description: La radio de los éxitos
-    genre: hits
-    country: spain
-
-  - id: cope
-    name: COPE
-    stream_url: https://flucast23-h.akamaihd.net/COPEMADRID_SC
-    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Cope_logo.svg/200px-Cope_logo.svg.png
-    # No SVG available on Wikimedia Commons
-    description: Radio COPE - Cadena de Ondas Populares Españolas
-    genre: news_talk
-    country: spain
-
-  - id: onda_cero
-    name: Onda Cero
-    stream_url: https://atres-live.ondacero.es/live/ondacero/bitrate_1.m3u8
-    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Onda_Cero_logo.svg/200px-Onda_Cero_logo.svg.png
-    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/b/bf/Onda_Cero_logo.svg
-    description: Radio en español
-    genre: variety
-    country: spain
-
-  - id: cadena_dial
-    name: Cadena Dial
-    stream_url: https://playerservices.streamtheworld.com/api/livestream-redirect/CADENADIAL.mp3
-    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Cadena_Dial_logo.svg/200px-Cadena_Dial_logo.svg.png
-    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/d/d1/Cadena_Dial_2019_logo.svg
-    description: La radio de las baladas
-    genre: adult_contemporary
-    country: spain
-
-  # ============ Netherlands ============
-  - id: npo_radio_2
-    name: NPO Radio 2
-    stream_url: http://icecast.omroep.nl/radio2-bb-mp3
-    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/NPO_Radio_2_logo.svg/200px-NPO_Radio_2_logo.svg.png
-    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/f/f4/NPO_Radio_2_logo.svg
-    description: De beste muziekmix
-    genre: variety
-    country: netherlands
-
-  - id: sky_radio
-    name: Sky Radio
-    stream_url: https://playerservices.streamtheworld.com/api/livestream-redirect/SRGSTR01.mp3
-    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Sky_Radio_logo.svg/200px-Sky_Radio_logo.svg.png
-    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/1/12/Sky_Radio_logo_2019.svg
-    description: The feel good station
-    genre: adult_contemporary
-    country: netherlands
-
-  - id: radio_10
-    name: Radio 10
-    stream_url: https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO10.mp3
-    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Radio_10_logo.svg/200px-Radio_10_logo.svg.png
-    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/1/19/Radio_10_logo_2019.svg
-    description: Gewoon de beste hits
-    genre: oldies
-    country: netherlands
-
-  - id: qmusic
-    name: Qmusic
-    stream_url: https://icecast-qmusicnl-cdp.triple-it.nl/qmusic.mp3
-    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Qmusic_logo.svg/200px-Qmusic_logo.svg.png
-    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/7/70/Qmusic_logo.svg
-    description: Q sounds better with you
-    genre: hits
-    country: netherlands
-
-  - id: radio_538
-    name: Radio 538
-    stream_url: https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO538.mp3
-    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Radio_538_logo.svg/200px-Radio_538_logo.svg.png
-    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/e/ea/Logo_Radio538.svg
-    description: De nummer 1 hits
-    genre: hits
-    country: netherlands
-
-  # ============ Germany (additional) ============
-  - id: bayern_1
-    name: Bayern 1
-    stream_url: https://dispatcher.rndfnk.com/br/br1/obb/mp3/mid
-    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Bayern_1_Logo.svg/200px-Bayern_1_Logo.svg.png
-    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/f/f8/Bayern1-logo.svg
-    description: Die beste Musik für Bayern
-    genre: oldies
-    country: germany
-
-  - id: wdr_2
-    name: WDR 2
-    stream_url: https://wdr-wdr2-rheinland.icecastssl.wdr.de/wdr/wdr2/rheinland/mp3/128/stream.mp3
-    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/WDR_2_logo.svg/200px-WDR_2_logo.svg.png
-    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/7/78/WDR_2_logo.svg
-    description: Musik, Infos, Podcasts
-    genre: adult_contemporary
-    country: germany
-
+    tags: hits
+    popularity: 305
   - id: swr3
     name: SWR3
     stream_url: https://liveradio.swr.de/sw282p3/swr3/play.mp3
@@ -451,7 +146,87 @@ stations:
     description: Pop und mehr
     genre: pop_rock
     country: germany
-
+    tags: ''
+    popularity: 297
+  - id: cadena_dial
+    name: Cadena Dial
+    stream_url: https://playerservices.streamtheworld.com/api/livestream-redirect/CADENADIAL.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Cadena_Dial_logo.svg/200px-Cadena_Dial_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/d/d1/Cadena_Dial_2019_logo.svg
+    description: La radio de las baladas
+    genre: adult_contemporary
+    country: spain
+    tags: ''
+    popularity: 274
+  - id: fip
+    name: FIP
+    stream_url: https://icecast.radiofrance.fr/fip-midfi.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/1/16/FIP_logo_2021.svg
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/1/16/FIP_logo_2021.svg
+    description: Éclectisme musical
+    genre: eclectic
+    country: france
+    tags: ''
+    popularity: 241
+  - id: capital_fm
+    name: Capital FM
+    stream_url: http://5229.cloudrad.io:8316/;
+    logo_url: https://cdn-radiotime-logos.tunein.com/s2728q.png
+    logo_svg_url: https://en.wikipedia.org/wiki/Special:FilePath/Logo_Capital_FM.svg
+    description: The UK's No.1 Hit Music Station
+    genre: hits
+    country: uk
+    tags: ''
+    popularity: 233
+  - id: heart_uk
+    name: Heart UK
+    stream_url: http://media-ice.musicradio.com/HeartUKMP3
+    logo_url: https://cdn-radiotime-logos.tunein.com/s121960q.png
+    logo_svg_url: https://en.wikipedia.org/wiki/Special:FilePath/The_Heart_Network_logo.svg
+    description: Turn up the feel good
+    genre: pop_rock
+    country: uk
+    tags: commercial,london,hot adult contemporary
+    popularity: 228
+  - id: classic_fm
+    name: Classic FM
+    stream_url: https://media-ice.musicradio.com/ClassicFMMP3
+    logo_url: https://www.classicfm.com/assets_v4r/classic/img/favicon-196x196.png
+    description: The world's greatest music
+    genre: classical
+    country: uk
+    tags: classic fm,classical
+    popularity: 211
+  - id: bayern_1
+    name: Bayern 1
+    stream_url: https://dispatcher.rndfnk.com/br/br1/obb/mp3/mid
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Bayern_1_Logo.svg/200px-Bayern_1_Logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/f/f8/Bayern1-logo.svg
+    description: Die beste Musik für Bayern
+    genre: oldies
+    country: germany
+    tags: ''
+    popularity: 207
+  - id: bbc_6music
+    name: BBC Radio 6 Music
+    stream_url: https://as-hls-ww-live.akamaized.net/pool_81827798/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d96000.norewind.m3u8
+    logo_url: https://cdn-radiotime-logos.tunein.com/s24944q.png
+    logo_svg_url: https://en.wikipedia.org/wiki/Special:FilePath/BBC_Radio_6_Music.svg
+    description: The place for alternative music
+    genre: alternative
+    country: uk
+    tags: 320kbps,music,rock,indie,pop
+    popularity: 203
+  - id: rds
+    name: RDS
+    stream_url: https://icstream.rds.radio/rds64k
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/RDS_logo.svg/200px-RDS_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/2/2a/RDS_logo.svg
+    description: Radio Dimensione Suono - 100% Grandi Successi
+    genre: hits
+    country: italy
+    tags: ''
+    popularity: 108
   - id: wdr1
     name: WDR 1
     stream_url: https://wdr-1live-live.icecastssl.wdr.de/wdr/1live/live/mp3/128/stream.mp3
@@ -460,7 +235,124 @@ stations:
     description: Das junge Radio des WDR
     genre: pop_rock
     country: germany
-
+    tags: ''
+    popularity: 85
+  - id: radio_10
+    name: Radio 10
+    stream_url: https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO10.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Radio_10_logo.svg/200px-Radio_10_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/1/19/Radio_10_logo_2019.svg
+    description: Gewoon de beste hits
+    genre: oldies
+    country: netherlands
+    tags: talk,news,noticias
+    popularity: 75
+  - id: jazz24
+    name: Jazz24
+    stream_url: https://knkx-live-a.edge.audiocdn.com/6285_128k
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/4/4e/KNKX_Logo.png
+    description: Jazz from Seattle's KNKX
+    genre: jazz
+    country: usa
+    tags: ''
+    popularity: 57
+  - id: bbc_radio_2
+    name: BBC Radio 2
+    stream_url: https://as-hls-ww-live.akamaized.net/pool_74208725/live/ww/bbc_radio_two/bbc_radio_two.isml/bbc_radio_two-audio%3d128000.norewind.m3u8
+    logo_url: https://cdn-radiotime-logos.tunein.com/s24940q.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/en/8/8c/BBC_Radio_2.svg
+    description: Great music, great variety
+    genre: adult_contemporary
+    country: uk
+    tags: adult standards,bbc,interviews,variety,oldies
+    popularity: 46
+  - id: wnyc_fm
+    name: WNYC 93.9 FM
+    stream_url: https://fm939.wnyc.org/wnycfm.aac
+    logo_url: https://cdn-radiotime-logos.tunein.com/s21606q.png
+    logo_svg_url: https://en.wikipedia.org/wiki/Special:FilePath/WNYC_logo.svg
+    description: New York's flagship public radio station
+    genre: news_talk
+    country: usa
+    tags: news
+    popularity: 45
+  - id: radio_538
+    name: Radio 538
+    stream_url: https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO538.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Radio_538_logo.svg/200px-Radio_538_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/e/ea/Logo_Radio538.svg
+    description: De nummer 1 hits
+    genre: hits
+    country: netherlands
+    tags: ''
+    popularity: 45
+  - id: tsfjazz
+    name: TSF Jazz
+    stream_url: https://tsfjazz.ice.infomaniak.ch/tsfjazz-high.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/fr/thumb/4/44/TSF_Jazz_logo.svg/200px-TSF_Jazz_logo.svg.png
+    description: La radio jazz
+    genre: jazz
+    country: france
+    tags: ''
+    popularity: 43
+  - id: npr
+    name: NPR News
+    stream_url: https://npr-ice.streamguys1.com/live.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/National_Public_Radio_logo.svg/200px-National_Public_Radio_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/d/d7/National_Public_Radio_logo.svg
+    description: National Public Radio
+    genre: news
+    country: usa
+    tags: classical
+    popularity: 40
+  - id: deutschlandradio
+    name: Deutschlandfunk
+    stream_url: https://st01.sslstream.dlf.de/dlf/01/128/mp3/stream.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Deutschlandfunk_Logo_2017.svg/200px-Deutschlandfunk_Logo_2017.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/1/14/Deutschlandfunk_Logo_2017.svg
+    description: Nachrichten und Kultur
+    genre: news_culture
+    country: germany
+    tags: ''
+    popularity: 31
+  - id: cope
+    name: COPE
+    stream_url: https://flucast-m02-03.flumotion.com/cope/net1.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Cope_logo.svg/200px-Cope_logo.svg.png
+    description: Radio COPE - Cadena de Ondas Populares Españolas
+    genre: news_talk
+    country: spain
+    tags: ''
+    popularity: 20
+  - id: rmc
+    name: RMC
+    stream_url: http://audio.bfmtv.com/rmcinfo_mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/RMC_logo.svg/200px-RMC_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/2/20/RMC_2025.svg
+    description: Info Talk Sport
+    genre: news_talk
+    country: france
+    tags: ''
+    popularity: 20
+  - id: cadena_ser
+    name: Cadena SER
+    stream_url: https://playerservices.streamtheworld.com/api/livestream-redirect/CADENASER.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Cadena_SER_logo.svg/200px-Cadena_SER_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/2/28/Cadena_Ser_logo.svg
+    description: La radio líder en España
+    genre: news_talk
+    country: spain
+    tags: classical
+    popularity: 19
+  - id: radio_paradise
+    name: Radio Paradise
+    stream_url: http://stream-dc1.radioparadise.com/aac-320
+    logo_url: https://radioparadise.com/graphics/logo_rp_400.png
+    description: Eclectic blend of music from California
+    genre: eclectic
+    country: usa
+    tags: ''
+    popularity: 15
   - id: antenne_bayern
     name: Antenne Bayern
     stream_url: https://stream.antenne.de/antenne
@@ -469,8 +361,86 @@ stations:
     description: Hits für Bayern
     genre: hits
     country: germany
-
-  # ============ France (additional) ============
+    tags: ''
+    popularity: 15
+  - id: france_culture
+    name: France Culture
+    stream_url: https://icecast.radiofrance.fr/franceculture-midfi.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/France_Culture_logo_2021.svg/250px-France_Culture_logo_2021.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/d/d6/France_Culture_logo_2021.svg
+    description: Culture et savoirs
+    genre: culture
+    country: france
+    tags: ''
+    popularity: 13
+  - id: france_inter
+    name: France Inter
+    stream_url: https://icecast.radiofrance.fr/franceinter-midfi.mp3
+    logo_url: https://www.lesentreprisesdupaysage.fr/content/uploads/2022/03/france_inter_logo_2021-svg-1024x1024.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/1/10/France_Inter_logo_2021.svg
+    description: La radio de service public
+    genre: talk_music
+    country: france
+    tags: ''
+    popularity: 11
+  - id: radio_nova
+    name: Radio Nova
+    stream_url: https://novazz.ice.infomaniak.ch/novazz-128.mp3
+    logo_url: https://www.nova.fr/wp-content/thumbnails/uploads/sites/2/2024/05/NOVA-nova-400x496-1-t-1700x1030.png
+    description: Le Grand Mix de Radio Nova
+    genre: eclectic_world
+    country: france
+    tags: ''
+    popularity: 11
+  - id: nrj
+    name: NRJ
+    stream_url: https://scdn.nrjaudio.fm/adwz2/fr/30001/mp3_128.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/NRJ_logo.svg/200px-NRJ_logo.svg.png
+    description: Hit Music Only
+    genre: hits
+    country: france
+    tags: ''
+    popularity: 9
+  - id: qmusic
+    name: Qmusic
+    stream_url: http://20723.live.streamtheworld.com/QMUSICAAC.aac
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Qmusic_logo.svg/200px-Qmusic_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/7/70/Qmusic_logo.svg
+    description: Q sounds better with you
+    genre: hits
+    country: netherlands
+    tags: ''
+    popularity: 6
+  - id: npo_radio_2
+    name: NPO Radio 2
+    stream_url: http://icecast.omroep.nl/radio2-bb-mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/NPO_Radio_2_logo.svg/200px-NPO_Radio_2_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/f/f4/NPO_Radio_2_logo.svg
+    description: De beste muziekmix
+    genre: variety
+    country: netherlands
+    tags: pop
+    popularity: 5
+  - id: radio_105
+    name: Radio 105
+    stream_url: https://icecast.unitedradio.it/Radio105.aac
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Radio_105_logo.svg/200px-Radio_105_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/5/50/Radio_105_logo.svg
+    description: La radio che suona la musica
+    genre: hits
+    country: italy
+    tags: information,rock,pop,folk,local news
+    popularity: 3
+  - id: sky_radio
+    name: Sky Radio
+    stream_url: https://playerservices.streamtheworld.com/api/livestream-redirect/SRGSTR01.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Sky_Radio_logo.svg/200px-Sky_Radio_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/1/12/Sky_Radio_logo_2019.svg
+    description: The feel good station
+    genre: adult_contemporary
+    country: netherlands
+    tags: ''
+    popularity: 3
   - id: rtl
     name: RTL
     stream_url: http://streaming.radio.rtl.fr/rtl-1-44-128
@@ -479,16 +449,80 @@ stations:
     description: On a tous une bonne raison d'écouter RTL
     genre: news_talk
     country: france
-
-  - id: nrj
-    name: NRJ
-    stream_url: https://scdn.nrjaudio.fm/adwz2/fr/30001/mp3_128.mp3
-    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/NRJ_logo.svg/200px-NRJ_logo.svg.png
-    # No SVG available on Wikimedia Commons
-    description: Hit Music Only
+    tags: adult album alternative
+    popularity: 3
+  - id: onda_cero
+    name: Onda Cero
+    stream_url: https://atres-live.ondacero.es/live/ondacero/bitrate_1.m3u8
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Onda_Cero_logo.svg/200px-Onda_Cero_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/b/bf/Onda_Cero_logo.svg
+    description: Radio en español
+    genre: variety
+    country: spain
+    tags: ''
+    popularity: 1
+  - id: lbc
+    name: LBC
+    stream_url: http://icecast.thisisdax.com/LBCUKMP3
+    logo_url: https://cdn-radiotime-logos.tunein.com/s25071q.png
+    logo_svg_url: https://en.wikipedia.org/wiki/Special:FilePath/LBC_logo.svg
+    description: Leading Britain's Conversation
+    genre: news_talk
+    country: uk
+  - id: kexp
+    name: KEXP 90.3
+    stream_url: https://kexp-mp3-128.streamguys1.com/kexp128.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/KEXP_logo.svg/200px-KEXP_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/6/69/KEXP_logo.svg
+    description: Where the music matters
+    genre: alternative
+    country: usa
+  - id: wqxr
+    name: WQXR 105.9 FM
+    stream_url: https://wqxr.streamguys1.com/wqxr
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/WQXR_logo.svg/200px-WQXR_logo.svg.png
+    logo_svg_url: https://en.wikipedia.org/wiki/Special:FilePath/WQXR-FM_logo.svg
+    description: New York's only dedicated classical station
+    genre: classical
+    country: usa
+  - id: kcrw
+    name: KCRW 89.9
+    stream_url: https://kcrw.streamguys1.com/kcrw_192k_mp3_on_air
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/KCRW_logo.svg/200px-KCRW_logo.svg.png
+    description: Music, news, and culture from LA
+    genre: eclectic
+    country: usa
+  - id: soma_drone
+    name: SomaFM Drone Zone
+    stream_url: https://ice1.somafm.com/dronezone-128-mp3
+    logo_url: https://somafm.com/img3/dronezone-400.jpg
+    description: Atmospheric textures with minimal beats
+    genre: ambient
+    country: usa
+  - id: radio_italia
+    name: Radio Italia
+    stream_url: https://stream4.xdevel.com/audio0s976608-1379/stream/icecast.audio
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Logo_Radio_Italia.svg/200px-Logo_Radio_Italia.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/0/06/Radio_Italia_logo_%282020%29.svg
+    description: Solo musica italiana
     genre: hits
-    country: france
-
+    country: italy
+  - id: los40
+    name: LOS40
+    stream_url: https://playerservices.streamtheworld.com/api/livestream-redirect/LOS40.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/LOS40_logo.svg/200px-LOS40_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/8/80/Los_40.svg
+    description: La radio de los éxitos
+    genre: hits
+    country: spain
+  - id: wdr_2
+    name: WDR 2
+    stream_url: https://wdr-wdr2-rheinland.icecastssl.wdr.de/wdr/wdr2/rheinland/mp3/128/stream.mp3
+    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/WDR_2_logo.svg/200px-WDR_2_logo.svg.png
+    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/7/78/WDR_2_logo.svg
+    description: Musik, Infos, Podcasts
+    genre: adult_contemporary
+    country: germany
   - id: franceinfo
     name: Franceinfo
     stream_url: https://icecast.radiofrance.fr/franceinfo-midfi.mp3
@@ -496,21 +530,4 @@ stations:
     logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/0/03/Franceinfo.svg
     description: L'info en continu
     genre: news
-    country: france
-
-  - id: nostalgie
-    name: Nostalgie
-    stream_url: https://scdn.nrjaudio.fm/adwz2/fr/30601/mp3_128.mp3
-    logo_url: https://upload.wikimedia.org/wikipedia/fr/thumb/e/ed/Logo_Nostalgie_2001.svg/200px-Logo_Nostalgie_2001.svg.png
-    description: Que des tubes
-    genre: oldies
-    country: france
-
-  - id: rmc
-    name: RMC
-    stream_url: https://audio.bfmtv.com/bfmbusiness/rmc_info-smil
-    logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/RMC_logo.svg/200px-RMC_logo.svg.png
-    logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/2/20/RMC_2025.svg
-    description: Info Talk Sport
-    genre: news_talk
     country: france

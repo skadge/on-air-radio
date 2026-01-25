@@ -116,6 +116,10 @@ fun RadioApp(
                                                         station.description.contains(
                                                                 searchQuery,
                                                                 ignoreCase = true
+                                                        ) ||
+                                                        station.tags.contains(
+                                                                searchQuery,
+                                                                ignoreCase = true
                                                         )
                                         }
 

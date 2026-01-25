@@ -12,7 +12,10 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
+import androidx.media3.datasource.DefaultDataSource
+import androidx.media3.datasource.DefaultHttpDataSource
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import androidx.media3.session.LibraryResult
 import androidx.media3.session.MediaLibraryService
 import androidx.media3.session.MediaSession
@@ -58,8 +61,21 @@ class RadioPlaybackService : MediaLibraryService() {
     }
 
     private fun initializePlayer() {
+        val userAgent = "OnAir Radio/1.0 (Android)"
+
+        // Configure HttpDataSource with User-Agent and ICY metadata request
+        val httpDataSourceFactory =
+                DefaultHttpDataSource.Factory()
+                        .setUserAgent(userAgent)
+                        .setAllowCrossProtocolRedirects(true)
+                        .setDefaultRequestProperties(mapOf("Icy-MetaData" to "1"))
+
+        val dataSourceFactory = DefaultDataSource.Factory(this, httpDataSourceFactory)
+        val mediaSourceFactory = DefaultMediaSourceFactory(dataSourceFactory)
+
         val exoPlayer =
                 ExoPlayer.Builder(this)
+                        .setMediaSourceFactory(mediaSourceFactory)
                         .setAudioAttributes(
                                 AudioAttributes.Builder()
                                         .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)

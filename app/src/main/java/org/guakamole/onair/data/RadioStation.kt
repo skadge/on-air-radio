@@ -12,5 +12,7 @@ data class RadioStation(
         val description: String = "",
         @StringRes val genre: Int = 0,
         @StringRes val country: Int = 0,
-        val isFavorite: Boolean = false
+        val isFavorite: Boolean = false,
+        val popularity: Int = 0,
+        val tags: String = ""
 )

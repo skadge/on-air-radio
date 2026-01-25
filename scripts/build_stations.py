@@ -412,6 +412,7 @@ def generate_repository(data: dict, dry_run: bool = False, verbose: bool = False
     """Generate RadioRepository.kt from station data."""
     constants = data['constants']
     stations = sorted(data['stations'], key=lambda x: x['name'].lower())
+    #stations = sorted(data['stations'], key=lambda x: x.get('popularity', 0), reverse=True)
     
     # Build station entries
     station_entries = []
@@ -430,6 +431,8 @@ def generate_repository(data: dict, dry_run: bool = False, verbose: bool = False
         # Escape quotes in strings
         name = station['name'].replace('"', '\\"')
         description = station.get('description', '').replace('"', '\\"')
+        tags = station.get('tags', '').replace('"', '\\"')
+        popularity = station.get('popularity', 0)
         
         entry = f'''                        RadioStation(
                                 id = "{station['id']}",
@@ -439,7 +442,9 @@ def generate_repository(data: dict, dry_run: bool = False, verbose: bool = False
                                 logoResId = {logo_res_id},
                                 description = "{description}",
                                 genre = {genre_res},
-                                country = {country_res}
+                                country = {country_res},
+                                popularity = {popularity},
+                                tags = "{tags}"
                         )'''
         station_entries.append(entry)
     
