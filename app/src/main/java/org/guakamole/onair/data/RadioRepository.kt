@@ -1135,7 +1135,7 @@ object RadioRepository {
                                 name = "RTL2",
                                 streamUrl = "https://streaming.radio.rtl2.fr/rtl2-1-48-192",
                                 logoUrl = "https://static.rtl2.fr/versions/www/6.0.626/img/apple-touch-icon.png",
-                                logoResId = 0,
+                                logoResId = R.drawable.logo_rtl2,
                                 description = "RTL2 from France",
                                 primaryTag = "pop",
                                 country = R.string.country_france,
