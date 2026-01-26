@@ -55,7 +55,7 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q2748488
   - id: rmc
     name: RMC
-    stream_url: https://audio.bfmtv.com/rmcinfo_mp3
+    stream_url: https://chai5she.cdn.dvmr.fr/rmcinfo
     logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/RMC_logo.svg/200px-RMC_logo.svg.png
     logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/2/20/RMC_2025.svg
     description: Info Talk Sport
@@ -81,7 +81,7 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q795598
   - id: wdr_5
     name: WDR 5
-    stream_url: https://wdr-edge-2015-fra-lg-cdn.cast.addradio.de/wdr/wdr5/live/mp3/128/stream.mp3
+    stream_url: http://wdr-wdr5-live.icecast.wdr.de/wdr/wdr5/live/mp3/128/stream.mp3
     logo_url: https://web.ard.de/static/imp/radionet_responsive/wdr_wdr5.png
     description: WDR 5 from Germany
     country: germany
@@ -166,8 +166,8 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q1308457
   - id: radio_swiss_jazz
     name: Radio Swiss Jazz
-    stream_url: https://stream.srg-ssr.ch/m/rsj/mp3_128
-    logo_url: https://www.radioswissjazz.ch/social-media/rsj-web.png
+    stream_url: http://stream.srg-ssr.ch/m/rsj/aacp_96
+    logo_url: http://www.radioswissjazz.ch/social-media/rsj-web.png
     description: Radio Swiss Jazz from Switzerland
     country: switzerland
     tags: jazz
@@ -190,7 +190,7 @@ stations:
     logo_svg_url: https://commons.wikimedia.org/wiki/Special:FilePath/EsRadio_logo.svg
   - id: srf_4_news
     name: SRF 4 News
-    stream_url: https://stream.srg-ssr.ch/m/drs4news/mp3_128
+    stream_url: http://stream.srg-ssr.ch/m/drs4news/mp3_128
     logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Radio_SRF_4_News.svg/205px-Radio_SRF_4_News.svg.png
     description: SRF 4 News from Switzerland
     country: switzerland
@@ -322,7 +322,7 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q749608
   - id: nostalgie
     name: Nostalgie
-    stream_url: https://scdn.nrjaudio.fm/adwz2/fr/30601/mp3_128.mp3
+    stream_url: http://185.52.127.132/fr/30601/mp3_128.mp3?origine=fluxradios
     logo_url: https://upload.wikimedia.org/wikipedia/fr/thumb/e/ed/Logo_Nostalgie_2001.svg/200px-Logo_Nostalgie_2001.svg.png
     description: Que des tubes
     country: france
@@ -517,8 +517,8 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q977817
   - id: radio_swiss_pop
     name: Radio Swiss Pop
-    stream_url: https://stream.srg-ssr.ch/m/rsp/mp3_128
-    logo_url: https://static.radio.fr/images/broadcasts/73/c0/3463/c300.png
+    stream_url: http://stream.srg-ssr.ch/m/rsp/aacp_32
+    logo_url: http://static.radio.fr/images/broadcasts/73/c0/3463/c300.png
     description: Radio Swiss Pop from Switzerland
     country: switzerland
     tags: pop
@@ -565,7 +565,7 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q1747704
   - id: bnr_nieuwsradio
     name: BNR Nieuwsradio
-    stream_url: https://stream.bnr.nl/bnr_mp3_128_20
+    stream_url: http://icecast-bnr.cdp.triple-it.nl/bnr_mp3_96_06
     logo_url: https://hamwaves.com/streams/images/bnr.png
     description: BNR Nieuwsradio from Netherlands
     country: netherlands
@@ -587,7 +587,7 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q2126028
   - id: radio_88_6
     name: radio 88.6
-    stream_url: https://radio886.fluidstream.eu/886_live.mp3
+    stream_url: http://radio886.fluidstream.eu/886_live.mp3
     logo_url: https://radio886.at//apple-touch-icon.png
     description: radio 88.6 from Austria
     country: austria
@@ -947,7 +947,7 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q1961361
   - id: qmusic
     name: Qmusic
-    stream_url: https://20723.live.streamtheworld.com/QMUSICAAC.aac
+    stream_url: https://icecast-qmusicnl-cdp.triple-it.nl/Qmusic_nl_live_96.mp3
     logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Qmusic_logo.svg/200px-Qmusic_logo.svg.png
     logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/7/70/Qmusic_logo.svg
     description: Q sounds better with you

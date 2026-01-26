@@ -6,23 +6,21 @@ KCRW - no audio, no text
 
 
 Antyradio - no logo, no text
-Arrow Classic Rock - no audio, no text
 BBC4 - no text (because it is a show? maybe different entry in the meta data?)
 BFM business - no audio, no text
-BNR Nieuwsradio - no logo, no text
-Business FM - no logo, no audio, no text
+BNR Nieuwsradio - no svg logo, no text
+Business FM - no text, no audio
 Cadena SER - no text
-Capital FM - no text
+Capital FM - no text, logo probably wrong (logo in german, but UK station?), no audio
 CNR - no audio, no text
 COPE - no audio, no text
-Deutschlandfunk kultur - no audio, no text
-Deutschlandfunk nova - no audio, no text, broken logo
+Deutschlandfunk nova - broken logo
 esRadio - no audio, no text
-Europe 1 - no audio, no text, no svg logo
+Europe 1 - no text/wrong text?, no svg logo
 FOX news - no audio, no text, no svg logo
 France culture - no text
 Ibiza Global Radio - no logo, no audio, no text
-Jazz Radio - no text, no logo
+Jazz Radio - no text, no logo, language seems to be spanish, not french?
 Jovem Pan News - no audio, no text, no svg logo
 KEXP - no text
 Nostalgie - no audio, no text
@@ -30,26 +28,23 @@ NPO Radio 2 Soul & Jazz - no svg logo
 NPR - no text
 NRJ - no audio, no text
 Onda Cera - no text
-Polskie Radio 24 - no audio, no text, no logo
-Qmusic - no audio, no text
+Polskie Radio 24 - no audio, no text, no svg logo
 RAC1 -  no text
 Radio 105 - no text
 Radio 24 - no audio, no text, no logo
 Radio 538 - no text
-radio 88.6 - no audio, no text, no logo
-Radio Beat - no audio, no text, no logo
+radio 88.6 - no audio, no text, no svg logo
+Radio Beat - no svg logo
 Radio Capital - no audio, no text, no svg logo
 Radio Deejay - no audio, no text
 Radio eins -  no audio, no text
 Radio Italia - no text
 Radio Nowy Swiat - no logo
-Radio Popolare - no audio, no text, no svg logo
-Radio Swiss Jazz - no audio, no text
-Radio Swiss Pop - no audio, no text
-Rai Radio 1 - no audio, no text
-Rai Radio 3 - no audio, no text
+Radio Popolare - no text, no svg logo
+Rai Radio 1 - no text
+Rai Radio 3 - no text
 RMC - no audio, no text
-RMF Classic - no audio, no text, no logo
+RMF Classic - no audio, no text, no svg logo
 RMF FM - no audio, no text, no logo
 rne radio 3 - no audio, no text
 Rockserwis.fm - no audio, no text, no logo
@@ -60,11 +55,10 @@ RTS Couleur 3 - no audio, no text
 SLAM! - no logo
 SRF 4 News - no audio, no text
 TSF Jazz - no text
-WRD 2 - no text
 WRD 5 - no audio, no text 
-cro dvojka - no audio, no text, no logo
-cro plus - no audio, no text, no logo
-cro radiozurnal - no audio, no text, no logo
+cro dvojka - no text, no svg logo
+cro plus - no audio, no text, no svg logo
+cro radiozurnal - no text, no svg logo
 vesti fm - no audio, no text, no logo
 radyo svezda -  no audio, no text, no logo
 

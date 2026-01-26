@@ -173,8 +173,8 @@ object RadioRepository {
                         RadioStation(
                                 id = "bfm_business",
                                 name = "BFM Business",
-                                streamUrl = "https://audio.bfmtv.com/bfmbusiness_128.mp3",
-                                logoUrl = "https://static.radio.fr/images/broadcasts/b1/97/1441/1/c300.png",
+                                streamUrl = "https://chai5she.cdn.dvmr.fr/bfmbusiness",
+                                logoUrl = "http://static.radio.fr/images/broadcasts/b1/97/1441/1/c300.png",
                                 logoResId = R.drawable.logo_bfm_business,
                                 description = "BFM Business from France",
                                 primaryTag = "news",
@@ -188,7 +188,7 @@ object RadioRepository {
                         RadioStation(
                                 id = "bnr_nieuwsradio",
                                 name = "BNR Nieuwsradio",
-                                streamUrl = "https://stream.bnr.nl/bnr_mp3_128_20",
+                                streamUrl = "http://icecast-bnr.cdp.triple-it.nl/bnr_mp3_96_06",
                                 logoUrl = "https://hamwaves.com/streams/images/bnr.png",
                                 logoResId = 0,
                                 description = "BNR Nieuwsradio from Netherlands",
@@ -608,7 +608,7 @@ object RadioRepository {
                         RadioStation(
                                 id = "nostalgie",
                                 name = "Nostalgie",
-                                streamUrl = "https://scdn.nrjaudio.fm/adwz2/fr/30601/mp3_128.mp3",
+                                streamUrl = "http://185.52.127.132/fr/30601/mp3_128.mp3?origine=fluxradios",
                                 logoUrl = "https://upload.wikimedia.org/wikipedia/fr/thumb/e/ed/Logo_Nostalgie_2001.svg/200px-Logo_Nostalgie_2001.svg.png",
                                 logoResId = R.drawable.logo_nostalgie,
                                 description = "Que des tubes",
@@ -728,7 +728,7 @@ object RadioRepository {
                         RadioStation(
                                 id = "qmusic",
                                 name = "Qmusic",
-                                streamUrl = "https://20723.live.streamtheworld.com/QMUSICAAC.aac",
+                                streamUrl = "https://icecast-qmusicnl-cdp.triple-it.nl/Qmusic_nl_live_96.mp3",
                                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Qmusic_logo.svg/200px-Qmusic_logo.svg.png",
                                 logoResId = R.drawable.logo_qmusic,
                                 description = "Q sounds better with you",
@@ -818,7 +818,7 @@ object RadioRepository {
                         RadioStation(
                                 id = "radio_88_6",
                                 name = "radio 88.6",
-                                streamUrl = "https://radio886.fluidstream.eu/886_live.mp3",
+                                streamUrl = "http://radio886.fluidstream.eu/886_live.mp3",
                                 logoUrl = "https://radio886.at//apple-touch-icon.png",
                                 logoResId = 0,
                                 description = "radio 88.6 from Austria",
@@ -968,8 +968,8 @@ object RadioRepository {
                         RadioStation(
                                 id = "radio_swiss_jazz",
                                 name = "Radio Swiss Jazz",
-                                streamUrl = "https://stream.srg-ssr.ch/m/rsj/mp3_128",
-                                logoUrl = "https://www.radioswissjazz.ch/social-media/rsj-web.png",
+                                streamUrl = "http://stream.srg-ssr.ch/m/rsj/aacp_96",
+                                logoUrl = "http://www.radioswissjazz.ch/social-media/rsj-web.png",
                                 logoResId = R.drawable.logo_radio_swiss_jazz,
                                 description = "Radio Swiss Jazz from Switzerland",
                                 primaryTag = "jazz",
@@ -983,8 +983,8 @@ object RadioRepository {
                         RadioStation(
                                 id = "radio_swiss_pop",
                                 name = "Radio Swiss Pop",
-                                streamUrl = "https://stream.srg-ssr.ch/m/rsp/mp3_128",
-                                logoUrl = "https://static.radio.fr/images/broadcasts/73/c0/3463/c300.png",
+                                streamUrl = "http://stream.srg-ssr.ch/m/rsp/aacp_32",
+                                logoUrl = "http://static.radio.fr/images/broadcasts/73/c0/3463/c300.png",
                                 logoResId = R.drawable.logo_radio_swiss_pop,
                                 description = "Radio Swiss Pop from Switzerland",
                                 primaryTag = "pop",
@@ -1028,7 +1028,7 @@ object RadioRepository {
                         RadioStation(
                                 id = "rmc",
                                 name = "RMC",
-                                streamUrl = "https://audio.bfmtv.com/rmcinfo_mp3",
+                                streamUrl = "https://chai5she.cdn.dvmr.fr/rmcinfo",
                                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/RMC_logo.svg/200px-RMC_logo.svg.png",
                                 logoResId = R.drawable.logo_rmc,
                                 description = "Info Talk Sport",
@@ -1193,7 +1193,7 @@ object RadioRepository {
                         RadioStation(
                                 id = "srf_4_news",
                                 name = "SRF 4 News",
-                                streamUrl = "https://stream.srg-ssr.ch/m/drs4news/mp3_128",
+                                streamUrl = "http://stream.srg-ssr.ch/m/drs4news/mp3_128",
                                 logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Radio_SRF_4_News.svg/205px-Radio_SRF_4_News.svg.png",
                                 logoResId = R.drawable.logo_srf_4_news,
                                 description = "SRF 4 News from Switzerland",
@@ -1268,7 +1268,7 @@ object RadioRepository {
                         RadioStation(
                                 id = "wdr_5",
                                 name = "WDR 5",
-                                streamUrl = "https://wdr-edge-2015-fra-lg-cdn.cast.addradio.de/wdr/wdr5/live/mp3/128/stream.mp3",
+                                streamUrl = "http://wdr-wdr5-live.icecast.wdr.de/wdr/wdr5/live/mp3/128/stream.mp3",
                                 logoUrl = "https://web.ard.de/static/imp/radionet_responsive/wdr_wdr5.png",
                                 logoResId = R.drawable.logo_wdr_5,
                                 description = "WDR 5 from Germany",
