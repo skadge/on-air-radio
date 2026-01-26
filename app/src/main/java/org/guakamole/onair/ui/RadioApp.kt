@@ -107,7 +107,11 @@ fun RadioApp(
                                                                 station.tags.contains(
                                                                         it.tag,
                                                                         ignoreCase = true
-                                                                ) || station.primaryTag == it.tag
+                                                                ) ||
+                                                                        station.primaryTag.equals(
+                                                                                it.tag,
+                                                                                ignoreCase = true
+                                                                        )
                                                         }
                                                                 ?: false
                                                 }
@@ -117,16 +121,17 @@ fun RadioApp(
                                         if (searchQuery.isBlank()) {
                                                 true
                                         } else {
+                                                val trimmedQuery = searchQuery.trim()
                                                 station.name.contains(
-                                                        searchQuery,
+                                                        trimmedQuery,
                                                         ignoreCase = true
                                                 ) ||
                                                         station.description.contains(
-                                                                searchQuery,
+                                                                trimmedQuery,
                                                                 ignoreCase = true
                                                         ) ||
                                                         station.tags.contains(
-                                                                searchQuery,
+                                                                trimmedQuery,
                                                                 ignoreCase = true
                                                         )
                                         }

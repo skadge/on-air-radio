@@ -55,7 +55,11 @@ fun FilterBar(
                                                 station.tags.contains(
                                                         item.tag,
                                                         ignoreCase = true
-                                                ) || station.primaryTag == item.tag
+                                                ) ||
+                                                        station.primaryTag.equals(
+                                                                item.tag,
+                                                                ignoreCase = true
+                                                        )
                                         }
                                 item.id to count
                         }
