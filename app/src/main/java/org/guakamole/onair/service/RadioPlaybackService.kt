@@ -38,6 +38,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.guakamole.onair.BuildConfig
 import org.guakamole.onair.MainActivity
 import org.guakamole.onair.billing.PremiumManager
 import org.guakamole.onair.data.RadioRepository
@@ -56,7 +57,8 @@ data class PlaybackError(
 @OptIn(UnstableApi::class)
 class RadioPlaybackService : MediaLibraryService() {
 
-    private var player: ExoPlayer? = null
+    private var player: MetadataForwardingPlayer? = null
+    private var basePlayer: ExoPlayer? = null
     private var mediaLibrarySession: MediaLibrarySession? = null
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     private lateinit var imageLoader: ImageLoader
@@ -108,6 +110,9 @@ class RadioPlaybackService : MediaLibraryService() {
                         )
                         .setHandleAudioBecomingNoisy(true)
                         .build()
+
+        basePlayer = exoPlayer
+        val forwardingPlayer = MetadataForwardingPlayer(exoPlayer)
 
         // Removed: exoPlayer.addAnalyticsListener(EventLogger())
 
@@ -186,7 +191,7 @@ class RadioPlaybackService : MediaLibraryService() {
                 }
         )
 
-        player = exoPlayer
+        player = forwardingPlayer
     }
 
     private fun updatePlayerMetadata(titleArg: String?, artistArg: String?) {
@@ -222,12 +227,12 @@ class RadioPlaybackService : MediaLibraryService() {
                                 .setSubtitle(finalArtist)
                                 .build()
 
-                val newItem = currentItem.buildUpon().setMediaMetadata(newMetadata).build()
+                // Use MetadataForwardingPlayer to update metadata without re-setting media item
+                p.setOverriddenMetadata(newMetadata)
 
-                p.setMediaItem(newItem, /* resetPosition= */ false)
                 android.util.Log.d(
                         "MetadataDebug",
-                        "Service: Updated MediaItem: Title=$finalTitle, Artist=$finalArtist"
+                        "Service: Updated MediaMetadata override: Title=$finalTitle, Artist=$finalArtist"
                 )
             }
         }
@@ -284,7 +289,7 @@ class RadioPlaybackService : MediaLibraryService() {
                         } catch (e: Exception) {
                             android.util.Log.e("MetadataDebug", "Error polling metadata ($type)", e)
                         }
-                        delay(30000)
+                        delay(5000)
                     }
                 }
     }
@@ -354,7 +359,7 @@ class RadioPlaybackService : MediaLibraryService() {
         metadataPollingJob?.cancel()
         serviceScope.cancel()
         mediaLibrarySession?.run {
-            player?.release()
+            basePlayer?.release()
             release()
             mediaLibrarySession = null
         }
