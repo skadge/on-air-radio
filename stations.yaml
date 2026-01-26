@@ -55,7 +55,7 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q2748488
   - id: rmc
     name: RMC
-    stream_url: http://audio.bfmtv.com/rmcinfo_mp3
+    stream_url: https://audio.bfmtv.com/rmcinfo_mp3
     logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/RMC_logo.svg/200px-RMC_logo.svg.png
     logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/2/20/RMC_2025.svg
     description: Info Talk Sport
@@ -77,18 +77,18 @@ stations:
     metadata_type: bbc_rms
     metadata_param: bbc_radio_fourfm
     primary_tag: talk
-    website_url: http://www.bbc.co.uk/radio4
+    website_url: https://www.bbc.co.uk/radio4
     wikidata_url: https://www.wikidata.org/wiki/Q795598
   - id: wdr_5
     name: WDR 5
-    stream_url: http://wdr-edge-2015-fra-lg-cdn.cast.addradio.de/wdr/wdr5/live/mp3/128/stream.mp3
-    logo_url: http://web.ard.de/static/imp/radionet_responsive/wdr_wdr5.png
+    stream_url: https://wdr-edge-2015-fra-lg-cdn.cast.addradio.de/wdr/wdr5/live/mp3/128/stream.mp3
+    logo_url: https://web.ard.de/static/imp/radionet_responsive/wdr_wdr5.png
     description: WDR 5 from Germany
     country: germany
     tags: news,talk
     popularity: 5807
     primary_tag: news
-    website_url: http://www.wdr5.de/
+    website_url: https://www.wdr5.de/
     logo_svg_url: https://commons.wikimedia.org/wiki/Special:FilePath/WDR5_Logo_2012.svg
     wikidata_url: https://www.wikidata.org/wiki/Q1000950
   - id: swr3
@@ -119,8 +119,8 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q795585
   - id: deutschlandfunk_kultur
     name: Deutschlandfunk Kultur
-    stream_url: http://st02.dlf.de/dlf/02/128/mp3/stream.mp3
-    logo_url: http://www.deutschlandfunkkultur.de/themes/dradio/icons/dkultur/favicon-196x196.png
+    stream_url: https://st02.dlf.de/dlf/02/128/mp3/stream.mp3
+    logo_url: https://www.deutschlandfunkkultur.de/themes/dradio/icons/dkultur/favicon-196x196.png
     description: Deutschlandfunk Kultur from Germany
     country: germany
     tags: news
@@ -131,7 +131,7 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q30303189
   - id: deutschlandfunk_nova
     name: Deutschlandfunk Nova
-    stream_url: http://st03.dlf.de/dlf/03/128/mp3/stream.mp3
+    stream_url: https://st03.dlf.de/dlf/03/128/mp3/stream.mp3
     logo_url: https://www.deutschlandfunknova.de/apple-touch-icon-precomposed.png
     description: Deutschlandfunk Nova from Germany
     country: germany
@@ -143,7 +143,7 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q1155601
   - id: vesti_fm
     name: Вести ФМ (Vesti FM)
-    stream_url: http://icecast.vgtrk.cdnvideo.ru/vestifm_mp3_192kbps
+    stream_url: https://icecast.vgtrk.cdnvideo.ru/vestifm_mp3_192kbps
     logo_url: https://images.radiovolna.net/_files/uploads/posts/2017-01/1485363734_vesti-fm-nizhniy-novgorod.png
     description: Вести ФМ (Vesti FM) from Russia
     country: russia
@@ -154,8 +154,8 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q4109601
   - id: radio_eins
     name: Radio Eins
-    stream_url: http://rbb-edge-2072-fra-lg-cdn.cast.addradio.de/rbb/radioeins/live/mp3/mid?_art=dj0yJmlwPTk1LjE3OS4xMzkuMTA2JmlkPWljc2N4bC1qeDVrY3RybmImdD0xNjAzNTQ3MDUzJnM9Nzg2NmYyOWMjMjcxMTRkYWJiZGY5YWM0MDAxMTQ0OTBkYWU3Yzc3YjY
-    logo_url: http://www.ardmediathek.de/img/standard/00/32/71/60/72/-1774185891/16x9/512
+    stream_url: https://rbb-edge-2072-fra-lg-cdn.cast.addradio.de/rbb/radioeins/live/mp3/mid?_art=dj0yJmlwPTk1LjE3OS4xMzkuMTA2JmlkPWljc2N4bC1qeDVrY3RybmImdD0xNjAzNTQ3MDUzJnM9Nzg2NmYyOWMjMjcxMTRkYWJiZGY5YWM0MDAxMTQ0OTBkYWU3Yzc3YjY
+    logo_url: https://www.ardmediathek.de/img/standard/00/32/71/60/72/-1774185891/16x9/512
     description: Radio Eins from Germany
     country: germany
     tags: rock,pop,talk,news
@@ -166,8 +166,8 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q1308457
   - id: radio_swiss_jazz
     name: Radio Swiss Jazz
-    stream_url: http://stream.srg-ssr.ch/m/rsj/mp3_128
-    logo_url: http://www.radioswissjazz.ch/social-media/rsj-web.png
+    stream_url: https://stream.srg-ssr.ch/m/rsj/mp3_128
+    logo_url: https://www.radioswissjazz.ch/social-media/rsj-web.png
     description: Radio Swiss Jazz from Switzerland
     country: switzerland
     tags: jazz
@@ -178,8 +178,8 @@ stations:
     logo_svg_url: https://commons.wikimedia.org/wiki/Special:FilePath/Radio_Swiss_Jazz_Logo.svg
   - id: esradio
     name: esRadio
-    stream_url: http://livestreaming.esradio.fm/stream64.mp3
-    logo_url: http://s.esradio.fm/f/logo-grande.gif
+    stream_url: https://livestreaming.esradio.fm/stream64.mp3
+    logo_url: https://s.esradio.fm/f/logo-grande.gif
     description: esRadio from Spain
     country: spain
     tags: news,talk
@@ -190,7 +190,7 @@ stations:
     logo_svg_url: https://commons.wikimedia.org/wiki/Special:FilePath/EsRadio_logo.svg
   - id: srf_4_news
     name: SRF 4 News
-    stream_url: http://stream.srg-ssr.ch/m/drs4news/mp3_128
+    stream_url: https://stream.srg-ssr.ch/m/drs4news/mp3_128
     logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Radio_SRF_4_News.svg/205px-Radio_SRF_4_News.svg.png
     description: SRF 4 News from Switzerland
     country: switzerland
@@ -213,19 +213,19 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q5476834
   - id: europe_1
     name: Europe 1
-    stream_url: http://stream.europe1.fr/europe1.mp3
+    stream_url: https://stream.europe1.fr/europe1.mp3
     logo_url: https://cdn-europe1.lanmedia.fr/europe1/apple-touch-icon.png
     description: Europe 1 from France
     country: france
     tags: talk,news
     popularity: 1327
     primary_tag: talk
-    website_url: http://www.europe1.fr/
+    website_url: https://www.europe1.fr/
     wikidata_url: https://www.wikidata.org/wiki/Q314407
   - id: ro_radio_urn_l
     name: ČRo Radiožurnál
-    stream_url: http://icecast8.play.cz/cro1-128.mp3
-    logo_url: http://api.play.cz/static/radio_logo/t200/cro1.png
+    stream_url: https://icecast8.play.cz/cro1-128.mp3
+    logo_url: https://api.play.cz/static/radio_logo/t200/cro1.png
     description: ČRo Radiožurnál from Czech Republic
     country: czech_republic
     tags: news
@@ -235,20 +235,20 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q9393775
   - id: npo_radio_1
     name: NPO Radio 1
-    stream_url: http://icecast.omroep.nl:80/radio1-bb-mp3
+    stream_url: https://icecast.omroep.nl:80/radio1-bb-mp3
     logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/NPO_Radio_1_logo_2014.svg/640px-NPO_Radio_1_logo_2014.svg.png
     description: NPO Radio 1 from Netherlands
     country: netherlands
     tags: news
     popularity: 1276
     primary_tag: news
-    website_url: http://www.radio1.nl/
+    website_url: https://www.radio1.nl/
     wikidata_url: https://www.wikidata.org/wiki/Q452945
     logo_svg_url: https://commons.wikimedia.org/wiki/Special:FilePath/NPO_Radio_1_logo_2014.svg
   - id: rai_radio_3
     name: Rai Radio 3
-    stream_url: http://icestreaming.rai.it/3.mp3
-    logo_url: http://db.radioline.fr/pictures/radio_bac81bc62f776c6dbc4f71704143df87/logo200.jpg?size=200
+    stream_url: https://icestreaming.rai.it/3.mp3
+    logo_url: https://db.radioline.fr/pictures/radio_bac81bc62f776c6dbc4f71704143df87/logo200.jpg?size=200
     description: Rai Radio 3 from Italy
     country: italy
     tags: classical
@@ -274,31 +274,31 @@ stations:
   - id: rac1
     name: RAC1
     stream_url: https://playerservices.streamtheworld.com/api/livestream-redirect/RAC_1.mp3
-    logo_url: http://www.rac1.cat/rsc/images/logo.jpg
+    logo_url: https://www.rac1.cat/rsc/images/logo.jpg
     description: RAC1 from Spain
     country: spain
     tags: news,talk
     popularity: 1080
     primary_tag: news
-    website_url: http://www.rac1.cat/
+    website_url: https://www.rac1.cat/
     wikidata_url: https://www.wikidata.org/wiki/Q3323970
     logo_svg_url: https://commons.wikimedia.org/wiki/Special:FilePath/Logotip_de_RAC_1.svg
   - id: _ru
     name: Радио Звезда
-    stream_url: http://89.208.99.16:8088/zvezda_128
-    logo_url: http://www.radiozvezda.ru///assets/favicon/apple-touch-icon.png
+    stream_url: https://89.208.99.16:8088/zvezda_128
+    logo_url: https://www.radiozvezda.ru///assets/favicon/apple-touch-icon.png
     primary_tag: news
     country: russia
     popularity: 1077
     tags: news
     metadata_type: null
     metadata_param: null
-    website_url: http://www.radiozvezda.ru/
+    website_url: https://www.radiozvezda.ru/
     wikidata_url: https://www.wikidata.org/wiki/Q4387399
   - id: radio_beat
     name: Radio Beat
-    stream_url: http://icecast2.play.cz/radiobeat128.mp3
-    logo_url: http://www.radiobeat.cz//favicon.ico
+    stream_url: https://icecast2.play.cz/radiobeat128.mp3
+    logo_url: https://www.radiobeat.cz//favicon.ico
     description: Radio Beat from Czech Republic
     country: czech_republic
     tags: rock
@@ -333,41 +333,41 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q735936
   - id: rmf_fm
     name: RMF FM
-    stream_url: http://195.150.20.9/RMFFM48
-    logo_url: http://www.rmfon.pl/i/logos/100x100/rmf.png
+    stream_url: https://195.150.20.9/RMFFM48
+    logo_url: https://www.rmfon.pl/i/logos/100x100/rmf.png
     description: RMF FM from Poland
     country: poland
     tags: pop
     popularity: 849
     primary_tag: pop
-    website_url: http://www.rmf.fm
+    website_url: https://www.rmf.fm
     wikidata_url: https://www.wikidata.org/wiki/Q750140
     logo_svg_url: https://commons.wikimedia.org/wiki/Special:FilePath/RMF_FM_logo.svg
   - id: radio_popolare
     name: Radio Popolare
-    stream_url: http://livex.radiopopolare.it/radiopop
+    stream_url: https://livex.radiopopolare.it/radiopop
     logo_url: https://lh3.ggpht.com/p7znkM6Mj92APnfj5ac1PKzg47BecAAWrGWM5FFDpqojb9egIfFEHE6BiJoTyHSc8zFZ=w300
     description: Radio Popolare from Italy
     country: italy
     tags: news
     popularity: 838
     primary_tag: news
-    website_url: http://www.radiopopolare.it/
+    website_url: https://www.radiopopolare.it/
     wikidata_url: https://www.wikidata.org/wiki/Q3928791
   - id: business_fm
     name: Business FM
-    stream_url: http://bfmstream.bfm.ru:8004/fm64
+    stream_url: https://bfmstream.bfm.ru:8004/fm64
     logo_url: https://images.radiovolna.net/_files/uploads/posts/2017-01/1485811697_business_fm2.jpg
     description: Business FM from Russia
     country: russia
     tags: talk,news
     popularity: 813
     primary_tag: talk
-    website_url: http://radio.bfm.ru/air.html
+    website_url: https://radio.bfm.ru/air.html
     wikidata_url: https://www.wikidata.org/wiki/Q4035522
   - id: rai_radio_1
     name: Rai Radio 1
-    stream_url: http://icestreaming.rai.it/1.mp3
+    stream_url: https://icestreaming.rai.it/1.mp3
     logo_url: https://scontent-mxp1-1.xx.fbcdn.net/v/t1.0-1/21616450_1429847167064711_7807921244063691684_n.png?oh=49ed3d02bd5ab6580a1d7ecaa93bd3af&oe=5B46AAB5
     description: Rai Radio 1 from Italy
     country: italy
@@ -379,37 +379,37 @@ stations:
     logo_svg_url: https://commons.wikimedia.org/wiki/Special:FilePath/Rai_Radio_1_-_Logo_2017.svg
   - id: rtl2
     name: RTL2
-    stream_url: http://streaming.radio.rtl2.fr/rtl2-1-48-192
+    stream_url: https://streaming.radio.rtl2.fr/rtl2-1-48-192
     logo_url: https://static.rtl2.fr/versions/www/6.0.626/img/apple-touch-icon.png
     description: RTL2 from France
     country: france
     tags: pop,rock
     popularity: 785
     primary_tag: pop
-    website_url: http://www.rtl2.fr/
+    website_url: https://www.rtl2.fr/
     wikidata_url: https://www.wikidata.org/wiki/Q1613740
   - id: bfm_business
     name: BFM Business
-    stream_url: http://audio.bfmtv.com/bfmbusiness_128.mp3
-    logo_url: http://static.radio.fr/images/broadcasts/b1/97/1441/1/c300.png
+    stream_url: https://audio.bfmtv.com/bfmbusiness_128.mp3
+    logo_url: https://static.radio.fr/images/broadcasts/b1/97/1441/1/c300.png
     description: BFM Business from France
     country: france
     tags: news
     popularity: 716
     primary_tag: news
-    website_url: http://www.bfmbusiness.com
+    website_url: https://www.bfmbusiness.com
     logo_svg_url: https://commons.wikimedia.org/wiki/Special:FilePath/Logo_BFM_Business_2020.svg
     wikidata_url: https://www.wikidata.org/wiki/Q2877016
   - id: radio_24
     name: Radio 24
-    stream_url: http://shoutcast2.radio24.it:8000/;
-    logo_url: http://www.radio24.ilsole24ore.com//images/icons/android-chrome-192x192_new.png
+    stream_url: https://shoutcast2.radio24.it:8000/;
+    logo_url: https://www.radio24.ilsole24ore.com//images/icons/android-chrome-192x192_new.png
     description: Radio 24 from Italy
     country: italy
     tags: talk,news
     popularity: 706
     primary_tag: talk
-    website_url: http://www.radio24.it/
+    website_url: https://www.radio24.it/
     wikidata_url: https://www.wikidata.org/wiki/Q3416540
   - id: france_musique
     name: France Musique
@@ -427,14 +427,14 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q19909
   - id: polskie_radio_24
     name: Polskie Radio 24
-    stream_url: http://stream3.polskieradio.pl:8080/;.mp3
-    logo_url: http://static.prsa.pl/images/20363502-dee8-4661-b007-2f2935423b25.jpg
+    stream_url: https://stream3.polskieradio.pl:8080/;.mp3
+    logo_url: https://static.prsa.pl/images/20363502-dee8-4661-b007-2f2935423b25.jpg
     description: Polskie Radio 24 from Poland
     country: poland
     tags: news
     popularity: 669
     primary_tag: news
-    website_url: http://www.polskieradio24.pl
+    website_url: https://www.polskieradio24.pl
     wikidata_url: https://www.wikidata.org/wiki/Q21523269
   - id: radio_nowy_wiat
     name: Radio Nowy Świat
@@ -449,8 +449,8 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q97142690
   - id: ro_dvojka
     name: ČRo Dvojka
-    stream_url: http://icecast6.play.cz/cro2-128.mp3
-    logo_url: http://api.play.cz/static/radio_logo/t200/cro2.png
+    stream_url: https://icecast6.play.cz/cro2-128.mp3
+    logo_url: https://api.play.cz/static/radio_logo/t200/cro2.png
     description: ČRo Dvojka from Czech Republic
     country: czech_republic
     tags: talk
@@ -461,17 +461,17 @@ stations:
   - id: antyradio
     name: Antyradio
     stream_url: https://n-4-2.dcs.redcdn.pl/sc/o2/Eurozet/live/antyradio.livx?audio=5
-    logo_url: http://gfx.antyradio.pl/design/antyradio_2015/images/layout/logo_small.png
+    logo_url: https://gfx.antyradio.pl/design/antyradio_2015/images/layout/logo_small.png
     description: Antyradio from Poland
     country: poland
     tags: rock
     popularity: 540
     primary_tag: rock
-    website_url: http://www.antyradio.pl/
+    website_url: https://www.antyradio.pl/
     wikidata_url: https://www.wikidata.org/wiki/Q4777506
   - id: radio_deejay
     name: Radio Deejay
-    stream_url: http://radiodeejay-lh.akamaihd.net/i/RadioDeejay_Live_1@189857/master.m3u8
+    stream_url: https://radiodeejay-lh.akamaihd.net/i/RadioDeejay_Live_1@189857/master.m3u8
     logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Radio_DeeJay_logo.svg/200px-Radio_DeeJay_logo.svg.png
     logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/9/93/Logo_Deejay.svg
     description: La radio che libera la musica
@@ -479,12 +479,12 @@ stations:
     tags: hits,pop
     popularity: 533
     primary_tag: hits
-    website_url: http://www.deejay.it/
+    website_url: https://www.deejay.it/
     wikidata_url: https://www.wikidata.org/wiki/Q1567359
   - id: ibiza_global_radio
     name: Ibiza Global Radio
-    stream_url: http://ibizaglobalradio.streaming-pro.com:8024/
-    logo_url: http://ibizaglobalradio.com/wp-content/themes/igr-theme/img/favicon.png
+    stream_url: https://ibizaglobalradio.streaming-pro.com:8024/
+    logo_url: https://ibizaglobalradio.com/wp-content/themes/igr-theme/img/favicon.png
     description: Ibiza Global Radio from Spain
     country: spain
     tags: hits,ambient
@@ -494,14 +494,14 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q123735709
   - id: rne_radio_3
     name: rne radio 3
-    stream_url: http://radio3.rtveradio.cires21.com/radio3.mp3
-    logo_url: http://www.rtve.es/css/rtve.corpIma/rtve_radio3_facebook.jpg
+    stream_url: https://radio3.rtveradio.cires21.com/radio3.mp3
+    logo_url: https://www.rtve.es/css/rtve.corpIma/rtve_radio3_facebook.jpg
     description: rne radio 3 from Spain
     country: spain
     tags: jazz,rock,world
     popularity: 501
     primary_tag: jazz
-    website_url: http://www.rtve.es/radio/radio3/
+    website_url: https://www.rtve.es/radio/radio3/
     wikidata_url: https://www.wikidata.org/wiki/Q3101582
     logo_svg_url: https://commons.wikimedia.org/wiki/Special:FilePath/RNE_Radio_3_2026.svg
   - id: jazz_radio
@@ -513,12 +513,12 @@ stations:
     tags: jazz,soul
     popularity: 482
     primary_tag: jazz
-    website_url: http://www.jazzradio.fr/
+    website_url: https://www.jazzradio.fr/
     wikidata_url: https://www.wikidata.org/wiki/Q977817
   - id: radio_swiss_pop
     name: Radio Swiss Pop
-    stream_url: http://stream.srg-ssr.ch/m/rsp/mp3_128
-    logo_url: http://static.radio.fr/images/broadcasts/73/c0/3463/c300.png
+    stream_url: https://stream.srg-ssr.ch/m/rsp/mp3_128
+    logo_url: https://static.radio.fr/images/broadcasts/73/c0/3463/c300.png
     description: Radio Swiss Pop from Switzerland
     country: switzerland
     tags: pop
@@ -529,14 +529,14 @@ stations:
     logo_svg_url: https://commons.wikimedia.org/wiki/Special:FilePath/Radio_Swiss_Pop_Logo_2018.svg
   - id: arrow_classic_rock
     name: Arrow Classic Rock
-    stream_url: http://stream.gal.io/arrow
+    stream_url: https://stream.gal.io/arrow
     logo_url: https://www.arrow.nl/wp-content/uploads/2017/07/logo.jpg
     description: Arrow Classic Rock from Netherlands
     country: netherlands
     tags: rock
     popularity: 419
     primary_tag: rock
-    website_url: http://www.arrow.nl/rock/
+    website_url: https://www.arrow.nl/rock/
     wikidata_url: https://www.wikidata.org/wiki/Q702962
     logo_svg_url: https://commons.wikimedia.org/wiki/Special:FilePath/Arrow_Classic_Rock_logo.svg
   - id: caf_del_mar
@@ -548,7 +548,7 @@ stations:
     tags: ambient
     popularity: 415
     primary_tag: ambient
-    website_url: http://www.cafedelmarmusic.com/#home
+    website_url: https://www.cafedelmarmusic.com/#home
     wikidata_url: https://www.wikidata.org/wiki/Q572570
     logo_svg_url: https://commons.wikimedia.org/wiki/Special:FilePath/Cafe_del_Mar_logo.svg
   - id: wdr3
@@ -561,12 +561,12 @@ stations:
     tags: classical
     popularity: 413
     primary_tag: classical
-    website_url: http://www.wdr3.de/
+    website_url: https://www.wdr3.de/
     wikidata_url: https://www.wikidata.org/wiki/Q1747704
   - id: bnr_nieuwsradio
     name: BNR Nieuwsradio
     stream_url: https://stream.bnr.nl/bnr_mp3_128_20
-    logo_url: http://hamwaves.com/streams/images/bnr.png
+    logo_url: https://hamwaves.com/streams/images/bnr.png
     description: BNR Nieuwsradio from Netherlands
     country: netherlands
     tags: news
@@ -576,7 +576,7 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q796840
   - id: radio_capital
     name: Radio Capital
-    stream_url: http://radiocapital-lh.akamaihd.net/i/RadioCapital_Live_1@196312/master.m3u8
+    stream_url: https://radiocapital-lh.akamaihd.net/i/RadioCapital_Live_1@196312/master.m3u8
     logo_url: https://www.capital.it/wp-content/themes/network-capital/img/logo_capital.png
     description: Radio Capital from Italy
     country: italy
@@ -587,8 +587,8 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q2126028
   - id: radio_88_6
     name: radio 88.6
-    stream_url: http://radio886.fluidstream.eu/886_live.mp3
-    logo_url: http://radio886.at//apple-touch-icon.png
+    stream_url: https://radio886.fluidstream.eu/886_live.mp3
+    logo_url: https://radio886.at//apple-touch-icon.png
     description: radio 88.6 from Austria
     country: austria
     tags: rock
@@ -598,8 +598,8 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q1492474
   - id: rts_couleur_3
     name: RTS Couleur 3
-    stream_url: http://stream.srg-ssr.ch/m/couleur3/mp3_128
-    logo_url: http://static.radio.net/images/broadcasts/1b/af/1489/5/c175.png
+    stream_url: https://stream.srg-ssr.ch/m/couleur3/mp3_128
+    logo_url: https://static.radio.net/images/broadcasts/1b/af/1489/5/c175.png
     description: RTS Couleur 3 from Switzerland
     country: switzerland
     tags: rock
@@ -610,8 +610,8 @@ stations:
     logo_svg_url: https://commons.wikimedia.org/wiki/Special:FilePath/Couleur_3_logo_2016.svg
   - id: rmf_classic
     name: RMF Classic
-    stream_url: http://31.192.216.8/RMFCLASSIC48
-    logo_url: http://api.my-radios.com/images/thumb.php?countryCode=PL&name=RMF_Classic.png&size=200
+    stream_url: https://31.192.216.8/RMFCLASSIC48
+    logo_url: https://api.my-radios.com/images/thumb.php?countryCode=PL&name=RMF_Classic.png&size=200
     description: RMF Classic from Poland
     country: poland
     tags: classical
@@ -621,8 +621,8 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q886612
   - id: ro_plus
     name: ČRo Plus
-    stream_url: http://amp.cesnet.cz:8000/cro-plus-256.ogg
-    logo_url: http://api.play.cz/static/radio_logo/t200/croplus.png
+    stream_url: https://amp.cesnet.cz:8000/cro-plus-256.ogg
+    logo_url: https://api.play.cz/static/radio_logo/t200/croplus.png
     description: ČRo Plus from Czech Republic
     country: czech_republic
     tags: talk
@@ -632,19 +632,19 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q11294251
   - id: cnr
     name: CNR香港之声
-    stream_url: http://ngcdn008.cnr.cn/live/xgzs/index.m3u8
+    stream_url: https://ngcdn008.cnr.cn/live/xgzs/index.m3u8
     logo_url: https://bkimg.cdn.bcebos.com/pic/d000baa1cd11728bc85d899acffcc3cec3fd2c11?x-bce-process=image/watermark,g_7,image_d2F0ZXIvYmFpa2UxODA=,xp_5,yp_5
     description: CNR香港之声 from China
     country: china
     tags: news
     popularity: 330
     primary_tag: news
-    website_url: http://rtgb.cnr.cn/
+    website_url: https://rtgb.cnr.cn/
     wikidata_url: https://www.wikidata.org/wiki/Q17500269
   - id: rockserwis_fm
     name: Rockserwis.fm
-    stream_url: http://stream5.nadaje.com:8002/live
-    logo_url: http://www.rockserwis.fm/view/images/smok-radio.jpg
+    stream_url: https://stream5.nadaje.com:8002/live
+    logo_url: https://www.rockserwis.fm/view/images/smok-radio.jpg
     description: Rockserwis.fm from Poland
     country: poland
     tags: rock
@@ -654,14 +654,14 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q114870263
   - id: slam
     name: SLAM!
-    stream_url: http://22533.live.streamtheworld.com:80/SLAM_MP3_SC?
+    stream_url: https://22533.live.streamtheworld.com:80/SLAM_MP3_SC?
     logo_url: https://www.slam.nl/themes/slam-gsys/images/favicon.png
     description: SLAM! from Netherlands
     country: netherlands
     tags: hits,pop
     popularity: 322
     primary_tag: hits
-    website_url: http://www.slamfm.nl/
+    website_url: https://www.slamfm.nl/
     wikidata_url: https://www.wikidata.org/wiki/Q2293679
   - id: rtl_102_5
     name: RTL 102.5
@@ -673,7 +673,7 @@ stations:
     tags: hits
     popularity: 305
     primary_tag: hits
-    website_url: http://www.rtl.it/
+    website_url: https://www.rtl.it/
     wikidata_url: https://www.wikidata.org/wiki/Q1812894
   - id: cadena_dial
     name: Cadena Dial
@@ -689,7 +689,7 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q1700228
   - id: npo_radio_2_soul_jazz
     name: NPO Radio 2 Soul & Jazz
-    stream_url: http://icecast.omroep.nl/radio6-bb-mp3
+    stream_url: https://icecast.omroep.nl/radio6-bb-mp3
     logo_url: https://yt3.ggpht.com/-Mv6G5w6yRY0/AAAAAAAAAAI/AAAAAAAAAAA/5Z5r9htpNrE/s288-c-k-no-mo-rj-c0xffffff/photo.jpg
     description: NPO Radio 2 Soul & Jazz from Netherlands
     country: netherlands
@@ -714,7 +714,7 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q961891
   - id: capital_fm
     name: Capital FM
-    stream_url: http://5229.cloudrad.io:8316/;
+    stream_url: https://5229.cloudrad.io:8316/;
     logo_url: https://cdn-radiotime-logos.tunein.com/s2728q.png
     logo_svg_url: https://en.wikipedia.org/wiki/Special:FilePath/Logo_Capital_FM.svg
     description: The UK's No.1 Hit Music Station
@@ -722,11 +722,11 @@ stations:
     tags: hits
     popularity: 233
     primary_tag: hits
-    website_url: http://www.capitalfm.com/
+    website_url: https://www.capitalfm.com/
     wikidata_url: https://www.wikidata.org/wiki/Q5035441
   - id: jovem_pan_news
     name: Jovem Pan News
-    stream_url: http://14553.live.streamtheworld.com/JP_NEWSAAC_SC
+    stream_url: https://14553.live.streamtheworld.com/JP_NEWSAAC_SC
     logo_url: https://jovempan.uol.com.br/wp-content/themes/jovempan/assets/build/images/logos-player/jpnews.jpg
     description: Jovem Pan News from Brazil
     country: brazil
@@ -737,7 +737,7 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q18468043
   - id: heart_uk
     name: Heart UK
-    stream_url: http://media-ice.musicradio.com/HeartUKMP3
+    stream_url: https://media-ice.musicradio.com/HeartUKMP3
     logo_url: https://cdn-radiotime-logos.tunein.com/s121960q.png
     logo_svg_url: https://en.wikipedia.org/wiki/Special:FilePath/The_Heart_Network_logo.svg
     description: Turn up the feel good
@@ -745,7 +745,7 @@ stations:
     tags: rock
     popularity: 228
     primary_tag: rock
-    website_url: http://www.heart.co.uk/extra/
+    website_url: https://www.heart.co.uk/extra/
     wikidata_url: https://www.wikidata.org/wiki/Q24970051
   - id: classic_fm
     name: Classic FM
@@ -756,7 +756,7 @@ stations:
     tags: classical
     popularity: 211
     primary_tag: classical
-    website_url: http://www.classicfm.com/
+    website_url: https://www.classicfm.com/
     logo_svg_url: https://commons.wikimedia.org/wiki/Special:FilePath/Classic_FM_logo.svg
     wikidata_url: https://www.wikidata.org/wiki/Q5128150
   - id: bayern_1
@@ -769,7 +769,7 @@ stations:
     tags: oldies
     popularity: 207
     primary_tag: oldies
-    website_url: http://www.bayern1.de/
+    website_url: https://www.bayern1.de/
     wikidata_url: https://www.wikidata.org/wiki/Q812476
   - id: bbc_6music
     name: BBC Radio 6 Music
@@ -795,7 +795,7 @@ stations:
     tags: news,oldies,talk
     popularity: 75
     primary_tag: oldies
-    website_url: http://www.radio10.nl/
+    website_url: https://www.radio10.nl/
     wikidata_url: https://www.wikidata.org/wiki/Q2125904
   - id: bbc_radio_2
     name: BBC Radio 2
@@ -821,7 +821,7 @@ stations:
     tags: hits
     popularity: 45
     primary_tag: hits
-    website_url: http://www.radio538.nl/
+    website_url: https://www.radio538.nl/
     wikidata_url: https://www.wikidata.org/wiki/Q82939
   - id: tsfjazz
     name: TSF Jazz
@@ -832,7 +832,7 @@ stations:
     tags: jazz
     popularity: 43
     primary_tag: jazz
-    website_url: http://www.tsfjazz.com/
+    website_url: https://www.tsfjazz.com/
     wikidata_url: https://www.wikidata.org/wiki/Q3512362
   - id: npr
     name: NPR News
@@ -868,7 +868,7 @@ stations:
     tags: classical,talk
     popularity: 19
     primary_tag: talk
-    website_url: http://www.cadenaser.com/
+    website_url: https://www.cadenaser.com/
     wikidata_url: https://www.wikidata.org/wiki/Q1025113
   - id: antenne_bayern
     name: Antenne Bayern
@@ -880,11 +880,11 @@ stations:
     tags: hits
     popularity: 15
     primary_tag: hits
-    website_url: http://www.antenne.de
+    website_url: https://www.antenne.de
     wikidata_url: https://www.wikidata.org/wiki/Q571871
   - id: radio_paradise
     name: Radio Paradise
-    stream_url: http://stream-dc1.radioparadise.com/aac-320
+    stream_url: https://stream-dc1.radioparadise.com/aac-320
     logo_url: https://radioparadise.com/graphics/logo_rp_400.png
     description: Eclectic blend of music from California
     country: usa
@@ -947,7 +947,7 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q1961361
   - id: qmusic
     name: Qmusic
-    stream_url: http://20723.live.streamtheworld.com/QMUSICAAC.aac
+    stream_url: https://20723.live.streamtheworld.com/QMUSICAAC.aac
     logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Qmusic_logo.svg/200px-Qmusic_logo.svg.png
     logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/7/70/Qmusic_logo.svg
     description: Q sounds better with you
@@ -959,7 +959,7 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q611521
   - id: npo_radio_2
     name: NPO Radio 2
-    stream_url: http://icecast.omroep.nl/radio2-bb-mp3
+    stream_url: https://icecast.omroep.nl/radio2-bb-mp3
     logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/NPO_Radio_2_logo.svg/200px-NPO_Radio_2_logo.svg.png
     logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/f/f4/NPO_Radio_2_logo.svg
     description: De beste muziekmix
@@ -967,7 +967,7 @@ stations:
     tags: pop
     popularity: 5
     primary_tag: pop
-    website_url: http://www.radio2.nl/
+    website_url: https://www.radio2.nl/
     wikidata_url: https://www.wikidata.org/wiki/Q730439
   - id: radio_105
     name: Radio 105
@@ -979,11 +979,11 @@ stations:
     tags: hits,pop,rock
     popularity: 3
     primary_tag: hits
-    website_url: http://www.105.net/
+    website_url: https://www.105.net/
     wikidata_url: https://www.wikidata.org/wiki/Q945541
   - id: rtl
     name: RTL
-    stream_url: http://streaming.radio.rtl.fr/rtl-1-44-128
+    stream_url: https://streaming.radio.rtl.fr/rtl-1-44-128
     logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/RTL-Logo.svg/200px-RTL-Logo.svg.png
     logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/5/51/RTL_logo.svg
     description: On a tous une bonne raison d'écouter RTL
@@ -1003,7 +1003,7 @@ stations:
     tags: pop
     popularity: 3
     primary_tag: pop
-    website_url: http://www.skyradio.nl/
+    website_url: https://www.skyradio.nl/
     wikidata_url: https://www.wikidata.org/wiki/Q878664
   - id: onda_cero
     name: Onda Cero
@@ -1015,7 +1015,7 @@ stations:
     tags: pop
     popularity: 1
     primary_tag: pop
-    website_url: http://www.ondacero.es
+    website_url: https://www.ondacero.es
     wikidata_url: https://www.wikidata.org/wiki/Q2748448
   - id: franceinfo
     name: France Info
@@ -1043,7 +1043,7 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q761627
   - id: lbc
     name: LBC
-    stream_url: http://icecast.thisisdax.com/LBCUKMP3
+    stream_url: https://icecast.thisisdax.com/LBCUKMP3
     logo_url: https://cdn-radiotime-logos.tunein.com/s25071q.png
     logo_svg_url: https://en.wikipedia.org/wiki/Special:FilePath/LBC_logo.svg
     description: Leading Britain's Conversation
@@ -1065,12 +1065,12 @@ stations:
     wikidata_url: https://www.wikidata.org/wiki/Q686964
   - id: wdr_2
     name: WDR 2
-    stream_url: http://wdr-wdr2-aachenundregion.icecast.wdr.de/wdr/wdr2/aachenundregion/mp3/128/stream.mp3
+    stream_url: https://wdr-wdr2-aachenundregion.icecast.wdr.de/wdr/wdr2/aachenundregion/mp3/128/stream.mp3
     logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/WDR_2_logo.svg/200px-WDR_2_logo.svg.png
     logo_svg_url: https://upload.wikimedia.org/wikipedia/commons/7/78/WDR_2_logo.svg
     description: Musik, Infos, Podcasts
     country: germany
     primary_tag: pop
     tags: pop
-    website_url: http://www.wdr2.de
+    website_url: https://www.wdr2.de
     wikidata_url: https://www.wikidata.org/wiki/Q321620
