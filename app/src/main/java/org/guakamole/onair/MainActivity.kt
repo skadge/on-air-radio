@@ -7,6 +7,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.core.view.WindowCompat
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
@@ -25,15 +27,13 @@ import org.guakamole.onair.ui.theme.RadioTheme
 class MainActivity : ComponentActivity() {
 
     private var controllerFuture: ListenableFuture<MediaController>? = null
-    private var mediaController: MediaController? = null
+    private var mediaController by mutableStateOf<MediaController?>(null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // enableEdgeToEdge() - Manual implementation for SDK 33 compatibility if needed
         WindowCompat.setDecorFitsSystemWindows(window, false)
         window.statusBarColor = Color.TRANSPARENT
         window.navigationBarColor = Color.TRANSPARENT
-        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
             var currentStationId by remember { mutableStateOf<String?>(null) }
@@ -43,13 +43,28 @@ class MainActivity : ComponentActivity() {
             var currentArtist by remember { mutableStateOf<String?>(null) }
             var currentPlaybackError by remember { mutableStateOf<PlaybackError?>(null) }
 
-            // Setup player listener
-            DisposableEffect(Unit) {
+            DisposableEffect(mediaController) {
+                val controller = mediaController
+                if (controller == null) {
+                    return@DisposableEffect onDispose {}
+                }
+
+                // Sync initial state
+                currentStationId = controller.currentMediaItem?.mediaId
+                isPlaying = controller.isPlaying
+                isBuffering = controller.playbackState == Player.STATE_BUFFERING
+                currentTitle = controller.currentMediaItem?.mediaMetadata?.title?.toString()
+                currentArtist = controller.currentMediaItem?.mediaMetadata?.artist?.toString()
+
                 val listener =
                         object : Player.Listener {
                             override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
                                 currentStationId = mediaItem?.mediaId
                                 currentPlaybackError = null
+                                android.util.Log.d(
+                                        "MetadataDebug",
+                                        "Main: Transition to ${mediaItem?.mediaId}"
+                                )
                             }
 
                             override fun onIsPlayingChanged(playing: Boolean) {
@@ -61,34 +76,35 @@ class MainActivity : ComponentActivity() {
                             }
 
                             override fun onMediaMetadataChanged(metadata: MediaMetadata) {
-                                // Stream metadata (song title) from ICY headers
                                 currentTitle = metadata.title?.toString()
                                 currentArtist = metadata.artist?.toString()
-                                android.util.Log.d(
-                                        "MetadataDebug",
-                                        "Main: Metadata received. Title: $currentTitle"
+                            }
+
+                            override fun onPlayerError(
+                                    error: androidx.media3.common.PlaybackException
+                            ) {
+                                android.util.Log.e(
+                                        "MainActivity",
+                                        "Player error received: ${error.message}",
+                                        error
                                 )
+                                currentPlaybackError =
+                                        PlaybackError(
+                                                errorCode = error.errorCode,
+                                                message = error.message ?: "Unknown error",
+                                                stationId = controller.currentMediaItem?.mediaId,
+                                                streamUrl =
+                                                        controller.currentMediaItem
+                                                                ?.localConfiguration?.uri
+                                                                ?.toString(),
+                                                userAgent =
+                                                        "OnAir Radio/${BuildConfig.VERSION_NAME}"
+                                        )
                             }
                         }
 
-                mediaController?.addListener(listener)
-
-                onDispose { mediaController?.removeListener(listener) }
-            }
-
-            // Update state when controller connects
-            LaunchedEffect(mediaController) {
-                mediaController?.let { controller ->
-                    currentStationId = controller.currentMediaItem?.mediaId
-                    isPlaying = controller.isPlaying
-                    isBuffering = controller.playbackState == Player.STATE_BUFFERING
-                    currentTitle = controller.currentMediaItem?.mediaMetadata?.title?.toString()
-                    currentArtist = controller.currentMediaItem?.mediaMetadata?.artist?.toString()
-                    // Initial error check not easily possible from controller without custom
-                    // session commands,
-                    // but onPlayerError in Service will update the StateFlow which we should
-                    // collect.
-                }
+                controller.addListener(listener)
+                onDispose { controller.removeListener(listener) }
             }
 
             RadioTheme {
@@ -102,40 +118,28 @@ class MainActivity : ComponentActivity() {
                         onStationSelect = { station -> playStation(station) },
                         onPlayPause = {
                             mediaController?.let { controller ->
-                                if (controller.isPlaying) {
-                                    controller.pause()
-                                } else {
-                                    controller.play()
-                                }
+                                if (controller.isPlaying) controller.pause() else controller.play()
                             }
                         },
                         onStop = { mediaController?.stop() },
-                        onPrevious = {
-                            val currentIndex =
-                                    currentStationId?.let { RadioRepository.getStationIndex(it) }
-                                            ?: 0
-                            val previousIndex =
-                                    if (currentIndex > 0) {
-                                        currentIndex - 1
-                                    } else {
-                                        RadioRepository.stations.size - 1
-                                    }
-                            RadioRepository.getStationByIndex(previousIndex)?.let { station ->
-                                playStation(station, isPlaying)
-                            }
-                        },
-                        onNext = {
-                            val currentIndex =
-                                    currentStationId?.let { RadioRepository.getStationIndex(it) }
-                                            ?: -1
-                            val nextIndex = (currentIndex + 1) % RadioRepository.stations.size
-                            RadioRepository.getStationByIndex(nextIndex)?.let { station ->
-                                playStation(station, isPlaying)
-                            }
-                        }
+                        onPrevious = { switchStation(relativeIndex = -1, currentStationId) },
+                        onNext = { switchStation(relativeIndex = 1, currentStationId) }
                 )
             }
         }
+    }
+
+    private fun switchStation(relativeIndex: Int, currentStationId: String?) {
+        val stations = RadioRepository.stations
+        if (stations.isEmpty()) return
+
+        val currentIndex =
+                currentStationId?.let { id -> stations.indexOfFirst { it.id == id } } ?: -1
+        val nextIndex =
+                if (currentIndex == -1) 0
+                else (currentIndex + relativeIndex + stations.size) % stations.size
+
+        RadioRepository.getStationByIndex(nextIndex)?.let { station -> playStation(station) }
     }
 
     override fun onStart() {
@@ -152,140 +156,7 @@ class MainActivity : ComponentActivity() {
         val sessionToken = SessionToken(this, ComponentName(this, RadioPlaybackService::class.java))
         controllerFuture = MediaController.Builder(this, sessionToken).buildAsync()
         controllerFuture?.addListener(
-                {
-                    mediaController = controllerFuture?.get()
-                    // Force recomposition with updated controller
-                    setContent {
-                        var currentStationId by remember {
-                            mutableStateOf(mediaController?.currentMediaItem?.mediaId)
-                        }
-                        var isPlaying by remember {
-                            mutableStateOf(mediaController?.isPlaying ?: false)
-                        }
-                        var isBuffering by remember {
-                            mutableStateOf(mediaController?.playbackState == Player.STATE_BUFFERING)
-                        }
-                        var currentTitle by remember {
-                            mutableStateOf(
-                                    mediaController?.currentMediaItem?.mediaMetadata?.title
-                                            ?.toString()
-                            )
-                        }
-                        var currentArtist by remember {
-                            mutableStateOf(
-                                    mediaController?.currentMediaItem?.mediaMetadata?.artist
-                                            ?.toString()
-                            )
-                        }
-                        var currentPlaybackError by remember {
-                            mutableStateOf<PlaybackError?>(null)
-                        }
-
-                        DisposableEffect(mediaController) {
-                            val listener =
-                                    object : Player.Listener {
-                                        override fun onMediaItemTransition(
-                                                mediaItem: MediaItem?,
-                                                reason: Int
-                                        ) {
-                                            currentStationId = mediaItem?.mediaId
-                                            currentPlaybackError = null
-                                        }
-
-                                        override fun onIsPlayingChanged(playing: Boolean) {
-                                            isPlaying = playing
-                                        }
-
-                                        override fun onPlaybackStateChanged(playbackState: Int) {
-                                            isBuffering = playbackState == Player.STATE_BUFFERING
-                                        }
-
-                                        override fun onMediaMetadataChanged(
-                                                metadata: MediaMetadata
-                                        ) {
-                                            currentTitle = metadata.title?.toString()
-                                            currentArtist = metadata.artist?.toString()
-                                        }
-
-                                        override fun onPlayerError(
-                                                error: androidx.media3.common.PlaybackException
-                                        ) {
-                                            currentPlaybackError =
-                                                    PlaybackError(
-                                                            errorCode = error.errorCode,
-                                                            message = error.message
-                                                                            ?: "Unknown error",
-                                                            stationId =
-                                                                    mediaController
-                                                                            ?.currentMediaItem
-                                                                            ?.mediaId,
-                                                            streamUrl =
-                                                                    mediaController
-                                                                            ?.currentMediaItem
-                                                                            ?.localConfiguration
-                                                                            ?.uri?.toString()
-                                                    )
-                                        }
-                                    }
-
-                            mediaController?.addListener(listener)
-
-                            onDispose { mediaController?.removeListener(listener) }
-                        }
-
-                        RadioTheme {
-                            RadioApp(
-                                    currentStationId = currentStationId,
-                                    isPlaying = isPlaying,
-                                    isBuffering = isBuffering,
-                                    currentTitle = currentTitle,
-                                    currentArtist = currentArtist,
-                                    playbackError = currentPlaybackError,
-                                    onStationSelect = { station -> playStation(station) },
-                                    onPlayPause = {
-                                        mediaController?.let { controller ->
-                                            if (controller.isPlaying) {
-                                                controller.pause()
-                                            } else {
-                                                controller.play()
-                                            }
-                                        }
-                                    },
-                                    onStop = { mediaController?.stop() },
-                                    onPrevious = {
-                                        val currentIndex =
-                                                currentStationId?.let {
-                                                    RadioRepository.getStationIndex(it)
-                                                }
-                                                        ?: 0
-                                        val previousIndex =
-                                                if (currentIndex > 0) {
-                                                    currentIndex - 1
-                                                } else {
-                                                    RadioRepository.stations.size - 1
-                                                }
-                                        RadioRepository.getStationByIndex(previousIndex)?.let {
-                                                station ->
-                                            playStation(station, isPlaying)
-                                        }
-                                    },
-                                    onNext = {
-                                        val currentIndex =
-                                                currentStationId?.let {
-                                                    RadioRepository.getStationIndex(it)
-                                                }
-                                                        ?: -1
-                                        val nextIndex =
-                                                (currentIndex + 1) % RadioRepository.stations.size
-                                        RadioRepository.getStationByIndex(nextIndex)?.let { station
-                                            ->
-                                            playStation(station, isPlaying)
-                                        }
-                                    }
-                            )
-                        }
-                    }
-                },
+                { mediaController = controllerFuture?.get() },
                 MoreExecutors.directExecutor()
         )
     }
