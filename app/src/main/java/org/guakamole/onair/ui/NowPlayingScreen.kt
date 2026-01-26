@@ -26,8 +26,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import kotlinx.coroutines.launch
 import org.guakamole.onair.R
 import org.guakamole.onair.data.RadioStation
+import org.guakamole.onair.report.ReportManager
+import org.guakamole.onair.service.PlaybackError
 
 @Composable
 fun NowPlayingScreen(
@@ -36,6 +39,7 @@ fun NowPlayingScreen(
         isBuffering: Boolean,
         currentTitle: String?,
         currentArtist: String?,
+        playbackError: PlaybackError?,
         previousStationName: String?,
         nextStationName: String?,
         onPlayPause: () -> Unit,
@@ -320,13 +324,120 @@ fun NowPlayingScreen(
                                         modifier = Modifier.size(48.dp),
                                         color = MaterialTheme.colorScheme.primary
                                 )
-                                Spacer(modifier = Modifier.height(16.dp))
-                                Text(
-                                        text = stringResource(R.string.connecting),
-                                        style = MaterialTheme.typography.labelMedium,
-                                        color = MaterialTheme.colorScheme.primary
-                                )
                                 Spacer(modifier = Modifier.height(32.dp))
+                        }
+
+                        // Stream Error and Reporting UI
+                        AnimatedVisibility(
+                                visible = playbackError != null,
+                                enter = fadeIn() + expandVertically(),
+                                exit = fadeOut() + shrinkVertically()
+                        ) {
+                                var isReporting by remember { mutableStateOf(false) }
+                                var reportStatus by remember { mutableStateOf<String?>(null) }
+                                val scope = rememberCoroutineScope()
+                                val context = LocalContext.current
+
+                                Column(
+                                        modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp),
+                                        horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                        Text(
+                                                text = stringResource(R.string.stream_error),
+                                                style = MaterialTheme.typography.bodyMedium,
+                                                color = MaterialTheme.colorScheme.error
+                                        )
+                                        Spacer(modifier = Modifier.height(8.dp))
+
+                                        if (reportStatus == null) {
+                                                Button(
+                                                        onClick = {
+                                                                playbackError?.let { error ->
+                                                                        isReporting = true
+                                                                        scope.launch {
+                                                                                val success =
+                                                                                        ReportManager
+                                                                                                .reportIssue(
+                                                                                                        error
+                                                                                                )
+                                                                                isReporting = false
+                                                                                reportStatus =
+                                                                                        if (success)
+                                                                                                context.getString(
+                                                                                                        R.string
+                                                                                                                .report_sent
+                                                                                                )
+                                                                                        else
+                                                                                                context.getString(
+                                                                                                        R.string
+                                                                                                                .report_failed
+                                                                                                )
+                                                                        }
+                                                                }
+                                                        },
+                                                        enabled = !isReporting,
+                                                        colors =
+                                                                ButtonDefaults.buttonColors(
+                                                                        containerColor =
+                                                                                MaterialTheme
+                                                                                        .colorScheme
+                                                                                        .errorContainer,
+                                                                        contentColor =
+                                                                                MaterialTheme
+                                                                                        .colorScheme
+                                                                                        .onErrorContainer
+                                                                )
+                                                ) {
+                                                        if (isReporting) {
+                                                                CircularProgressIndicator(
+                                                                        modifier =
+                                                                                Modifier.size(
+                                                                                        16.dp
+                                                                                ),
+                                                                        strokeWidth = 2.dp,
+                                                                        color =
+                                                                                MaterialTheme
+                                                                                        .colorScheme
+                                                                                        .onErrorContainer
+                                                                )
+                                                                Spacer(
+                                                                        modifier =
+                                                                                Modifier.width(8.dp)
+                                                                )
+                                                                Text(
+                                                                        stringResource(
+                                                                                R.string.reporting
+                                                                        )
+                                                                )
+                                                        } else {
+                                                                Icon(
+                                                                        imageVector =
+                                                                                Icons.Default
+                                                                                        .Report,
+                                                                        contentDescription = null,
+                                                                        modifier =
+                                                                                Modifier.size(18.dp)
+                                                                )
+                                                                Spacer(
+                                                                        modifier =
+                                                                                Modifier.width(8.dp)
+                                                                )
+                                                                Text(
+                                                                        stringResource(
+                                                                                R.string
+                                                                                        .report_issue
+                                                                        )
+                                                                )
+                                                        }
+                                                }
+                                        } else {
+                                                Text(
+                                                        text = reportStatus!!,
+                                                        style = MaterialTheme.typography.bodySmall,
+                                                        color = MaterialTheme.colorScheme.secondary
+                                                )
+                                        }
+                                }
                         }
 
                         // Playback Controls with labels

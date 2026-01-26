@@ -85,4 +85,11 @@
     <string name="premium_error">Could not connect to store</string>
     <string name="premium_debug_enabled">Debug Premium: ON</string>
     <string name="premium_debug_disabled">Debug Premium: OFF</string>
+
+    <!-- Reporting -->
+    <string name="report_issue">Report Issue</string>
+    <string name="stream_error">Stream connection failed</string>
+    <string name="reporting">Reporting…</string>
+    <string name="report_sent">Report sent. Thank you!</string>
+    <string name="report_failed">Failed to send report</string>
 </resources>

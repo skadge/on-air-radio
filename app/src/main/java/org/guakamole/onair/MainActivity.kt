@@ -17,6 +17,7 @@ import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.MoreExecutors
 import org.guakamole.onair.data.RadioRepository
 import org.guakamole.onair.data.RadioStation
+import org.guakamole.onair.service.PlaybackError
 import org.guakamole.onair.service.RadioPlaybackService
 import org.guakamole.onair.ui.RadioApp
 import org.guakamole.onair.ui.theme.RadioTheme
@@ -40,6 +41,7 @@ class MainActivity : ComponentActivity() {
             var isBuffering by remember { mutableStateOf(false) }
             var currentTitle by remember { mutableStateOf<String?>(null) }
             var currentArtist by remember { mutableStateOf<String?>(null) }
+            var currentPlaybackError by remember { mutableStateOf<PlaybackError?>(null) }
 
             // Setup player listener
             DisposableEffect(Unit) {
@@ -81,6 +83,10 @@ class MainActivity : ComponentActivity() {
                     isBuffering = controller.playbackState == Player.STATE_BUFFERING
                     currentTitle = controller.currentMediaItem?.mediaMetadata?.title?.toString()
                     currentArtist = controller.currentMediaItem?.mediaMetadata?.artist?.toString()
+                    // Initial error check not easily possible from controller without custom
+                    // session commands,
+                    // but onPlayerError in Service will update the StateFlow which we should
+                    // collect.
                 }
             }
 
@@ -91,6 +97,7 @@ class MainActivity : ComponentActivity() {
                         isBuffering = isBuffering,
                         currentTitle = currentTitle,
                         currentArtist = currentArtist,
+                        playbackError = currentPlaybackError,
                         onStationSelect = { station -> playStation(station) },
                         onPlayPause = {
                             mediaController?.let { controller ->

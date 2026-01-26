@@ -34,6 +34,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.guakamole.onair.MainActivity
@@ -41,6 +43,13 @@ import org.guakamole.onair.billing.PremiumManager
 import org.guakamole.onair.data.RadioRepository
 import org.guakamole.onair.data.RadioStation
 import org.guakamole.onair.metadata.MetadataProviderFactory
+
+data class PlaybackError(
+        val errorCode: Int,
+        val message: String,
+        val stationId: String?,
+        val streamUrl: String?
+)
 
 /** Media playback service that supports both in-app playback and Android Auto */
 @OptIn(UnstableApi::class)
@@ -53,6 +62,9 @@ class RadioPlaybackService : MediaLibraryService() {
     private var metadataPollingJob: Job? = null
     private var currentPollingParam: String? = null
     private var currentPollingType: String? = null
+
+    private val _playbackError = MutableStateFlow<PlaybackError?>(null)
+    val playbackError = _playbackError.asStateFlow()
 
     companion object {
         private const val ROOT_ID = "root"
@@ -100,6 +112,7 @@ class RadioPlaybackService : MediaLibraryService() {
                 object : Player.Listener {
                     override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
                         mediaItem?.mediaMetadata?.artworkUri?.let { uri -> loadAndSetArtwork(uri) }
+                        _playbackError.value = null // Reset error on transition
                         startMetadataPolling(mediaItem?.mediaId)
                     }
 
@@ -156,6 +169,15 @@ class RadioPlaybackService : MediaLibraryService() {
                                 "Player error: ${error.message}",
                                 error
                         )
+                        _playbackError.value =
+                                PlaybackError(
+                                        errorCode = error.errorCode,
+                                        message = error.message ?: "Unknown error",
+                                        stationId = player?.currentMediaItem?.mediaId,
+                                        streamUrl =
+                                                player?.currentMediaItem?.localConfiguration?.uri
+                                                        ?.toString()
+                                )
                     }
                 }
         )

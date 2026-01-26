@@ -228,6 +228,7 @@ fun RadioApp(
                                                 isBuffering = isBuffering,
                                                 currentTitle = currentTitle,
                                                 currentArtist = currentArtist,
+                                                playbackError = playbackError,
                                                 previousStationName = prevStation?.name,
                                                 nextStationName = nextStation?.name,
                                                 onPlayPause = onPlayPause,
