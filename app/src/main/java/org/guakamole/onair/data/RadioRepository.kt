@@ -173,8 +173,8 @@ object RadioRepository {
                         RadioStation(
                                 id = "bfm_business",
                                 name = "BFM Business",
-                                streamUrl = "https://chai5she.cdn.dvmr.fr/bfmbusiness",
-                                logoUrl = "http://static.radio.fr/images/broadcasts/b1/97/1441/1/c300.png",
+                                streamUrl = "https://audio.bfmtv.com/bfmbusiness_128.mp3",
+                                logoUrl = "https://static.radio.fr/images/broadcasts/b1/97/1441/1/c300.png",
                                 logoResId = R.drawable.logo_bfm_business,
                                 description = "BFM Business from France",
                                 primaryTag = "news",
