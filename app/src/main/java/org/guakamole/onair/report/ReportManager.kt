@@ -3,8 +3,10 @@ package org.guakamole.onair.report
 import android.os.Build
 import java.net.HttpURLConnection
 import java.net.URL
+import java.util.Locale
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.guakamole.onair.BuildConfig
 import org.guakamole.onair.service.PlaybackError
 import org.json.JSONObject
 
@@ -23,6 +25,7 @@ object ReportManager {
 
                     val deviceInfo =
                             "${Build.MANUFACTURER} ${Build.MODEL} - API ${Build.VERSION.SDK_INT}"
+                    val country = Locale.getDefault().country ?: "unknown"
 
                     val jsonBody =
                             JSONObject().apply {
@@ -31,6 +34,9 @@ object ReportManager {
                                 put("error_code", error.errorCode)
                                 put("error_message", error.message)
                                 put("device_info", deviceInfo)
+                                put("app_version", BuildConfig.VERSION_NAME)
+                                put("user_agent", error.userAgent ?: "unknown")
+                                put("country", country)
                             }
 
                     conn.outputStream.use { os ->

@@ -31,6 +31,7 @@ import org.guakamole.onair.R
 import org.guakamole.onair.data.FilterData
 import org.guakamole.onair.data.RadioRepository
 import org.guakamole.onair.data.RadioStation
+import org.guakamole.onair.service.PlaybackError
 
 enum class Screen {
         StationList,
@@ -46,6 +47,7 @@ fun RadioApp(
         isBuffering: Boolean,
         currentTitle: String?,
         currentArtist: String?,
+        playbackError: PlaybackError?,
         onStationSelect: (RadioStation) -> Unit,
         onPlayPause: () -> Unit,
         onStop: () -> Unit,

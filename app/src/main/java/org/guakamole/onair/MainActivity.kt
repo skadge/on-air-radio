@@ -49,6 +49,7 @@ class MainActivity : ComponentActivity() {
                         object : Player.Listener {
                             override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
                                 currentStationId = mediaItem?.mediaId
+                                currentPlaybackError = null
                             }
 
                             override fun onIsPlayingChanged(playing: Boolean) {
@@ -176,6 +177,9 @@ class MainActivity : ComponentActivity() {
                                             ?.toString()
                             )
                         }
+                        var currentPlaybackError by remember {
+                            mutableStateOf<PlaybackError?>(null)
+                        }
 
                         DisposableEffect(mediaController) {
                             val listener =
@@ -185,6 +189,7 @@ class MainActivity : ComponentActivity() {
                                                 reason: Int
                                         ) {
                                             currentStationId = mediaItem?.mediaId
+                                            currentPlaybackError = null
                                         }
 
                                         override fun onIsPlayingChanged(playing: Boolean) {
@@ -201,6 +206,26 @@ class MainActivity : ComponentActivity() {
                                             currentTitle = metadata.title?.toString()
                                             currentArtist = metadata.artist?.toString()
                                         }
+
+                                        override fun onPlayerError(
+                                                error: androidx.media3.common.PlaybackException
+                                        ) {
+                                            currentPlaybackError =
+                                                    PlaybackError(
+                                                            errorCode = error.errorCode,
+                                                            message = error.message
+                                                                            ?: "Unknown error",
+                                                            stationId =
+                                                                    mediaController
+                                                                            ?.currentMediaItem
+                                                                            ?.mediaId,
+                                                            streamUrl =
+                                                                    mediaController
+                                                                            ?.currentMediaItem
+                                                                            ?.localConfiguration
+                                                                            ?.uri?.toString()
+                                                    )
+                                        }
                                     }
 
                             mediaController?.addListener(listener)
@@ -215,6 +240,7 @@ class MainActivity : ComponentActivity() {
                                     isBuffering = isBuffering,
                                     currentTitle = currentTitle,
                                     currentArtist = currentArtist,
+                                    playbackError = currentPlaybackError,
                                     onStationSelect = { station -> playStation(station) },
                                     onPlayPause = {
                                         mediaController?.let { controller ->

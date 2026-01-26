@@ -3,6 +3,7 @@
     <!-- Allow cleartext HTTP for radio stream domains that don't support HTTPS -->
     <domain-config cleartextTrafficPermitted="true">
         <!-- BBC radio streams -->
+        <domain includeSubdomains="true">guakamole.org</domain>
         <domain includeSubdomains="true">bbci.co.uk</domain>
         <domain includeSubdomains="true">bbc.co.uk</domain>
         <!-- Other radio streams -->

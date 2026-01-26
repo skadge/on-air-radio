@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import kotlinx.coroutines.launch
+import org.guakamole.onair.BuildConfig
 import org.guakamole.onair.R
 import org.guakamole.onair.data.RadioStation
 import org.guakamole.onair.report.ReportManager
@@ -333,8 +334,9 @@ fun NowPlayingScreen(
                                 enter = fadeIn() + expandVertically(),
                                 exit = fadeOut() + shrinkVertically()
                         ) {
-                                var isReporting by remember { mutableStateOf(false) }
-                                var reportStatus by remember { mutableStateOf<String?>(null) }
+                                var isReporting by remember(station?.id) { mutableStateOf(false) }
+                                var reportStatus by
+                                        remember(station?.id) { mutableStateOf<String?>(null) }
                                 val scope = rememberCoroutineScope()
                                 val context = LocalContext.current
 
@@ -361,17 +363,28 @@ fun NowPlayingScreen(
                                                                                                         error
                                                                                                 )
                                                                                 isReporting = false
-                                                                                reportStatus =
-                                                                                        if (success)
+                                                                                if (BuildConfig
+                                                                                                .DEBUG
+                                                                                ) {
+                                                                                        reportStatus =
+                                                                                                if (success
+                                                                                                )
+                                                                                                        context.getString(
+                                                                                                                R.string
+                                                                                                                        .report_sent
+                                                                                                        )
+                                                                                                else
+                                                                                                        context.getString(
+                                                                                                                R.string
+                                                                                                                        .report_failed
+                                                                                                        )
+                                                                                } else {
+                                                                                        reportStatus =
                                                                                                 context.getString(
                                                                                                         R.string
                                                                                                                 .report_sent
                                                                                                 )
-                                                                                        else
-                                                                                                context.getString(
-                                                                                                        R.string
-                                                                                                                .report_failed
-                                                                                                )
+                                                                                }
                                                                         }
                                                                 }
                                                         },

@@ -48,7 +48,8 @@ data class PlaybackError(
         val errorCode: Int,
         val message: String,
         val stationId: String?,
-        val streamUrl: String?
+        val streamUrl: String?,
+        val userAgent: String? = null
 )
 
 /** Media playback service that supports both in-app playback and Android Auto */
@@ -66,6 +67,10 @@ class RadioPlaybackService : MediaLibraryService() {
     private val _playbackError = MutableStateFlow<PlaybackError?>(null)
     val playbackError = _playbackError.asStateFlow()
 
+    private val userAgent by lazy {
+        "OnAir Radio/${org.guakamole.onair.BuildConfig.VERSION_NAME} (Android ${android.os.Build.VERSION.RELEASE}; ${android.os.Build.MODEL})"
+    }
+
     companion object {
         private const val ROOT_ID = "root"
         private const val STATIONS_ID = "stations"
@@ -81,8 +86,6 @@ class RadioPlaybackService : MediaLibraryService() {
     }
 
     private fun initializePlayer() {
-        val userAgent = "OnAir Radio/1.0 (Android)"
-
         // Configure HttpDataSource with User-Agent and ICY metadata request
         val httpDataSourceFactory =
                 DefaultHttpDataSource.Factory()
@@ -176,7 +179,8 @@ class RadioPlaybackService : MediaLibraryService() {
                                         stationId = player?.currentMediaItem?.mediaId,
                                         streamUrl =
                                                 player?.currentMediaItem?.localConfiguration?.uri
-                                                        ?.toString()
+                                                        ?.toString(),
+                                        userAgent = userAgent
                                 )
                     }
                 }
