@@ -22,38 +22,42 @@ class RadioFranceMetadataProvider : MetadataProvider {
                         val json = JSONObject(response)
 
                         val steps = json.optJSONObject("steps") ?: return@withContext null
-                        val levels = json.optJSONArray("levels") ?: return@withContext null
+                        val now = System.currentTimeMillis() / 1000
 
-                        if (levels.length() > 0) {
-                            val items = levels.getJSONObject(0).optJSONArray("items")
-                            if (items != null && items.length() > 0) {
-                                // The last item in the list is usually the currently playing one
-                                val lastStepId = items.getString(items.length() - 1)
-                                val activeStep = steps.optJSONObject(lastStepId)
+                        var bestStep: JSONObject? = null
+                        var maxDepth = -1
 
-                                if (activeStep != null) {
-                                    val embedType = activeStep.optString("embedType")
-                                    val title = activeStep.optString("title")
+                        steps.keys().forEach { key ->
+                            val step = steps.getJSONObject(key)
+                            val start = step.optLong("start")
+                            val end = step.optLong("end", Long.MAX_VALUE)
 
-                                    return@withContext if (embedType == "song") {
-                                        val artist = activeStep.optString("authors")
-                                        MetadataResult(
-                                                artist =
-                                                        if (artist.isNullOrBlank()) null
-                                                        else artist,
-                                                title = if (title.isNullOrBlank()) null else title
-                                        )
-                                    } else {
-                                        // For programs/expressions
-                                        val concept = activeStep.optString("titleConcept")
-                                        MetadataResult(
-                                                artist =
-                                                        if (concept.isNullOrBlank()) null
-                                                        else concept,
-                                                title = if (title.isNullOrBlank()) null else title
-                                        )
-                                    }
+                            if (now in start until end) {
+                                val depth = step.optInt("depth", 0)
+                                if (depth > maxDepth) {
+                                    maxDepth = depth
+                                    bestStep = step
                                 }
+                            }
+                        }
+
+                        bestStep?.let { activeStep ->
+                            val embedType = activeStep.optString("embedType")
+                            val title = activeStep.optString("title")
+
+                            return@withContext if (embedType == "song") {
+                                val artist = activeStep.optString("authors")
+                                MetadataResult(
+                                        artist = if (artist.isNullOrBlank()) null else artist,
+                                        title = if (title.isNullOrBlank()) null else title
+                                )
+                            } else {
+                                // For programs/expressions
+                                val concept = activeStep.optString("titleConcept")
+                                MetadataResult(
+                                        artist = if (concept.isNullOrBlank()) null else concept,
+                                        title = if (title.isNullOrBlank()) null else title
+                                )
                             }
                         }
                     }
