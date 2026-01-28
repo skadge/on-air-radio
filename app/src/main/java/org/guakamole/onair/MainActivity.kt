@@ -19,6 +19,7 @@ import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.MoreExecutors
 import org.guakamole.onair.data.RadioRepository
 import org.guakamole.onair.data.RadioStation
+import org.guakamole.onair.metadata.MetadataType
 import org.guakamole.onair.service.PlaybackError
 import org.guakamole.onair.service.RadioPlaybackService
 import org.guakamole.onair.ui.RadioApp
@@ -41,6 +42,7 @@ class MainActivity : ComponentActivity() {
             var isBuffering by remember { mutableStateOf(false) }
             var currentTitle by remember { mutableStateOf<String?>(null) }
             var currentArtist by remember { mutableStateOf<String?>(null) }
+            var currentContentType by remember { mutableStateOf(MetadataType.UNKNOWN) }
             var currentPlaybackError by remember { mutableStateOf<PlaybackError?>(null) }
 
             DisposableEffect(mediaController) {
@@ -55,6 +57,11 @@ class MainActivity : ComponentActivity() {
                 isBuffering = controller.playbackState == Player.STATE_BUFFERING
                 currentTitle = controller.currentMediaItem?.mediaMetadata?.title?.toString()
                 currentArtist = controller.currentMediaItem?.mediaMetadata?.artist?.toString()
+                currentContentType =
+                        controller.currentMediaItem?.mediaMetadata?.let {
+                            RadioPlaybackService.getContentType(it)
+                        }
+                                ?: MetadataType.UNKNOWN
 
                 val listener =
                         object : Player.Listener {
@@ -78,6 +85,7 @@ class MainActivity : ComponentActivity() {
                             override fun onMediaMetadataChanged(metadata: MediaMetadata) {
                                 currentTitle = metadata.title?.toString()
                                 currentArtist = metadata.artist?.toString()
+                                currentContentType = RadioPlaybackService.getContentType(metadata)
                             }
 
                             override fun onPlayerError(
@@ -114,6 +122,7 @@ class MainActivity : ComponentActivity() {
                         isBuffering = isBuffering,
                         currentTitle = currentTitle,
                         currentArtist = currentArtist,
+                        currentContentType = currentContentType,
                         playbackError = currentPlaybackError,
                         onStationSelect = { station -> playStation(station) },
                         onPlayPause = {

@@ -31,7 +31,8 @@ class BbcMetadataProvider : MetadataProvider {
                                 if (!title.isNullOrBlank()) {
                                     return@withContext MetadataResult(
                                             artist = if (artist.isNullOrBlank()) null else artist,
-                                            title = title
+                                            title = title,
+                                            type = MetadataType.SONG
                                     )
                                 }
                             }

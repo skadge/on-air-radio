@@ -11,6 +11,7 @@
         <domain includeSubdomains="true">polskieradio.pl</domain>
         <domain includeSubdomains="true">bfm.ru</domain>
         <domain includeSubdomains="true">akamaihd.net</domain>
+        <domain includeSubdomains="true">coverartarchive.org</domain>
         <domain includeSubdomains="false">185.52.127.132</domain>
 
     </domain-config>

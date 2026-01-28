@@ -49,14 +49,16 @@ class RadioFranceMetadataProvider : MetadataProvider {
                                 val artist = activeStep.optString("authors")
                                 MetadataResult(
                                         artist = if (artist.isNullOrBlank()) null else artist,
-                                        title = if (title.isNullOrBlank()) null else title
+                                        title = if (title.isNullOrBlank()) null else title,
+                                        type = MetadataType.SONG
                                 )
                             } else {
                                 // For programs/expressions
                                 val concept = activeStep.optString("titleConcept")
                                 MetadataResult(
                                         artist = if (concept.isNullOrBlank()) null else concept,
-                                        title = if (title.isNullOrBlank()) null else title
+                                        title = if (title.isNullOrBlank()) null else title,
+                                        type = MetadataType.PROGRAM
                                 )
                             }
                         }

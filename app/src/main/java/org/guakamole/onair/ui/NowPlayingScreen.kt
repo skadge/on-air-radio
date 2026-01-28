@@ -30,6 +30,7 @@ import kotlinx.coroutines.launch
 import org.guakamole.onair.BuildConfig
 import org.guakamole.onair.R
 import org.guakamole.onair.data.RadioStation
+import org.guakamole.onair.metadata.MetadataType
 import org.guakamole.onair.report.ReportManager
 import org.guakamole.onair.service.PlaybackError
 
@@ -40,6 +41,7 @@ fun NowPlayingScreen(
         isBuffering: Boolean,
         currentTitle: String?,
         currentArtist: String?,
+        currentContentType: MetadataType = MetadataType.UNKNOWN,
         playbackError: PlaybackError?,
         previousStationName: String?,
         nextStationName: String?,
@@ -269,7 +271,12 @@ fun NowPlayingScreen(
                                                 verticalAlignment = Alignment.CenterVertically
                                         ) {
                                                 Icon(
-                                                        imageVector = Icons.Default.MusicNote,
+                                                        imageVector =
+                                                                if (currentContentType ==
+                                                                                MetadataType.PROGRAM
+                                                                )
+                                                                        Icons.Default.Mic
+                                                                else Icons.Default.MusicNote,
                                                         contentDescription = null,
                                                         tint = MaterialTheme.colorScheme.primary,
                                                         modifier = Modifier.size(24.dp)

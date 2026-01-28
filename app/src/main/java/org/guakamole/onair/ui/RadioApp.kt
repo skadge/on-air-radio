@@ -31,6 +31,7 @@ import org.guakamole.onair.R
 import org.guakamole.onair.data.FilterData
 import org.guakamole.onair.data.RadioRepository
 import org.guakamole.onair.data.RadioStation
+import org.guakamole.onair.metadata.MetadataType
 import org.guakamole.onair.service.PlaybackError
 
 enum class Screen {
@@ -47,6 +48,7 @@ fun RadioApp(
         isBuffering: Boolean,
         currentTitle: String?,
         currentArtist: String?,
+        currentContentType: MetadataType = MetadataType.UNKNOWN,
         playbackError: PlaybackError?,
         onStationSelect: (RadioStation) -> Unit,
         onPlayPause: () -> Unit,
@@ -177,6 +179,7 @@ fun RadioApp(
                                         isBuffering = isBuffering,
                                         currentTitle = currentTitle,
                                         currentArtist = currentArtist,
+                                        currentContentType = currentContentType,
                                         onPlayPause = onPlayPause,
                                         onClick = { currentScreen = Screen.NowPlaying }
                                 )
@@ -235,6 +238,7 @@ fun RadioApp(
                                                 isBuffering = isBuffering,
                                                 currentTitle = currentTitle,
                                                 currentArtist = currentArtist,
+                                                currentContentType = currentContentType,
                                                 playbackError = playbackError,
                                                 previousStationName = prevStation?.name,
                                                 nextStationName = nextStation?.name,
@@ -272,6 +276,7 @@ fun MiniPlayer(
         isBuffering: Boolean,
         currentTitle: String?,
         currentArtist: String?,
+        currentContentType: MetadataType = MetadataType.UNKNOWN,
         onPlayPause: () -> Unit,
         onClick: () -> Unit,
         modifier: Modifier = Modifier
@@ -368,7 +373,11 @@ fun MiniPlayer(
                                 } else {
                                         Icon(
                                                 imageVector =
-                                                        if (isPlaying) Icons.Default.Pause
+                                                        if (currentContentType ==
+                                                                        MetadataType.PROGRAM
+                                                        )
+                                                                Icons.Default.Mic
+                                                        else if (isPlaying) Icons.Default.Pause
                                                         else Icons.Default.PlayArrow,
                                                 contentDescription =
                                                         if (isPlaying)

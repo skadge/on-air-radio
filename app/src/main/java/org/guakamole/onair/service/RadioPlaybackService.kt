@@ -44,6 +44,8 @@ import org.guakamole.onair.billing.PremiumManager
 import org.guakamole.onair.data.RadioRepository
 import org.guakamole.onair.data.RadioStation
 import org.guakamole.onair.metadata.MetadataProviderFactory
+import org.guakamole.onair.metadata.MetadataType
+import org.guakamole.onair.metadata.MusicBrainzMetadataRefiner
 
 data class PlaybackError(
         val errorCode: Int,
@@ -78,6 +80,17 @@ class RadioPlaybackService : MediaLibraryService() {
         private const val STATIONS_ID = "stations"
         private const val PREMIUM_REQUIRED_ID = "premium_required"
         private const val ANDROID_AUTO_PACKAGE = "com.google.android.projection.gearhead"
+
+        const val EXT_CONTENT_TYPE = "org.guakamole.onair.CONTENT_TYPE"
+
+        fun getContentType(metadata: MediaMetadata): MetadataType {
+            val typeStr = metadata.extras?.getString(EXT_CONTENT_TYPE)
+            return try {
+                MetadataType.valueOf(typeStr ?: MetadataType.UNKNOWN.name)
+            } catch (e: Exception) {
+                MetadataType.UNKNOWN
+            }
+        }
     }
 
     override fun onCreate() {
@@ -195,11 +208,22 @@ class RadioPlaybackService : MediaLibraryService() {
     }
 
     private fun updatePlayerMetadata(titleArg: String?, artistArg: String?) {
+        updatePlayerMetadataInternal(titleArg, artistArg, null, MetadataType.UNKNOWN)
+    }
+
+    private fun updatePlayerMetadataInternal(
+            titleArg: String?,
+            artistArg: String?,
+            artworkUrlArg: String? = null,
+            typeArg: MetadataType = MetadataType.UNKNOWN
+    ) {
         player?.let { p ->
             val currentItem = p.currentMediaItem ?: return@let
 
             var finalTitle = titleArg ?: currentItem.mediaMetadata.title?.toString()
             var finalArtist = artistArg
+            var finalArtworkUrl = artworkUrlArg
+            var finalType = typeArg
 
             // Intelligent splitting for "Artist - Title" format common in ICY streams
             if (finalArtist == null && finalTitle != null && finalTitle.contains(" - ")) {
@@ -214,27 +238,77 @@ class RadioPlaybackService : MediaLibraryService() {
                 finalArtist = station?.name ?: currentItem.mediaMetadata.artist?.toString()
             }
 
-            // Check if anything actually changed
-            if (currentItem.mediaMetadata.title?.toString() != finalTitle ||
-                            currentItem.mediaMetadata.artist?.toString() != finalArtist
-            ) {
-                val newMetadata =
-                        currentItem
-                                .mediaMetadata
-                                .buildUpon()
-                                .setTitle(finalTitle)
-                                .setArtist(finalArtist)
-                                .setSubtitle(finalArtist)
-                                .build()
+            android.util.Log.d(
+                    "MetadataDebug",
+                    "Service: updatePlayerMetadataInternal: finalArtist=$finalArtist, finalTitle=$finalTitle, finalArtworkUrl=$finalArtworkUrl"
+            )
 
-                // Use MetadataForwardingPlayer to update metadata without re-setting media item
-                p.setOverriddenMetadata(newMetadata)
+            // Check if we should refine (only if we don't already have a refined artwork URL)
+            if (artworkUrlArg == null && finalArtist != null && finalTitle != null) {
+                val lastArtist = currentItem.mediaMetadata.artist?.toString()
+                val lastTitle = currentItem.mediaMetadata.title?.toString()
 
-                android.util.Log.d(
-                        "MetadataDebug",
-                        "Service: Updated MediaMetadata override: Title=$finalTitle, Artist=$finalArtist"
-                )
+                // If artist/title changed or are new, try refining with MusicBrainz
+                if (finalArtist != lastArtist || finalTitle != lastTitle) {
+                    serviceScope.launch {
+                        val refined =
+                                MusicBrainzMetadataRefiner.refine(
+                                        finalArtist,
+                                        finalTitle,
+                                        finalType
+                                )
+                        if (refined != null) {
+                            updatePlayerMetadataInternal(
+                                    refined.title,
+                                    refined.artist,
+                                    refined.artworkUrl,
+                                    refined.type
+                            )
+                        } else {
+                            // Even if no refinement, apply current ones
+                            applyMetadataOverride(finalTitle, finalArtist, null, finalType)
+                        }
+                    }
+                    return@let
+                }
             }
+
+            applyMetadataOverride(finalTitle, finalArtist, finalArtworkUrl, finalType)
+        }
+    }
+
+    private fun applyMetadataOverride(
+            title: String?,
+            artist: String?,
+            artworkUrl: String?,
+            type: MetadataType
+    ) {
+        val p = player ?: return
+        val currentItem = p.currentMediaItem ?: return
+
+        android.util.Log.d(
+                "MetadataDebug",
+                "Service: applyMetadataOverride: title=$title, artist=$artist, artworkUrl=$artworkUrl, type=$type"
+        )
+
+        val extras =
+                (currentItem.mediaMetadata.extras ?: android.os.Bundle()).apply {
+                    putString(EXT_CONTENT_TYPE, type.name)
+                }
+
+        val builder =
+                currentItem
+                        .mediaMetadata
+                        .buildUpon()
+                        .setTitle(title)
+                        .setArtist(artist)
+                        .setSubtitle(artist)
+                        .setExtras(extras)
+
+        p.setOverriddenMetadata(builder.build())
+
+        if (artworkUrl != null) {
+            loadAndSetArtwork(Uri.parse(artworkUrl))
         }
     }
 
@@ -278,9 +352,14 @@ class RadioPlaybackService : MediaLibraryService() {
                                 withContext(Dispatchers.Main) {
                                     android.util.Log.d(
                                             "MetadataDebug",
-                                            "Polled metadata: ${result.artist} - ${result.title}"
+                                            "Polled metadata: ${result.artist} - ${result.title} (type=${result.type})"
                                     )
-                                    updatePlayerMetadata(result.title, result.artist)
+                                    updatePlayerMetadataInternal(
+                                            result.title,
+                                            result.artist,
+                                            null,
+                                            result.type
+                                    )
                                 }
                             }
                         } catch (e: kotlinx.coroutines.CancellationException) {
@@ -295,6 +374,7 @@ class RadioPlaybackService : MediaLibraryService() {
     }
 
     private fun loadAndSetArtwork(uri: Uri) {
+        android.util.Log.d("MetadataDebug", "Service: loadAndSetArtwork: uri=$uri")
         serviceScope.launch {
             val request =
                     ImageRequest.Builder(this@RadioPlaybackService)
@@ -315,25 +395,19 @@ class RadioPlaybackService : MediaLibraryService() {
 
     private fun updateMetadataWithArtwork(bitmap: Bitmap) {
         val player = player ?: return
-        val currentItem = player.currentMediaItem ?: return
-
-        // Only update if it doesn't have artwork data yet
-        if (currentItem.mediaMetadata.artworkData != null) return
 
         val stream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
         val artworkData = stream.toByteArray()
 
+        val currentMetadata = player.mediaMetadata
         val updatedMetadata =
-                currentItem
-                        .mediaMetadata
+                currentMetadata
                         .buildUpon()
                         .setArtworkData(artworkData, MediaMetadata.PICTURE_TYPE_FRONT_COVER)
                         .build()
 
-        val updatedItem = currentItem.buildUpon().setMediaMetadata(updatedMetadata).build()
-
-        player.setMediaItem(updatedItem, /* resetPosition= */ false)
+        player.setOverriddenMetadata(updatedMetadata)
     }
 
     private fun initializeSession() {

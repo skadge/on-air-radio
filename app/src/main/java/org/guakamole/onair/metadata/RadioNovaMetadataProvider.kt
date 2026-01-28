@@ -40,7 +40,8 @@ class RadioNovaMetadataProvider : MetadataProvider {
                                     )
                                     return@withContext MetadataResult(
                                             artist = if (artist.isNullOrBlank()) null else artist,
-                                            title = if (title.isNullOrBlank()) null else title
+                                            title = if (title.isNullOrBlank()) null else title,
+                                            type = MetadataType.SONG
                                     )
                                 } else {
                                     // Fallback to currentShow if it's a talk program
@@ -56,7 +57,8 @@ class RadioNovaMetadataProvider : MetadataProvider {
                                     )
                                     return@withContext MetadataResult(
                                             artist = if (author.isNullOrBlank()) null else author,
-                                            title = if (title.isNullOrBlank()) null else title
+                                            title = if (title.isNullOrBlank()) null else title,
+                                            type = MetadataType.PROGRAM
                                     )
                                 }
                             }
