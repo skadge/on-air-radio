@@ -49,6 +49,8 @@ fun RadioApp(
         currentTitle: String?,
         currentArtist: String?,
         currentContentType: MetadataType = MetadataType.UNKNOWN,
+        currentArtworkData: ByteArray? = null,
+        isSongArtwork: Boolean = false,
         playbackError: PlaybackError?,
         onStationSelect: (RadioStation) -> Unit,
         onPlayPause: () -> Unit,
@@ -180,6 +182,8 @@ fun RadioApp(
                                         currentTitle = currentTitle,
                                         currentArtist = currentArtist,
                                         currentContentType = currentContentType,
+                                        currentArtworkData = currentArtworkData,
+                                        isSongArtwork = isSongArtwork,
                                         onPlayPause = onPlayPause,
                                         onClick = { currentScreen = Screen.NowPlaying }
                                 )
@@ -239,6 +243,8 @@ fun RadioApp(
                                                 currentTitle = currentTitle,
                                                 currentArtist = currentArtist,
                                                 currentContentType = currentContentType,
+                                                currentArtworkData = currentArtworkData,
+                                                isSongArtwork = isSongArtwork,
                                                 playbackError = playbackError,
                                                 previousStationName = prevStation?.name,
                                                 nextStationName = nextStation?.name,
@@ -277,6 +283,8 @@ fun MiniPlayer(
         currentTitle: String?,
         currentArtist: String?,
         currentContentType: MetadataType = MetadataType.UNKNOWN,
+        currentArtworkData: ByteArray? = null,
+        isSongArtwork: Boolean = false,
         onPlayPause: () -> Unit,
         onClick: () -> Unit,
         modifier: Modifier = Modifier
@@ -304,9 +312,12 @@ fun MiniPlayer(
                                         model =
                                                 ImageRequest.Builder(LocalContext.current)
                                                         .data(
-                                                                if (station.logoResId != 0)
-                                                                        station.logoResId
-                                                                else station.logoUrl
+                                                                currentArtworkData
+                                                                        ?: if (station.logoResId !=
+                                                                                        0
+                                                                        )
+                                                                                station.logoResId
+                                                                        else station.logoUrl
                                                         )
                                                         .crossfade(true)
                                                         .build(),
@@ -333,7 +344,9 @@ fun MiniPlayer(
                                 )
                                 val displayTitle =
                                         if (!currentTitle.isNullOrBlank() &&
-                                                        currentTitle != station.name
+                                                        (currentTitle != station.name ||
+                                                                currentContentType ==
+                                                                        MetadataType.PROGRAM)
                                         ) {
                                                 if (!currentArtist.isNullOrBlank() &&
                                                                 currentArtist != station.name

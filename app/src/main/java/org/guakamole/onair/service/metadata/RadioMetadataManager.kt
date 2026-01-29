@@ -71,13 +71,18 @@ class RadioMetadataManager(
         var finalTitle = titleArg ?: currentRawTitle
         var finalArtist = artistArg
         val finalArtworkUrl = artworkUrlArg
-        val finalType = typeArg
+        var finalType = typeArg
 
         // Intelligent splitting for "Artist - Title" format common in ICY streams
         if (finalArtist == null && finalTitle != null && finalTitle.contains(" - ")) {
             val parts = finalTitle.split(" - ", limit = 2)
             finalArtist = parts[0].trim()
             finalTitle = parts[1].trim()
+
+            // Assume it's a song if we successfully split "Artist - Title" from raw metadata
+            if (finalType == MetadataType.UNKNOWN) {
+                finalType = MetadataType.SONG
+            }
         }
 
         // Fallback for artist if still null

@@ -173,9 +173,19 @@ class RadioPlaybackService : MediaLibraryService() {
                     }
 
                     override fun onMetadata(metadata: androidx.media3.common.Metadata) {
-                        // Logging remains for debugging
                         for (i in 0 until metadata.length()) {
                             val entry = metadata.get(i)
+                            if (entry is androidx.media3.extractor.metadata.icy.IcyInfo) {
+                                android.util.Log.d(
+                                        "MetadataDebug",
+                                        "Service: Received IcyInfo: title=${entry.title}, url=${entry.url}"
+                                )
+                                metadataManager.onRawMetadata(
+                                        entry.title,
+                                        null // Artist usually in title
+                                )
+                            }
+                            // Logging remains for debugging
                             android.util.Log.d(
                                     "MetadataDebug",
                                     "Service: Received metadata entry: type=${entry::class.java.simpleName}, content=$entry"

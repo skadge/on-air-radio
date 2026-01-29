@@ -42,6 +42,8 @@ fun NowPlayingScreen(
         currentTitle: String?,
         currentArtist: String?,
         currentContentType: MetadataType = MetadataType.UNKNOWN,
+        currentArtworkData: ByteArray? = null,
+        isSongArtwork: Boolean = false,
         playbackError: PlaybackError?,
         previousStationName: String?,
         nextStationName: String?,
@@ -162,36 +164,77 @@ fun NowPlayingScreen(
 
                 if (station != null) {
 
-                        // Station Logo with animation
-                        Surface(
+                        // Main Image Area (Artwork + Station Logo Overlay)
+                        Box(
                                 modifier = Modifier.size(260.dp).scale(scaleAnim.value),
-                                shape = RoundedCornerShape(32.dp),
-                                shadowElevation = 0.dp,
-                                color = Color.Transparent
+                                contentAlignment = Alignment.BottomEnd
                         ) {
-                                val placeholder = rememberVectorPainter(Icons.Default.Radio)
-                                AsyncImage(
-                                        model =
-                                                ImageRequest.Builder(LocalContext.current)
-                                                        .data(
-                                                                if (station.logoResId != 0)
-                                                                        station.logoResId
-                                                                else station.logoUrl
-                                                        )
-                                                        .crossfade(true)
-                                                        .build(),
-                                        placeholder = placeholder,
-                                        error = placeholder,
-                                        contentDescription =
-                                                stringResource(
-                                                        R.string.station_logo_description,
-                                                        station.name
-                                                ),
-                                        modifier =
-                                                Modifier.fillMaxSize()
-                                                        .clip(RoundedCornerShape(32.dp)),
-                                        contentScale = ContentScale.Fit
-                                )
+                                Surface(
+                                        modifier = Modifier.fillMaxSize(),
+                                        shape = RoundedCornerShape(32.dp),
+                                        shadowElevation =
+                                                if (currentArtworkData != null) 8.dp else 0.dp,
+                                        color =
+                                                if (currentArtworkData != null)
+                                                        MaterialTheme.colorScheme.surfaceVariant
+                                                else Color.Transparent
+                                ) {
+                                        val placeholder = rememberVectorPainter(Icons.Default.Radio)
+                                        AsyncImage(
+                                                model =
+                                                        ImageRequest.Builder(LocalContext.current)
+                                                                .data(
+                                                                        currentArtworkData
+                                                                                ?: if (station.logoResId !=
+                                                                                                0
+                                                                                )
+                                                                                        station.logoResId
+                                                                                else station.logoUrl
+                                                                )
+                                                                .crossfade(true)
+                                                                .build(),
+                                                placeholder = placeholder,
+                                                error = placeholder,
+                                                contentDescription =
+                                                        stringResource(
+                                                                R.string.station_logo_description,
+                                                                station.name
+                                                        ),
+                                                modifier =
+                                                        Modifier.fillMaxSize()
+                                                                .clip(RoundedCornerShape(32.dp)),
+                                                contentScale =
+                                                        if (currentArtworkData != null)
+                                                                ContentScale.Crop
+                                                        else ContentScale.Fit
+                                        )
+                                }
+
+                                // If we have song-specific artwork, show small station logo on top
+                                // (no
+                                // background)
+                                if (currentArtworkData != null && isSongArtwork) {
+                                        Box(modifier = Modifier.padding(12.dp).size(48.dp)) {
+                                                AsyncImage(
+                                                        model =
+                                                                ImageRequest.Builder(
+                                                                                LocalContext.current
+                                                                        )
+                                                                        .data(
+                                                                                if (station.logoResId !=
+                                                                                                0
+                                                                                )
+                                                                                        station.logoResId
+                                                                                else station.logoUrl
+                                                                        )
+                                                                        .crossfade(true)
+                                                                        .build(),
+                                                        contentDescription = null,
+                                                        modifier = Modifier.fillMaxSize(),
+                                                        contentScale = ContentScale.Fit
+                                                )
+                                        }
+                                }
                         }
 
                         Spacer(modifier = Modifier.height(40.dp))
@@ -243,7 +286,9 @@ fun NowPlayingScreen(
 
                         // Dedicated Song Title Box
                         val showTitle =
-                                !currentTitle.isNullOrBlank() && currentTitle != station.name
+                                !currentTitle.isNullOrBlank() &&
+                                        (currentTitle != station.name ||
+                                                currentContentType == MetadataType.PROGRAM)
 
                         SideEffect {
                                 android.util.Log.d(
