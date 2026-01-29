@@ -35,6 +35,14 @@ class ArtworkManager(private val context: Context) {
                 }
             }
 
+    fun getStationArtworkUri(station: org.guakamole.onair.data.RadioStation): Uri {
+        return if (station.logoResId != 0) {
+            Uri.parse("android.resource://${context.packageName}/${station.logoResId}")
+        } else {
+            Uri.parse(station.logoUrl)
+        }
+    }
+
     private fun compressBitmap(bitmap: Bitmap): ByteArray {
         val stream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)

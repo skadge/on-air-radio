@@ -78,4 +78,59 @@ class MetadataForwardingPlayer(player: Player) : ForwardingPlayer(player) {
         overriddenMetadata = null
         super.setMediaItems(mediaItems, startIndex, startPositionMs)
     }
+
+    override fun isCurrentMediaItemSeekable(): Boolean {
+        return false
+    }
+
+    override fun hasNextMediaItem(): Boolean {
+        return true
+    }
+
+    override fun hasPreviousMediaItem(): Boolean {
+        return true
+    }
+
+    override fun seekToNext() {
+        skipToStation(1)
+    }
+
+    override fun seekToPrevious() {
+        skipToStation(-1)
+    }
+
+    private fun skipToStation(direction: Int) {
+        val currentId = currentMediaItem?.mediaId ?: return
+        val stations = org.guakamole.onair.data.RadioRepository.stations
+        if (stations.isEmpty()) return
+
+        val currentIndex = stations.indexOfFirst { it.id == currentId }
+        // If current not found, default to 0
+        val index = if (currentIndex == -1) 0 else currentIndex
+
+        // Calculate new index wrapping around
+        val newIndex = (index + direction).mod(stations.size)
+        val newStation = stations[newIndex]
+
+        val newItem =
+                androidx.media3.common.MediaItem.Builder()
+                        .setMediaId(newStation.id)
+                        .setUri(newStation.streamUrl)
+                        .setMediaMetadata(
+                                MediaMetadata.Builder()
+                                        .setTitle(newStation.name)
+                                        .setArtist(newStation.name)
+                                        .setArtworkUri(
+                                                if (newStation.logoUrl != null)
+                                                        android.net.Uri.parse(newStation.logoUrl)
+                                                else null
+                                        )
+                                        .build()
+                        )
+                        .build()
+
+        setMediaItem(newItem)
+        prepare()
+        play()
+    }
 }

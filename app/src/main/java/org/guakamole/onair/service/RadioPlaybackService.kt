@@ -151,14 +151,6 @@ class RadioPlaybackService : MediaLibraryService() {
                         metadataManager.onStationChange(mediaItem?.mediaId)
                         metadataPoller.startPolling(mediaItem?.mediaId)
                         _playbackError.value = null // Reset error on transition
-
-                        // Pass initial raw metadata if any
-                        mediaItem?.mediaMetadata?.let {
-                            metadataManager.onRawMetadata(
-                                    it.title?.toString(),
-                                    it.artist?.toString()
-                            )
-                        }
                     }
 
                     override fun onMediaMetadataChanged(mediaMetadata: MediaMetadata) {

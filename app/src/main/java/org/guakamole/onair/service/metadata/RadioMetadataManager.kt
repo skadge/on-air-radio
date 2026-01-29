@@ -96,7 +96,8 @@ class RadioMetadataManager(
         // Logic Rule 1: Ignore weak raw updates if we have a specific override active
         val isRawUpdate = typeArg == MetadataType.UNKNOWN
         if (isRawUpdate && activeType != MetadataType.UNKNOWN) {
-            if (titleArg.isNullOrBlank() || titleArg == station?.name) {
+            if (titleArg.isNullOrBlank() || titleArg.trim().equals(station?.name, ignoreCase = true)
+            ) {
                 android.util.Log.d(
                         "MetadataDebug",
                         "Manager: Ignoring weak raw update over specific override"
@@ -109,7 +110,8 @@ class RadioMetadataManager(
         if (!isRawUpdate) {
             activeType = finalType
         } else if (activeType != MetadataType.UNKNOWN &&
-                        (titleArg.isNullOrBlank() || titleArg == station?.name)
+                        (titleArg.isNullOrBlank() ||
+                                titleArg.trim().equals(station?.name, ignoreCase = true))
         ) {
             // If we accepted a weak raw update (because activeType was UNKNOWN), we shouldn't
             // promote it to specific
@@ -168,16 +170,26 @@ class RadioMetadataManager(
         val builder = MediaMetadata.Builder().setTitle(title).setArtist(artist).setSubtitle(artist)
 
         // Artwork handling
+        val effectiveArtworkUri: Uri?
+        val isSongArtwork: Boolean
+
         if (artworkUrl != null) {
-            builder.setArtworkUri(Uri.parse(artworkUrl))
+            effectiveArtworkUri = Uri.parse(artworkUrl)
+            isSongArtwork = (type == MetadataType.SONG)
+        } else {
+            val station = currentStationId?.let { RadioRepository.getStationById(it) }
+            effectiveArtworkUri = station?.let { artworkManager.getStationArtworkUri(it) }
+            isSongArtwork = false
+        }
+
+        if (effectiveArtworkUri != null) {
+            builder.setArtworkUri(effectiveArtworkUri)
             // Asynchronously load artwork data
             scope.launch {
-                val isSongArtwork = (type == MetadataType.SONG)
-                val artworkData = artworkManager.loadArtwork(Uri.parse(artworkUrl))
+                val artworkData = artworkManager.loadArtwork(effectiveArtworkUri)
                 if (artworkData != null) {
                     emitFinalMetadata(builder, typeName, artworkData, isSongArtwork)
                 } else {
-                    // Emit without data (URI only)
                     emitFinalMetadata(builder, typeName, null, isSongArtwork)
                 }
             }

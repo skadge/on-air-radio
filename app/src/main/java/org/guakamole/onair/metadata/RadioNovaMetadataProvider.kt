@@ -45,21 +45,35 @@ class RadioNovaMetadataProvider : MetadataProvider {
                                     )
                                 } else {
                                     // Fallback to currentShow if it's a talk program
-                                    val currentShow =
-                                            entry.optJSONObject("currentShow")
-                                                    ?: return@withContext null
-                                    val author = currentShow.optString("author")
-                                    val title = currentShow.optString("title")
+                                    val currentShow = entry.optJSONObject("currentShow")
 
-                                    android.util.Log.d(
-                                            "MetadataDebug",
-                                            "RadioNovaProvider: Found show for $param: $author - $title"
-                                    )
-                                    return@withContext MetadataResult(
-                                            artist = if (author.isNullOrBlank()) null else author,
-                                            title = if (title.isNullOrBlank()) null else title,
-                                            type = MetadataType.PROGRAM
-                                    )
+                                    if (currentShow != null) {
+                                        val author = currentShow.optString("author")
+                                        val title = currentShow.optString("title")
+
+                                        android.util.Log.d(
+                                                "MetadataDebug",
+                                                "RadioNovaProvider: Found show for $param: $author - $title"
+                                        )
+                                        return@withContext MetadataResult(
+                                                artist =
+                                                        if (author.isNullOrBlank()) null
+                                                        else author,
+                                                title = if (title.isNullOrBlank()) null else title,
+                                                type = MetadataType.PROGRAM
+                                        )
+                                    } else {
+                                        android.util.Log.d(
+                                                "MetadataDebug",
+                                                "RadioNovaProvider: No track or show found for $param"
+                                        )
+                                        // Return station name ensuring we clear old metadata
+                                        return@withContext MetadataResult(
+                                                artist = null,
+                                                title = name,
+                                                type = MetadataType.PROGRAM
+                                        )
+                                    }
                                 }
                             }
                         }
