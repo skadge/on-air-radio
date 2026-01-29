@@ -3,7 +3,6 @@ package org.guakamole.onair.metadata
 import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
-import java.util.Scanner
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -39,7 +38,7 @@ object MusicBrainzMetadataRefiner {
                     connection.setRequestProperty("User-Agent", USER_AGENT)
 
                     if (connection.responseCode == 200) {
-                        val response = Scanner(connection.inputStream).useDelimiter("\\A").next()
+                        val response = connection.inputStream.bufferedReader().use { it.readText() }
                         val json = JSONObject(response)
                         val recordings = json.optJSONArray("recordings")
 

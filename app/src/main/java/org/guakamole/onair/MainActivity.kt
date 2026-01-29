@@ -43,6 +43,8 @@ class MainActivity : ComponentActivity() {
             var currentTitle by remember { mutableStateOf<String?>(null) }
             var currentArtist by remember { mutableStateOf<String?>(null) }
             var currentContentType by remember { mutableStateOf(MetadataType.UNKNOWN) }
+            var currentArtworkData by remember { mutableStateOf<ByteArray?>(null) }
+            var isSongArtwork by remember { mutableStateOf(false) }
             var currentPlaybackError by remember { mutableStateOf<PlaybackError?>(null) }
 
             DisposableEffect(mediaController) {
@@ -62,12 +64,25 @@ class MainActivity : ComponentActivity() {
                             RadioPlaybackService.getContentType(it)
                         }
                                 ?: MetadataType.UNKNOWN
+                currentArtworkData = controller.currentMediaItem?.mediaMetadata?.artworkData
+                isSongArtwork =
+                        controller.currentMediaItem?.mediaMetadata?.let {
+                            RadioPlaybackService.getIsSongArtwork(it)
+                        }
+                                ?: false
+                android.util.Log.d(
+                        "MetadataDebug",
+                        "Main: Initial metadata: title=$currentTitle, artist=$currentArtist, artworkDataSize=${currentArtworkData?.size ?: 0}"
+                )
 
                 val listener =
                         object : Player.Listener {
                             override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
                                 currentStationId = mediaItem?.mediaId
                                 currentPlaybackError = null
+                                currentContentType = MetadataType.UNKNOWN
+                                currentArtworkData = null
+                                isSongArtwork = false
                                 android.util.Log.d(
                                         "MetadataDebug",
                                         "Main: Transition to ${mediaItem?.mediaId}"
@@ -86,6 +101,12 @@ class MainActivity : ComponentActivity() {
                                 currentTitle = metadata.title?.toString()
                                 currentArtist = metadata.artist?.toString()
                                 currentContentType = RadioPlaybackService.getContentType(metadata)
+                                currentArtworkData = metadata.artworkData
+                                isSongArtwork = RadioPlaybackService.getIsSongArtwork(metadata)
+                                android.util.Log.d(
+                                        "MetadataDebug",
+                                        "Main: Metadata changed: title=$currentTitle, artist=$currentArtist, artworkDataSize=${currentArtworkData?.size ?: 0}"
+                                )
                             }
 
                             override fun onPlayerError(
@@ -123,6 +144,7 @@ class MainActivity : ComponentActivity() {
                         currentTitle = currentTitle,
                         currentArtist = currentArtist,
                         currentContentType = currentContentType,
+                        currentArtworkData = currentArtworkData,
                         playbackError = currentPlaybackError,
                         onStationSelect = { station -> playStation(station) },
                         onPlayPause = {

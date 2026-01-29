@@ -25,13 +25,21 @@ class MetadataForwardingPlayer(player: Player) : ForwardingPlayer(player) {
     }
 
     /** Updates the metadata returned by this player and notifies all listeners. */
-    fun setOverriddenMetadata(metadata: MediaMetadata) {
+    fun setOverriddenMetadata(metadata: MediaMetadata?) {
         overriddenMetadata = metadata
-        listeners.forEach { it.onMediaMetadataChanged(metadata) }
+        if (metadata != null) {
+            listeners.forEach { it.onMediaMetadataChanged(metadata) }
+        }
     }
 
     override fun getMediaMetadata(): MediaMetadata {
         return overriddenMetadata ?: super.getMediaMetadata()
+    }
+
+    override fun getCurrentMediaItem(): androidx.media3.common.MediaItem? {
+        val item = super.getCurrentMediaItem() ?: return null
+        val metadata = overriddenMetadata ?: return item
+        return item.buildUpon().setMediaMetadata(metadata).build()
     }
 
     override fun setMediaItem(mediaItem: androidx.media3.common.MediaItem) {
