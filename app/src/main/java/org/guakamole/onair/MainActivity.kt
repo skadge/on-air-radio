@@ -83,6 +83,10 @@ class MainActivity : ComponentActivity() {
                                 currentContentType = MetadataType.UNKNOWN
                                 currentArtworkData = null
                                 isSongArtwork = false
+                                // Keep displaying the station name as initial title to prevent
+                                // flash
+                                currentTitle = mediaItem?.mediaMetadata?.title?.toString()
+                                currentArtist = mediaItem?.mediaMetadata?.artist?.toString()
                                 android.util.Log.d(
                                         "MetadataDebug",
                                         "Main: Transition to ${mediaItem?.mediaId}"

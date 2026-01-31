@@ -40,14 +40,19 @@ class RadioMetadataManager(
     // We store the "active" metadata to check against weak raw updates
     private var activeType: MetadataType = MetadataType.UNKNOWN
 
+    // Cache for refinement to prevent flickering/re-fetching
+    private var lastRefinementInput: Pair<String, String>? = null
+    private var lastRefinedResult: MetadataResult? = null
+
     fun onStationChange(stationId: String?) {
         currentStationId = stationId
         lastRawArtist = null
         lastRawTitle = null
         lastRawStationId = null
         activeType = MetadataType.UNKNOWN
+        lastRefinementInput = null
+        lastRefinedResult = null
 
-        // Clear metadata logic handled by service (setOverriddenMetadata(null))
         // But we reset our internal state
     }
 
@@ -68,20 +73,54 @@ class RadioMetadataManager(
             typeArg: MetadataType = MetadataType.UNKNOWN
     ) {
         // Prepare final candidates
+        // Prepare final candidates
         var finalTitle = titleArg ?: currentRawTitle
         var finalArtist = artistArg
-        val finalArtworkUrl = artworkUrlArg
+        var finalArtworkUrl = artworkUrlArg
         var finalType = typeArg
 
-        // Intelligent splitting for "Artist - Title" format common in ICY streams
-        if (finalArtist == null && finalTitle != null && finalTitle.contains(" - ")) {
-            val parts = finalTitle.split(" - ", limit = 2)
-            finalArtist = parts[0].trim()
-            finalTitle = parts[1].trim()
+        // Intelligent splitting for "Artist - Title" or "Artist;Title" format common in ICY streams
+        if (finalArtist == null && finalTitle != null) {
+            // Try dash separator first (most common), then semicolon (e.g., Bayern 1)
+            val separator =
+                    when {
+                        finalTitle.contains(" - ") -> " - "
+                        finalTitle.contains(";") -> ";"
+                        else -> null
+                    }
 
-            // Assume it's a song if we successfully split "Artist - Title" from raw metadata
-            if (finalType == MetadataType.UNKNOWN) {
-                finalType = MetadataType.SONG
+            if (separator != null) {
+                val parts = finalTitle.split(separator, limit = 2)
+                finalArtist = parts[0].trim()
+                finalTitle = parts[1].trim()
+
+                // Assume it's a song if we successfully split "Artist - Title" from raw metadata
+                if (finalType == MetadataType.UNKNOWN) {
+                    finalType = MetadataType.SONG
+                }
+            }
+        }
+
+        var isCached = false
+
+        // Cache Check: If input matches cache (case-insensitive), apply refined immediately
+        if (finalType == MetadataType.SONG && finalArtist != null && finalTitle != null) {
+            val cachedInput = lastRefinementInput
+            val cachedResult = lastRefinedResult
+
+            if (cachedInput != null &&
+                            cachedResult != null &&
+                            cachedInput.first.equals(finalArtist, ignoreCase = true) &&
+                            cachedInput.second.equals(finalTitle, ignoreCase = true)
+            ) {
+
+                finalArtist = cachedResult.artist
+                finalTitle = cachedResult.title
+                // Use cached artwork if we don't have a specific override
+                if (finalArtworkUrl == null) {
+                    finalArtworkUrl = cachedResult.artworkUrl
+                }
+                isCached = true
             }
         }
 
@@ -94,36 +133,38 @@ class RadioMetadataManager(
         val station = currentStationId?.let { RadioRepository.getStationById(it) }
 
         // Logic Rule 1: Ignore weak raw updates if we have a specific override active
+        // A "weak" update is one that is blank or just contains the station name
+        // A "strong" raw update is one that contains actual song info (e.g., "Artist - Title")
         val isRawUpdate = typeArg == MetadataType.UNKNOWN
-        if (isRawUpdate && activeType != MetadataType.UNKNOWN) {
-            if (titleArg.isNullOrBlank() || titleArg.trim().equals(station?.name, ignoreCase = true)
-            ) {
-                android.util.Log.d(
-                        "MetadataDebug",
-                        "Manager: Ignoring weak raw update over specific override"
-                )
-                return
-            }
+        val isWeakRawUpdate =
+                isRawUpdate &&
+                        (titleArg.isNullOrBlank() ||
+                                titleArg.trim().equals(station?.name, ignoreCase = true))
+
+        if (isWeakRawUpdate && activeType != MetadataType.UNKNOWN) {
+            android.util.Log.d(
+                    "MetadataDebug",
+                    "Manager: Ignoring weak raw update over specific override"
+            )
+            return
         }
 
         // Update active type
+        // For polled results, always use their type
+        // For raw updates, use the inferred type (SONG if we parsed artist-title)
         if (!isRawUpdate) {
             activeType = finalType
-        } else if (activeType != MetadataType.UNKNOWN &&
-                        (titleArg.isNullOrBlank() ||
-                                titleArg.trim().equals(station?.name, ignoreCase = true))
-        ) {
-            // If we accepted a weak raw update (because activeType was UNKNOWN), we shouldn't
-            // promote it to specific
-            // But here we are in the "else" of the ignore check, meaning either activeType IS
-            // unknown
-            // OR the raw update IS strong.
+        } else if (!isWeakRawUpdate && finalType != MetadataType.UNKNOWN) {
+            // Strong raw update with parsed song info - update active type
+            activeType = finalType
         }
 
         // Logic Rule 2: Check for changes relative to last RAW data for refinement
         // Only refine if this is a RAW update or a generic update that needs refinement
         // AND we don't have a direct artwork URL (refinement is mostly for artwork/cleanup)
+        // AND not already cached
         if (artworkUrlArg == null &&
+                        !isCached &&
                         (finalArtist != lastRawArtist ||
                                 finalTitle != lastRawTitle ||
                                 currentStationId != lastRawStationId)
@@ -134,10 +175,19 @@ class RadioMetadataManager(
 
             // Only refine SONGS
             if (finalType == MetadataType.SONG && finalArtist != null && finalTitle != null) {
+                // Capture input for caching key
+                val inputKey = finalArtist to finalTitle
                 scope.launch {
                     val refined =
-                            MusicBrainzMetadataRefiner.refine(finalArtist, finalTitle, finalType)
+                            MusicBrainzMetadataRefiner.refine(
+                                    inputKey.first,
+                                    inputKey.second,
+                                    finalType
+                            )
                     if (refined != null) {
+                        lastRefinementInput = inputKey
+                        lastRefinedResult = refined
+
                         // Apply refined immediatley serves as recursive call with specific type
                         processMetadata(
                                 refined.title,
@@ -168,6 +218,11 @@ class RadioMetadataManager(
     ) {
         val typeName = type.name
         val builder = MediaMetadata.Builder().setTitle(title).setArtist(artist).setSubtitle(artist)
+
+        // Set media type for scrobbling compatibility
+        if (type == MetadataType.SONG) {
+            builder.setMediaType(MediaMetadata.MEDIA_TYPE_MUSIC)
+        }
 
         // Artwork handling
         val effectiveArtworkUri: Uri?

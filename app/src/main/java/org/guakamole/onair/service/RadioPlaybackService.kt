@@ -124,7 +124,9 @@ class RadioPlaybackService : MediaLibraryService() {
                         .setDefaultRequestProperties(mapOf("Icy-MetaData" to "1"))
 
         val dataSourceFactory = DefaultDataSource.Factory(this, httpDataSourceFactory)
-        val mediaSourceFactory = DefaultMediaSourceFactory(dataSourceFactory)
+        val mediaSourceFactory =
+                DefaultMediaSourceFactory(dataSourceFactory)
+                        .setLoadErrorHandlingPolicy(RadioLoadErrorHandlingPolicy())
 
         val exoPlayer =
                 ExoPlayer.Builder(this)
@@ -248,9 +250,18 @@ class RadioPlaybackService : MediaLibraryService() {
             val connectionResult = super.onConnect(session, controller)
             val availableSessionCommands = connectionResult.availableSessionCommands.buildUpon()
 
+            // Expose next/previous commands for Android Auto station navigation
+            val availablePlayerCommands =
+                    connectionResult
+                            .availablePlayerCommands
+                            .buildUpon()
+                            .add(Player.COMMAND_SEEK_TO_NEXT)
+                            .add(Player.COMMAND_SEEK_TO_PREVIOUS)
+                            .build()
+
             return MediaSession.ConnectionResult.accept(
                     availableSessionCommands.build(),
-                    connectionResult.availablePlayerCommands
+                    availablePlayerCommands
             )
         }
 
