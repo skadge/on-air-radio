@@ -8,27 +8,87 @@ import java.util.concurrent.CopyOnWriteArraySet
 /**
  * A [ForwardingPlayer] that allows for seamless metadata updates without interrupting playback.
  * This is particularly useful for radio streams where metadata is fetched out-of-band (e.g., via
- * polling).
+ * polling). When overridden metadata is set, raw stream metadata events are suppressed.
  */
-class MetadataForwardingPlayer(player: Player) : ForwardingPlayer(player) {
-    private val listeners = CopyOnWriteArraySet<Player.Listener>()
+class MetadataForwardingPlayer(private val wrappedPlayer: Player) :
+        ForwardingPlayer(wrappedPlayer) {
+    private val externalListeners = CopyOnWriteArraySet<Player.Listener>()
     private var overriddenMetadata: MediaMetadata? = null
 
+    // Internal listener that intercepts raw metadata events
+    private val internalListener =
+            object : Player.Listener {
+                override fun onMediaMetadataChanged(mediaMetadata: MediaMetadata) {
+                    // If we have overridden metadata, suppress raw stream metadata events
+                    // The overridden metadata was already pushed via setOverriddenMetadata
+                    if (overriddenMetadata != null) {
+                        android.util.Log.d(
+                                "MetadataDebug",
+                                "ForwardingPlayer: Suppressing raw metadata, using override"
+                        )
+                        return
+                    }
+                    // Forward raw metadata if no override is set
+                    externalListeners.forEach { it.onMediaMetadataChanged(mediaMetadata) }
+                }
+            }
+
+    init {
+        wrappedPlayer.addListener(internalListener)
+    }
+
     override fun addListener(listener: Player.Listener) {
-        super.addListener(listener)
-        listeners.add(listener)
+        externalListeners.add(listener)
+        // Add a wrapper that forwards all events EXCEPT onMediaMetadataChanged
+        // (which is handled by our internal listener)
+        super.addListener(
+                object : Player.Listener {
+                    override fun onEvents(player: Player, events: Player.Events) {
+                        listener.onEvents(player, events)
+                    }
+                    override fun onPlaybackStateChanged(playbackState: Int) {
+                        listener.onPlaybackStateChanged(playbackState)
+                    }
+                    override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
+                        listener.onPlayWhenReadyChanged(playWhenReady, reason)
+                    }
+                    override fun onIsPlayingChanged(isPlaying: Boolean) {
+                        listener.onIsPlayingChanged(isPlaying)
+                    }
+                    override fun onPlayerError(error: androidx.media3.common.PlaybackException) {
+                        listener.onPlayerError(error)
+                    }
+                    override fun onMediaItemTransition(
+                            mediaItem: androidx.media3.common.MediaItem?,
+                            reason: Int
+                    ) {
+                        listener.onMediaItemTransition(mediaItem, reason)
+                    }
+                    override fun onPositionDiscontinuity(
+                            oldPosition: Player.PositionInfo,
+                            newPosition: Player.PositionInfo,
+                            reason: Int
+                    ) {
+                        listener.onPositionDiscontinuity(oldPosition, newPosition, reason)
+                    }
+                    override fun onAvailableCommandsChanged(availableCommands: Player.Commands) {
+                        listener.onAvailableCommandsChanged(availableCommands)
+                    }
+                    // onMediaMetadataChanged is intentionally omitted - handled by internalListener
+                }
+        )
     }
 
     override fun removeListener(listener: Player.Listener) {
-        super.removeListener(listener)
-        listeners.remove(listener)
+        externalListeners.remove(listener)
+        // Note: we don't remove the internal wrapper from super - this matches common patterns
     }
 
     /** Updates the metadata returned by this player and notifies all listeners. */
     fun setOverriddenMetadata(metadata: MediaMetadata?) {
         overriddenMetadata = metadata
         if (metadata != null) {
-            listeners.forEach { it.onMediaMetadataChanged(metadata) }
+            externalListeners.forEach { it.onMediaMetadataChanged(metadata) }
         }
     }
 

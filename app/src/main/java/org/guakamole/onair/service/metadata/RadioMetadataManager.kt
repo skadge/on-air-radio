@@ -216,6 +216,10 @@ class RadioMetadataManager(
             artworkUrl: String?,
             type: MetadataType
     ) {
+        android.util.Log.d(
+                "MetadataDebug",
+                "Manager: buildEmittedMetadata called: title=$title, artist=$artist, artworkUrl=$artworkUrl, type=$type"
+        )
         val typeName = type.name
         val builder = MediaMetadata.Builder().setTitle(title).setArtist(artist).setSubtitle(artist)
 
@@ -273,6 +277,11 @@ class RadioMetadataManager(
             builder.setArtworkUri(null) // Prioritize data
         }
 
-        _metadataUpdates.emit(builder.build())
+        val finalMetadata = builder.build()
+        android.util.Log.d(
+                "MetadataDebug",
+                "Manager: Emitting metadata: title=${finalMetadata.title}, artist=${finalMetadata.artist}, hasArtwork=${artworkData != null}"
+        )
+        _metadataUpdates.emit(finalMetadata)
     }
 }

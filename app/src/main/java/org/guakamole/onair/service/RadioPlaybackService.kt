@@ -49,413 +49,455 @@ data class PlaybackError(
 @OptIn(UnstableApi::class)
 class RadioPlaybackService : MediaLibraryService() {
 
-    private var player: MetadataForwardingPlayer? = null
-    private var basePlayer: ExoPlayer? = null
-    private var mediaLibrarySession: MediaLibrarySession? = null
-    private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+        private var player: MetadataForwardingPlayer? = null
+        private var basePlayer: ExoPlayer? = null
+        private var mediaLibrarySession: MediaLibrarySession? = null
+        private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
-    private lateinit var metadataManager: RadioMetadataManager
-    private lateinit var metadataPoller: MetadataPoller
-    private lateinit var artworkManager: ArtworkManager
+        private lateinit var metadataManager: RadioMetadataManager
+        private lateinit var metadataPoller: MetadataPoller
+        private lateinit var artworkManager: ArtworkManager
 
-    private val _playbackError = MutableStateFlow<PlaybackError?>(null)
-    val playbackError = _playbackError.asStateFlow()
+        private val _playbackError = MutableStateFlow<PlaybackError?>(null)
+        val playbackError = _playbackError.asStateFlow()
 
-    private val userAgent by lazy {
-        "OnAir Radio/${org.guakamole.onair.BuildConfig.VERSION_NAME} (Android ${android.os.Build.VERSION.RELEASE}; ${android.os.Build.MODEL})"
-    }
-
-    companion object {
-        private const val ROOT_ID = "root"
-        private const val STATIONS_ID = "stations"
-        private const val PREMIUM_REQUIRED_ID = "premium_required"
-        private const val ANDROID_AUTO_PACKAGE = "com.google.android.projection.gearhead"
-
-        const val EXT_CONTENT_TYPE = "org.guakamole.onair.CONTENT_TYPE"
-        const val EXT_IS_SONG_ARTWORK = "org.guakamole.onair.IS_SONG_ARTWORK"
-
-        fun getIsSongArtwork(metadata: MediaMetadata): Boolean {
-            return metadata.extras?.getBoolean(EXT_IS_SONG_ARTWORK) ?: false
+        private val userAgent by lazy {
+                "OnAir Radio/${org.guakamole.onair.BuildConfig.VERSION_NAME} (Android ${android.os.Build.VERSION.RELEASE}; ${android.os.Build.MODEL})"
         }
 
-        fun getContentType(metadata: MediaMetadata): MetadataType {
-            val typeStr = metadata.extras?.getString(EXT_CONTENT_TYPE)
-            return try {
-                MetadataType.valueOf(typeStr ?: MetadataType.UNKNOWN.name)
-            } catch (e: Exception) {
-                MetadataType.UNKNOWN
-            }
-        }
-    }
+        companion object {
+                private const val ROOT_ID = "root"
+                private const val STATIONS_ID = "stations"
+                private const val PREMIUM_REQUIRED_ID = "premium_required"
+                private const val ANDROID_AUTO_PACKAGE = "com.google.android.projection.gearhead"
 
-    override fun onCreate() {
-        super.onCreate()
+                const val EXT_CONTENT_TYPE = "org.guakamole.onair.CONTENT_TYPE"
+                const val EXT_IS_SONG_ARTWORK = "org.guakamole.onair.IS_SONG_ARTWORK"
 
-        artworkManager = ArtworkManager(this)
-        metadataManager = RadioMetadataManager(serviceScope, artworkManager)
-        metadataPoller = MetadataPoller(serviceScope)
-
-        initializePlayer()
-        initializeSession()
-
-        // Observe metadata updates from the manager
-        serviceScope.launch {
-            metadataManager.metadataUpdates.collect { metadata ->
-                if (metadata != null) {
-                    player?.setOverriddenMetadata(metadata)
+                fun getIsSongArtwork(metadata: MediaMetadata): Boolean {
+                        return metadata.extras?.getBoolean(EXT_IS_SONG_ARTWORK) ?: false
                 }
-            }
+
+                fun getContentType(metadata: MediaMetadata): MetadataType {
+                        val typeStr = metadata.extras?.getString(EXT_CONTENT_TYPE)
+                        return try {
+                                MetadataType.valueOf(typeStr ?: MetadataType.UNKNOWN.name)
+                        } catch (e: Exception) {
+                                MetadataType.UNKNOWN
+                        }
+                }
         }
 
-        // Observe polled updates and feed them to the manager
-        serviceScope.launch {
-            metadataPoller.metadataUpdates.collect { result ->
-                metadataManager.onPolledMetadata(result)
-            }
-        }
-    }
+        override fun onCreate() {
+                super.onCreate()
 
-    private fun initializePlayer() {
-        // Configure HttpDataSource with User-Agent and ICY metadata request
-        val httpDataSourceFactory =
-                DefaultHttpDataSource.Factory()
-                        .setUserAgent(userAgent)
-                        .setAllowCrossProtocolRedirects(true)
-                        .setDefaultRequestProperties(mapOf("Icy-MetaData" to "1"))
+                artworkManager = ArtworkManager(this)
+                metadataManager = RadioMetadataManager(serviceScope, artworkManager)
+                metadataPoller = MetadataPoller(serviceScope)
 
-        val dataSourceFactory = DefaultDataSource.Factory(this, httpDataSourceFactory)
-        val mediaSourceFactory =
-                DefaultMediaSourceFactory(dataSourceFactory)
-                        .setLoadErrorHandlingPolicy(RadioLoadErrorHandlingPolicy())
+                initializePlayer()
+                initializeSession()
 
-        val exoPlayer =
-                ExoPlayer.Builder(this)
-                        .setMediaSourceFactory(mediaSourceFactory)
-                        .setAudioAttributes(
-                                AudioAttributes.Builder()
-                                        .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
-                                        .setUsage(C.USAGE_MEDIA)
-                                        .build(),
-                                true // Handle audio focus
-                        )
-                        .setHandleAudioBecomingNoisy(true)
-                        .build()
-
-        basePlayer = exoPlayer
-        val forwardingPlayer = MetadataForwardingPlayer(exoPlayer)
-
-        // Removed: exoPlayer.addAnalyticsListener(EventLogger())
-
-        exoPlayer.addListener(
-                object : Player.Listener {
-                    override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
-                        player?.setOverriddenMetadata(null)
-                        metadataManager.onStationChange(mediaItem?.mediaId)
-                        metadataPoller.startPolling(mediaItem?.mediaId)
-                        _playbackError.value = null // Reset error on transition
-                    }
-
-                    override fun onMediaMetadataChanged(mediaMetadata: MediaMetadata) {
-                        android.util.Log.d(
-                                "MetadataDebug",
-                                "Service: onMediaMetadataChanged: title=${mediaMetadata.title}, artist=${mediaMetadata.artist}"
-                        )
-                        metadataManager.onRawMetadata(
-                                mediaMetadata.title?.toString(),
-                                mediaMetadata.artist?.toString()
-                        )
-                    }
-
-                    override fun onMetadata(metadata: androidx.media3.common.Metadata) {
-                        for (i in 0 until metadata.length()) {
-                            val entry = metadata.get(i)
-                            if (entry is androidx.media3.extractor.metadata.icy.IcyInfo) {
+                // Observe metadata updates from the manager
+                serviceScope.launch {
+                        metadataManager.metadataUpdates.collect { metadata ->
                                 android.util.Log.d(
                                         "MetadataDebug",
-                                        "Service: Received IcyInfo: title=${entry.title}, url=${entry.url}"
+                                        "Service: Received metadata from manager: title=${metadata?.title}, artist=${metadata?.artist}"
                                 )
-                                metadataManager.onRawMetadata(
-                                        entry.title,
-                                        null // Artist usually in title
-                                )
-                            }
-                            // Logging remains for debugging
-                            android.util.Log.d(
-                                    "MetadataDebug",
-                                    "Service: Received metadata entry: type=${entry::class.java.simpleName}, content=$entry"
-                            )
+                                if (metadata != null) {
+                                        player?.setOverriddenMetadata(metadata)
+                                }
                         }
-                    }
-
-                    override fun onPlayerError(error: androidx.media3.common.PlaybackException) {
-                        android.util.Log.e(
-                                "RadioPlaybackService",
-                                "Player error: ${error.message}",
-                                error
-                        )
-                        _playbackError.value =
-                                PlaybackError(
-                                        errorCode = error.errorCode,
-                                        message = error.message ?: "Unknown error",
-                                        stationId = player?.currentMediaItem?.mediaId,
-                                        streamUrl =
-                                                player?.currentMediaItem?.localConfiguration?.uri
-                                                        ?.toString(),
-                                        userAgent = userAgent
-                                )
-                    }
                 }
-        )
 
-        player = forwardingPlayer
-    }
-
-    override fun onDestroy() {
-        metadataPoller.stopPolling()
-        serviceScope.cancel()
-        mediaLibrarySession?.run {
-            basePlayer?.release()
-            release()
-            mediaLibrarySession = null
+                // Observe polled updates and feed them to the manager
+                serviceScope.launch {
+                        metadataPoller.metadataUpdates.collect { result ->
+                                metadataManager.onPolledMetadata(result)
+                        }
+                }
         }
-        super.onDestroy()
-    }
 
-    private fun initializeSession() {
-        val sessionActivityPendingIntent =
-                PendingIntent.getActivity(
-                        this,
-                        0,
-                        Intent(this, MainActivity::class.java),
-                        PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        private fun initializePlayer() {
+                // Configure HttpDataSource with User-Agent and ICY metadata request
+                val httpDataSourceFactory =
+                        DefaultHttpDataSource.Factory()
+                                .setUserAgent(userAgent)
+                                .setAllowCrossProtocolRedirects(true)
+                                .setDefaultRequestProperties(mapOf("Icy-MetaData" to "1"))
+
+                val dataSourceFactory = DefaultDataSource.Factory(this, httpDataSourceFactory)
+                val mediaSourceFactory =
+                        DefaultMediaSourceFactory(dataSourceFactory)
+                                .setLoadErrorHandlingPolicy(RadioLoadErrorHandlingPolicy())
+
+                val exoPlayer =
+                        ExoPlayer.Builder(this)
+                                .setMediaSourceFactory(mediaSourceFactory)
+                                .setAudioAttributes(
+                                        AudioAttributes.Builder()
+                                                .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
+                                                .setUsage(C.USAGE_MEDIA)
+                                                .build(),
+                                        true // Handle audio focus
+                                )
+                                .setHandleAudioBecomingNoisy(true)
+                                .build()
+
+                basePlayer = exoPlayer
+                val forwardingPlayer = MetadataForwardingPlayer(exoPlayer)
+
+                // Removed: exoPlayer.addAnalyticsListener(EventLogger())
+
+                exoPlayer.addListener(
+                        object : Player.Listener {
+                                override fun onMediaItemTransition(
+                                        mediaItem: MediaItem?,
+                                        reason: Int
+                                ) {
+                                        player?.setOverriddenMetadata(null)
+                                        metadataManager.onStationChange(mediaItem?.mediaId)
+                                        metadataPoller.startPolling(mediaItem?.mediaId)
+                                        _playbackError.value = null // Reset error on transition
+                                }
+
+                                override fun onMediaMetadataChanged(mediaMetadata: MediaMetadata) {
+                                        android.util.Log.d(
+                                                "MetadataDebug",
+                                                "Service: onMediaMetadataChanged: title=${mediaMetadata.title}, artist=${mediaMetadata.artist}"
+                                        )
+                                        metadataManager.onRawMetadata(
+                                                mediaMetadata.title?.toString(),
+                                                mediaMetadata.artist?.toString()
+                                        )
+                                }
+
+                                override fun onMetadata(metadata: androidx.media3.common.Metadata) {
+                                        for (i in 0 until metadata.length()) {
+                                                val entry = metadata.get(i)
+                                                if (entry is
+                                                                androidx.media3.extractor.metadata.icy.IcyInfo
+                                                ) {
+                                                        android.util.Log.d(
+                                                                "MetadataDebug",
+                                                                "Service: Received IcyInfo: title=${entry.title}, url=${entry.url}"
+                                                        )
+                                                        metadataManager.onRawMetadata(
+                                                                entry.title,
+                                                                null // Artist usually in title
+                                                        )
+                                                }
+                                                // Logging remains for debugging
+                                                android.util.Log.d(
+                                                        "MetadataDebug",
+                                                        "Service: Received metadata entry: type=${entry::class.java.simpleName}, content=$entry"
+                                                )
+                                        }
+                                }
+
+                                override fun onPlayerError(
+                                        error: androidx.media3.common.PlaybackException
+                                ) {
+                                        android.util.Log.e(
+                                                "RadioPlaybackService",
+                                                "Player error: ${error.message}",
+                                                error
+                                        )
+                                        _playbackError.value =
+                                                PlaybackError(
+                                                        errorCode = error.errorCode,
+                                                        message = error.message ?: "Unknown error",
+                                                        stationId =
+                                                                player?.currentMediaItem?.mediaId,
+                                                        streamUrl =
+                                                                player?.currentMediaItem
+                                                                        ?.localConfiguration?.uri
+                                                                        ?.toString(),
+                                                        userAgent = userAgent
+                                                )
+                                }
+                        }
                 )
 
-        mediaLibrarySession =
-                MediaLibrarySession.Builder(this, player!!, LibrarySessionCallback())
-                        .setSessionActivity(sessionActivityPendingIntent)
-                        .build()
-    }
-
-    override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaLibrarySession? {
-        return mediaLibrarySession
-    }
-
-    /** Callback handling media library browsing for Android Auto and other clients */
-    private inner class LibrarySessionCallback : MediaLibrarySession.Callback {
-
-        override fun onConnect(
-                session: MediaSession,
-                controller: MediaSession.ControllerInfo
-        ): MediaSession.ConnectionResult {
-            val connectionResult = super.onConnect(session, controller)
-            val availableSessionCommands = connectionResult.availableSessionCommands.buildUpon()
-
-            // Expose next/previous commands for Android Auto station navigation
-            val availablePlayerCommands =
-                    connectionResult
-                            .availablePlayerCommands
-                            .buildUpon()
-                            .add(Player.COMMAND_SEEK_TO_NEXT)
-                            .add(Player.COMMAND_SEEK_TO_PREVIOUS)
-                            .build()
-
-            return MediaSession.ConnectionResult.accept(
-                    availableSessionCommands.build(),
-                    availablePlayerCommands
-            )
+                player = forwardingPlayer
         }
 
-        override fun onGetLibraryRoot(
-                session: MediaLibrarySession,
-                browser: MediaSession.ControllerInfo,
-                params: LibraryParams?
-        ): ListenableFuture<LibraryResult<MediaItem>> {
-            val rootItem =
-                    MediaItem.Builder()
-                            .setMediaId(ROOT_ID)
-                            .setMediaMetadata(
-                                    MediaMetadata.Builder()
-                                            .setIsBrowsable(true)
-                                            .setIsPlayable(false)
-                                            .setMediaType(MediaMetadata.MEDIA_TYPE_FOLDER_MIXED)
-                                            .setTitle("Radio")
-                                            .build()
-                            )
-                            .build()
-            return Futures.immediateFuture(LibraryResult.ofItem(rootItem, params))
+        override fun onDestroy() {
+                metadataPoller.stopPolling()
+                serviceScope.cancel()
+                mediaLibrarySession?.run {
+                        basePlayer?.release()
+                        release()
+                        mediaLibrarySession = null
+                }
+                super.onDestroy()
         }
 
-        /** Check if the connecting client is Android Auto. */
-        private fun isAndroidAuto(controller: MediaSession.ControllerInfo): Boolean {
-            return controller.packageName == ANDROID_AUTO_PACKAGE
+        private fun initializeSession() {
+                val sessionActivityPendingIntent =
+                        PendingIntent.getActivity(
+                                this,
+                                0,
+                                Intent(this, MainActivity::class.java),
+                                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+                        )
+
+                mediaLibrarySession =
+                        MediaLibrarySession.Builder(this, player!!, LibrarySessionCallback())
+                                .setSessionActivity(sessionActivityPendingIntent)
+                                .build()
         }
 
-        override fun onGetChildren(
-                session: MediaLibrarySession,
-                browser: MediaSession.ControllerInfo,
-                parentId: String,
-                page: Int,
-                pageSize: Int,
-                params: LibraryParams?
-        ): ListenableFuture<LibraryResult<ImmutableList<MediaItem>>> {
-            // Gate Android Auto access for non-premium users
-            val isPremium = PremiumManager.getInstance(this@RadioPlaybackService).isPremium.value
-            val isAutoClient = isAndroidAuto(browser)
+        override fun onGetSession(
+                controllerInfo: MediaSession.ControllerInfo
+        ): MediaLibrarySession? {
+                return mediaLibrarySession
+        }
 
-            if (isAutoClient && !isPremium) {
-                // Return a "Premium Required" placeholder for Android Auto
-                val premiumItem =
-                        MediaItem.Builder()
-                                .setMediaId(PREMIUM_REQUIRED_ID)
-                                .setMediaMetadata(
-                                        MediaMetadata.Builder()
-                                                .setIsBrowsable(false)
-                                                .setIsPlayable(false)
-                                                .setMediaType(MediaMetadata.MEDIA_TYPE_MIXED)
-                                                .setTitle(
-                                                        getString(
-                                                                org.guakamole
-                                                                        .onair
-                                                                        .R
-                                                                        .string
-                                                                        .premium_required
+        /** Callback handling media library browsing for Android Auto and other clients */
+        private inner class LibrarySessionCallback : MediaLibrarySession.Callback {
+
+                override fun onConnect(
+                        session: MediaSession,
+                        controller: MediaSession.ControllerInfo
+                ): MediaSession.ConnectionResult {
+                        val connectionResult = super.onConnect(session, controller)
+                        val availableSessionCommands =
+                                connectionResult.availableSessionCommands.buildUpon()
+
+                        // Expose next/previous commands for Android Auto station navigation
+                        val availablePlayerCommands =
+                                connectionResult
+                                        .availablePlayerCommands
+                                        .buildUpon()
+                                        .add(Player.COMMAND_SEEK_TO_NEXT)
+                                        .add(Player.COMMAND_SEEK_TO_PREVIOUS)
+                                        .build()
+
+                        return MediaSession.ConnectionResult.accept(
+                                availableSessionCommands.build(),
+                                availablePlayerCommands
+                        )
+                }
+
+                override fun onGetLibraryRoot(
+                        session: MediaLibrarySession,
+                        browser: MediaSession.ControllerInfo,
+                        params: LibraryParams?
+                ): ListenableFuture<LibraryResult<MediaItem>> {
+                        val rootItem =
+                                MediaItem.Builder()
+                                        .setMediaId(ROOT_ID)
+                                        .setMediaMetadata(
+                                                MediaMetadata.Builder()
+                                                        .setIsBrowsable(true)
+                                                        .setIsPlayable(false)
+                                                        .setMediaType(
+                                                                MediaMetadata
+                                                                        .MEDIA_TYPE_FOLDER_MIXED
                                                         )
-                                                )
-                                                .setSubtitle(
-                                                        getString(
-                                                                org.guakamole
-                                                                        .onair
-                                                                        .R
-                                                                        .string
-                                                                        .premium_required_desc
-                                                        )
+                                                        .setTitle("Radio")
+                                                        .build()
+                                        )
+                                        .build()
+                        return Futures.immediateFuture(LibraryResult.ofItem(rootItem, params))
+                }
+
+                /** Check if the connecting client is Android Auto. */
+                private fun isAndroidAuto(controller: MediaSession.ControllerInfo): Boolean {
+                        return controller.packageName == ANDROID_AUTO_PACKAGE
+                }
+
+                override fun onGetChildren(
+                        session: MediaLibrarySession,
+                        browser: MediaSession.ControllerInfo,
+                        parentId: String,
+                        page: Int,
+                        pageSize: Int,
+                        params: LibraryParams?
+                ): ListenableFuture<LibraryResult<ImmutableList<MediaItem>>> {
+                        // Gate Android Auto access for non-premium users
+                        val isPremium =
+                                PremiumManager.getInstance(this@RadioPlaybackService)
+                                        .isPremium
+                                        .value
+                        val isAutoClient = isAndroidAuto(browser)
+
+                        if (isAutoClient && !isPremium) {
+                                // Return a "Premium Required" placeholder for Android Auto
+                                val premiumItem =
+                                        MediaItem.Builder()
+                                                .setMediaId(PREMIUM_REQUIRED_ID)
+                                                .setMediaMetadata(
+                                                        MediaMetadata.Builder()
+                                                                .setIsBrowsable(false)
+                                                                .setIsPlayable(false)
+                                                                .setMediaType(
+                                                                        MediaMetadata
+                                                                                .MEDIA_TYPE_MIXED
+                                                                )
+                                                                .setTitle(
+                                                                        getString(
+                                                                                org.guakamole
+                                                                                        .onair
+                                                                                        .R
+                                                                                        .string
+                                                                                        .premium_required
+                                                                        )
+                                                                )
+                                                                .setSubtitle(
+                                                                        getString(
+                                                                                org.guakamole
+                                                                                        .onair
+                                                                                        .R
+                                                                                        .string
+                                                                                        .premium_required_desc
+                                                                        )
+                                                                )
+                                                                .build()
                                                 )
                                                 .build()
+                                return Futures.immediateFuture(
+                                        LibraryResult.ofItemList(
+                                                ImmutableList.of(premiumItem),
+                                                params
+                                        )
                                 )
-                                .build()
-                return Futures.immediateFuture(
-                        LibraryResult.ofItemList(ImmutableList.of(premiumItem), params)
-                )
-            }
-
-            val children =
-                    when (parentId) {
-                        ROOT_ID -> {
-                            // Return stations folder
-                            listOf(
-                                    MediaItem.Builder()
-                                            .setMediaId(STATIONS_ID)
-                                            .setMediaMetadata(
-                                                    MediaMetadata.Builder()
-                                                            .setIsBrowsable(true)
-                                                            .setIsPlayable(false)
-                                                            .setMediaType(
-                                                                    MediaMetadata
-                                                                            .MEDIA_TYPE_FOLDER_RADIO_STATIONS
-                                                            )
-                                                            .setTitle("Radio Stations")
-                                                            .build()
-                                            )
-                                            .build()
-                            )
                         }
-                        STATIONS_ID -> {
-                            // Return all radio stations
-                            RadioRepository.stations.map { station -> createMediaItem(station) }
-                        }
-                        else -> emptyList()
-                    }
-            return Futures.immediateFuture(
-                    LibraryResult.ofItemList(ImmutableList.copyOf(children), params)
-            )
-        }
 
-        override fun onGetItem(
-                session: MediaLibrarySession,
-                browser: MediaSession.ControllerInfo,
-                mediaId: String
-        ): ListenableFuture<LibraryResult<MediaItem>> {
-            val station = RadioRepository.getStationById(mediaId)
-            return if (station != null) {
-                Futures.immediateFuture(LibraryResult.ofItem(createMediaItem(station), null))
-            } else {
-                Futures.immediateFuture(LibraryResult.ofError(LibraryResult.RESULT_ERROR_BAD_VALUE))
-            }
-        }
-
-        override fun onAddMediaItems(
-                mediaSession: MediaSession,
-                controller: MediaSession.ControllerInfo,
-                mediaItems: MutableList<MediaItem>
-        ): ListenableFuture<MutableList<MediaItem>> {
-            // Resolve media items with full URIs
-            val resolvedItems =
-                    mediaItems
-                            .map { item ->
-                                val station = RadioRepository.getStationById(item.mediaId)
-                                if (station != null) {
-                                    createMediaItem(station)
-                                } else {
-                                    item
-                                }
-                            }
-                            .toMutableList()
-            return Futures.immediateFuture(resolvedItems)
-        }
-
-        override fun onSetMediaItems(
-                mediaSession: MediaSession,
-                controller: MediaSession.ControllerInfo,
-                mediaItems: MutableList<MediaItem>,
-                startIndex: Int,
-                startPositionMs: Long
-        ): ListenableFuture<MediaSession.MediaItemsWithStartPosition> {
-            // Resolve all items
-            val resolvedItems =
-                    mediaItems
-                            .map { item ->
-                                val station = RadioRepository.getStationById(item.mediaId)
-                                if (station != null) {
-                                    createMediaItem(station)
-                                } else {
-                                    item
-                                }
-                            }
-                            .toMutableList()
-
-            return Futures.immediateFuture(
-                    MediaSession.MediaItemsWithStartPosition(
-                            resolvedItems,
-                            startIndex,
-                            startPositionMs
-                    )
-            )
-        }
-    }
-
-    private fun createMediaItem(station: RadioStation): MediaItem {
-        return MediaItem.Builder()
-                .setMediaId(station.id)
-                .setUri(station.streamUrl)
-                .setMediaMetadata(
-                        MediaMetadata.Builder()
-                                .setTitle(station.name)
-                                .setSubtitle(station.description)
-                                .setArtist(station.name)
-                                .setArtworkUri(
-                                        if (station.logoResId != 0) {
-                                            Uri.parse(
-                                                    "android.resource://${packageName}/${station.logoResId}"
-                                            )
-                                        } else {
-                                            Uri.parse(station.logoUrl)
+                        val children =
+                                when (parentId) {
+                                        ROOT_ID -> {
+                                                // Return stations folder
+                                                listOf(
+                                                        MediaItem.Builder()
+                                                                .setMediaId(STATIONS_ID)
+                                                                .setMediaMetadata(
+                                                                        MediaMetadata.Builder()
+                                                                                .setIsBrowsable(
+                                                                                        true
+                                                                                )
+                                                                                .setIsPlayable(
+                                                                                        false
+                                                                                )
+                                                                                .setMediaType(
+                                                                                        MediaMetadata
+                                                                                                .MEDIA_TYPE_FOLDER_RADIO_STATIONS
+                                                                                )
+                                                                                .setTitle(
+                                                                                        "Radio Stations"
+                                                                                )
+                                                                                .build()
+                                                                )
+                                                                .build()
+                                                )
                                         }
+                                        STATIONS_ID -> {
+                                                // Return all radio stations
+                                                RadioRepository.stations.map { station ->
+                                                        createMediaItem(station)
+                                                }
+                                        }
+                                        else -> emptyList()
+                                }
+                        return Futures.immediateFuture(
+                                LibraryResult.ofItemList(ImmutableList.copyOf(children), params)
+                        )
+                }
+
+                override fun onGetItem(
+                        session: MediaLibrarySession,
+                        browser: MediaSession.ControllerInfo,
+                        mediaId: String
+                ): ListenableFuture<LibraryResult<MediaItem>> {
+                        val station = RadioRepository.getStationById(mediaId)
+                        return if (station != null) {
+                                Futures.immediateFuture(
+                                        LibraryResult.ofItem(createMediaItem(station), null)
                                 )
-                                .setIsBrowsable(false)
-                                .setIsPlayable(true)
-                                .setMediaType(MediaMetadata.MEDIA_TYPE_RADIO_STATION)
-                                .build()
-                )
-                .build()
-    }
+                        } else {
+                                Futures.immediateFuture(
+                                        LibraryResult.ofError(LibraryResult.RESULT_ERROR_BAD_VALUE)
+                                )
+                        }
+                }
+
+                override fun onAddMediaItems(
+                        mediaSession: MediaSession,
+                        controller: MediaSession.ControllerInfo,
+                        mediaItems: MutableList<MediaItem>
+                ): ListenableFuture<MutableList<MediaItem>> {
+                        // Resolve media items with full URIs
+                        val resolvedItems =
+                                mediaItems
+                                        .map { item ->
+                                                val station =
+                                                        RadioRepository.getStationById(item.mediaId)
+                                                if (station != null) {
+                                                        createMediaItem(station)
+                                                } else {
+                                                        item
+                                                }
+                                        }
+                                        .toMutableList()
+                        return Futures.immediateFuture(resolvedItems)
+                }
+
+                override fun onSetMediaItems(
+                        mediaSession: MediaSession,
+                        controller: MediaSession.ControllerInfo,
+                        mediaItems: MutableList<MediaItem>,
+                        startIndex: Int,
+                        startPositionMs: Long
+                ): ListenableFuture<MediaSession.MediaItemsWithStartPosition> {
+                        // Resolve all items
+                        val resolvedItems =
+                                mediaItems
+                                        .map { item ->
+                                                val station =
+                                                        RadioRepository.getStationById(item.mediaId)
+                                                if (station != null) {
+                                                        createMediaItem(station)
+                                                } else {
+                                                        item
+                                                }
+                                        }
+                                        .toMutableList()
+
+                        return Futures.immediateFuture(
+                                MediaSession.MediaItemsWithStartPosition(
+                                        resolvedItems,
+                                        startIndex,
+                                        startPositionMs
+                                )
+                        )
+                }
+        }
+
+        private fun createMediaItem(station: RadioStation): MediaItem {
+                return MediaItem.Builder()
+                        .setMediaId(station.id)
+                        .setUri(station.streamUrl)
+                        .setMediaMetadata(
+                                MediaMetadata.Builder()
+                                        .setTitle(station.name)
+                                        .setSubtitle(station.description)
+                                        .setArtist(station.name)
+                                        .setArtworkUri(
+                                                if (station.logoResId != 0) {
+                                                        Uri.parse(
+                                                                "android.resource://${packageName}/${station.logoResId}"
+                                                        )
+                                                } else {
+                                                        Uri.parse(station.logoUrl)
+                                                }
+                                        )
+                                        .setIsBrowsable(false)
+                                        .setIsPlayable(true)
+                                        .setMediaType(MediaMetadata.MEDIA_TYPE_RADIO_STATION)
+                                        .build()
+                        )
+                        .build()
+        }
 }
