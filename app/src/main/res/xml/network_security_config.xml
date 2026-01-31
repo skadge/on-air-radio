@@ -4,6 +4,7 @@
     <domain-config cleartextTrafficPermitted="true">
         <!-- stream issue reporting server -->
         <domain includeSubdomains="true">guakamole.org</domain>
+        <domain includeSubdomains="true">akamaized.net</domain>
         <domain includeSubdomains="true">triple-it.nl</domain>
         <domain includeSubdomains="true">wdr.de</domain>
         <domain includeSubdomains="true">srg-ssr.ch</domain>
