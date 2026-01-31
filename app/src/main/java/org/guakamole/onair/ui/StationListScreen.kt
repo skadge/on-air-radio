@@ -63,7 +63,7 @@ fun StationListScreen(
         val hasFavorites = favorites.isNotEmpty()
 
         LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
+                columns = GridCells.Adaptive(minSize = 160.dp),
                 state = gridState,
                 modifier = modifier.fillMaxSize(),
                 contentPadding = PaddingValues(16.dp),
@@ -71,9 +71,13 @@ fun StationListScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
                 if (hasFavorites) {
-                        item(span = { androidx.compose.foundation.lazy.grid.GridItemSpan(2) }) {
-                                SectionHeader(stringResource(R.string.favorites))
-                        }
+                        item(
+                                span = {
+                                        androidx.compose.foundation.lazy.grid.GridItemSpan(
+                                                maxLineSpan
+                                        )
+                                }
+                        ) { SectionHeader(stringResource(R.string.favorites)) }
 
                         items(favorites, key = { it.id }) { station ->
                                 StationCard(
@@ -85,7 +89,13 @@ fun StationListScreen(
                                 )
                         }
 
-                        item(span = { androidx.compose.foundation.lazy.grid.GridItemSpan(2) }) {
+                        item(
+                                span = {
+                                        androidx.compose.foundation.lazy.grid.GridItemSpan(
+                                                maxLineSpan
+                                        )
+                                }
+                        ) {
                                 SectionHeader(
                                         stringResource(R.string.all_stations),
                                         modifier = Modifier.padding(top = 16.dp)
