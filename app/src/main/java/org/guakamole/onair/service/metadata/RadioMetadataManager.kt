@@ -248,8 +248,16 @@ class RadioMetadataManager(
                 val artworkData = artworkManager.loadArtwork(effectiveArtworkUri)
                 if (artworkData != null) {
                     emitFinalMetadata(builder, typeName, artworkData, isSongArtwork)
+                } else if (isSongArtwork) {
+                    // Song artwork failed to load - try falling back to station artwork
+                    val station = currentStationId?.let { RadioRepository.getStationById(it) }
+                    val stationArtworkUri = station?.let { artworkManager.getStationArtworkUri(it) }
+                    val stationArtworkData =
+                            stationArtworkUri?.let { artworkManager.loadArtwork(it) }
+                    // Emit with station artwork as fallback, but keep song title/artist
+                    emitFinalMetadata(builder, typeName, stationArtworkData, false)
                 } else {
-                    emitFinalMetadata(builder, typeName, null, isSongArtwork)
+                    emitFinalMetadata(builder, typeName, null, false)
                 }
             }
         } else {
@@ -274,13 +282,17 @@ class RadioMetadataManager(
 
         if (artworkData != null) {
             builder.setArtworkData(artworkData, MediaMetadata.PICTURE_TYPE_FRONT_COVER)
-            builder.setArtworkUri(null) // Prioritize data
+            builder.setArtworkUri(null) // Prioritize data over URI
+        } else {
+            // Clear any artworkUri that was set, since we don't have data
+            builder.setArtworkUri(null)
+            builder.setArtworkData(null, null)
         }
 
         val finalMetadata = builder.build()
         android.util.Log.d(
                 "MetadataDebug",
-                "Manager: Emitting metadata: title=${finalMetadata.title}, artist=${finalMetadata.artist}, hasArtwork=${artworkData != null}"
+                "Manager: Emitting metadata: title=${finalMetadata.title}, artist=${finalMetadata.artist}, hasArtwork=${artworkData != null}, isSongArtwork=$isSongArtwork"
         )
         _metadataUpdates.emit(finalMetadata)
     }

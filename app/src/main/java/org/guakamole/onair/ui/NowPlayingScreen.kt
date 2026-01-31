@@ -81,6 +81,41 @@ fun NowPlayingScreen(
         val configuration = LocalConfiguration.current
         val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
+        // Compute stable image source: only changes when actual data changes
+        // Station logo source is stable per station
+        val stationLogoSource: Any? =
+                remember(station?.id) {
+                        station?.let { if (it.logoResId != 0) it.logoResId else it.logoUrl }
+                }
+
+        // Remember the last valid artwork to preserve across orientation changes
+        var rememberedArtworkData by remember { mutableStateOf<ByteArray?>(null) }
+        var rememberedIsSongArtwork by remember { mutableStateOf(false) }
+
+        // Update remembered state when we get new valid artwork, or reset when station changes
+        LaunchedEffect(station?.id) {
+                // Reset when station changes
+                rememberedArtworkData = null
+                rememberedIsSongArtwork = false
+        }
+
+        LaunchedEffect(currentArtworkData, isSongArtwork) {
+                // Only update when we have valid artwork data
+                if (currentArtworkData != null) {
+                        rememberedArtworkData = currentArtworkData
+                        rememberedIsSongArtwork = isSongArtwork
+                }
+        }
+
+        // Use remembered artwork if current is null (happens during orientation change)
+        val effectiveArtworkData = currentArtworkData ?: rememberedArtworkData
+        val effectiveIsSongArtwork =
+                if (currentArtworkData != null) isSongArtwork else rememberedIsSongArtwork
+
+        // The actual image to display: prefer artwork data, fall back to station logo
+        val displayImageSource: Any? = effectiveArtworkData ?: stationLogoSource
+        val displayIsSongArtwork = effectiveArtworkData != null && effectiveIsSongArtwork
+
         Column(
                 modifier =
                         modifier.fillMaxSize()
@@ -189,10 +224,10 @@ fun NowPlayingScreen(
                                                                         .scale(scaleAnim.value),
                                                         shape = RoundedCornerShape(24.dp),
                                                         shadowElevation =
-                                                                if (currentArtworkData != null) 8.dp
+                                                                if (displayIsSongArtwork) 8.dp
                                                                 else 0.dp,
                                                         color =
-                                                                if (currentArtworkData != null)
+                                                                if (displayIsSongArtwork)
                                                                         MaterialTheme.colorScheme
                                                                                 .surfaceVariant
                                                                 else Color.Transparent
@@ -208,15 +243,11 @@ fun NowPlayingScreen(
                                                                                                 .current
                                                                                 )
                                                                                 .data(
-                                                                                        currentArtworkData
-                                                                                                ?: if (station.logoResId !=
-                                                                                                                0
-                                                                                                )
-                                                                                                        station.logoResId
-                                                                                                else
-                                                                                                        station.logoUrl
+                                                                                        displayImageSource
                                                                                 )
-                                                                                .crossfade(true)
+                                                                                .crossfade(
+                                                                                        displayIsSongArtwork
+                                                                                )
                                                                                 .build(),
                                                                 placeholder = placeholder,
                                                                 error = placeholder,
@@ -234,15 +265,13 @@ fun NowPlayingScreen(
                                                                                         )
                                                                                 ),
                                                                 contentScale =
-                                                                        if (currentArtworkData !=
-                                                                                        null
-                                                                        )
+                                                                        if (displayIsSongArtwork)
                                                                                 ContentScale.Crop
                                                                         else ContentScale.Fit
                                                         )
                                                 }
                                                 // Station logo overlay for song artwork
-                                                if (currentArtworkData != null && isSongArtwork) {
+                                                if (displayIsSongArtwork) {
                                                         Box(
                                                                 modifier =
                                                                         Modifier.align(
@@ -550,10 +579,9 @@ fun NowPlayingScreen(
                                                 modifier = Modifier.fillMaxSize(),
                                                 shape = RoundedCornerShape(32.dp),
                                                 shadowElevation =
-                                                        if (currentArtworkData != null) 8.dp
-                                                        else 0.dp,
+                                                        if (displayIsSongArtwork) 8.dp else 0.dp,
                                                 color =
-                                                        if (currentArtworkData != null)
+                                                        if (displayIsSongArtwork)
                                                                 MaterialTheme.colorScheme
                                                                         .surfaceVariant
                                                         else Color.Transparent
@@ -565,16 +593,10 @@ fun NowPlayingScreen(
                                                                 ImageRequest.Builder(
                                                                                 LocalContext.current
                                                                         )
-                                                                        .data(
-                                                                                currentArtworkData
-                                                                                        ?: if (station.logoResId !=
-                                                                                                        0
-                                                                                        )
-                                                                                                station.logoResId
-                                                                                        else
-                                                                                                station.logoUrl
+                                                                        .data(displayImageSource)
+                                                                        .crossfade(
+                                                                                displayIsSongArtwork
                                                                         )
-                                                                        .crossfade(true)
                                                                         .build(),
                                                         placeholder = placeholder,
                                                         error = placeholder,
@@ -592,7 +614,7 @@ fun NowPlayingScreen(
                                                                                 )
                                                                         ),
                                                         contentScale =
-                                                                if (currentArtworkData != null)
+                                                                if (displayIsSongArtwork)
                                                                         ContentScale.Crop
                                                                 else ContentScale.Fit
                                                 )
@@ -600,9 +622,7 @@ fun NowPlayingScreen(
 
                                         // If we have song-specific artwork, show small station logo
                                         // on top
-                                        // (no
-                                        // background)
-                                        if (currentArtworkData != null && isSongArtwork) {
+                                        if (displayIsSongArtwork) {
                                                 Box(
                                                         modifier =
                                                                 Modifier.padding(12.dp).size(48.dp)
