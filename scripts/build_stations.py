@@ -572,7 +572,58 @@ object RadioRepository {{
         fun setSortOrder(sortOrder: SortOrder) {{
                 prefs?.edit()?.putInt(SORT_ORDER_KEY, sortOrder.ordinal)?.apply()
         }}
-
+        
+        /**
+         * Get stations ordered for Android Auto:
+         * 1. Favorites first
+         * 2. Most listened (non-favorites)
+         * 3. Remaining stations with alphabet distribution
+         */
+        fun getStationsForAndroidAuto(): List<RadioStation> {{
+                val allStations = baseStations.map {{ station ->
+                        station.copy(isFavorite = favoriteIds.contains(station.id))
+                }}
+                
+                val favorites = allStations.filter {{ it.isFavorite }}.sortedBy {{ it.name.lowercase() }}
+                val nonFavorites = allStations.filter {{ !it.isFavorite }}
+                
+                // Get most listened non-favorites (top 10)
+                val mostListenedIds = listenCounts.entries
+                        .filter {{ entry -> nonFavorites.any {{ it.id == entry.key }} }}
+                        .sortedByDescending {{ it.value }}
+                        .take(10)
+                        .map {{ it.key }}
+                        .toSet()
+                
+                val mostListened = nonFavorites.filter {{ it.id in mostListenedIds }}
+                        .sortedByDescending {{ getListenCount(it.id) }}
+                
+                // Remaining stations sorted alphabetically
+                val remaining = nonFavorites.filter {{ it.id !in mostListenedIds }}
+                        .sortedBy {{ it.name.lowercase() }}
+                
+                return favorites + mostListened + remaining
+        }}
+        
+        /** Get top N most listened stations */
+        fun getMostListened(limit: Int = 10): List<RadioStation> {{
+                val allStations = baseStations.map {{ station ->
+                        station.copy(isFavorite = favoriteIds.contains(station.id))
+                }}
+                
+                return allStations
+                        .filter {{ getListenCount(it.id) > 0 }}
+                        .sortedByDescending {{ getListenCount(it.id) }}
+                        .take(limit)
+        }}
+        
+        /** Get stations by genre/tag */
+        fun getStationsByGenre(tag: String): List<RadioStation> {{
+                return baseStations
+                        .filter {{ it.primaryTag == tag }}
+                        .map {{ station -> station.copy(isFavorite = favoriteIds.contains(station.id)) }}
+                        .sortedBy {{ it.name.lowercase() }}
+        }}
 
         fun toggleFavorite(stationId: String) {{
                 if (favoriteIds.contains(stationId)) {{

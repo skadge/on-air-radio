@@ -9,6 +9,7 @@ def get_stream_title(url):
         print(f"Error opening stream: {e}")
         return
 
+    print(response.headers)
     metaint = int(response.headers['icy-metaint'])
     print(f"Metaint: {metaint}")
 

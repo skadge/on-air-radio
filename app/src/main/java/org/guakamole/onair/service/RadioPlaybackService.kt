@@ -73,8 +73,15 @@ class RadioPlaybackService : MediaLibraryService() {
         companion object {
                 private const val ROOT_ID = "root"
                 private const val STATIONS_ID = "stations"
+                private const val FAVORITES_ID = "favorites"
+                private const val MOST_LISTENED_ID = "most_listened"
+                private const val GENRES_ID = "genres"
+                private const val GENRE_PREFIX = "genre_"
                 private const val PREMIUM_REQUIRED_ID = "premium_required"
                 private const val ANDROID_AUTO_PACKAGE = "com.google.android.projection.gearhead"
+
+                // Genre tags for filtering (string res IDs resolved at runtime)
+                val AUTO_GENRE_TAGS = listOf("news", "hits", "rock", "jazz", "classical")
 
                 const val EXT_CONTENT_TYPE = "org.guakamole.onair.CONTENT_TYPE"
                 const val EXT_IS_SONG_ARTWORK = "org.guakamole.onair.IS_SONG_ARTWORK"
@@ -408,41 +415,132 @@ class RadioPlaybackService : MediaLibraryService() {
                         val children =
                                 when (parentId) {
                                         ROOT_ID -> {
-                                                // Return stations folder
+                                                // Return main folders
                                                 listOf(
-                                                        MediaItem.Builder()
-                                                                .setMediaId(STATIONS_ID)
-                                                                .setMediaMetadata(
-                                                                        MediaMetadata.Builder()
-                                                                                .setIsBrowsable(
-                                                                                        true
-                                                                                )
-                                                                                .setIsPlayable(
-                                                                                        false
-                                                                                )
-                                                                                .setMediaType(
-                                                                                        MediaMetadata
-                                                                                                .MEDIA_TYPE_FOLDER_RADIO_STATIONS
-                                                                                )
-                                                                                .setTitle(
-                                                                                        "Radio Stations"
-                                                                                )
-                                                                                .build()
-                                                                )
-                                                                .build()
+                                                        createFolderItem(
+                                                                STATIONS_ID,
+                                                                getString(
+                                                                        org.guakamole
+                                                                                .onair
+                                                                                .R
+                                                                                .string
+                                                                                .all_stations
+                                                                ),
+                                                                MediaMetadata
+                                                                        .MEDIA_TYPE_FOLDER_RADIO_STATIONS
+                                                        ),
+                                                        createFolderItem(
+                                                                FAVORITES_ID,
+                                                                getString(
+                                                                        org.guakamole
+                                                                                .onair
+                                                                                .R
+                                                                                .string
+                                                                                .favorites
+                                                                ),
+                                                                MediaMetadata
+                                                                        .MEDIA_TYPE_FOLDER_RADIO_STATIONS
+                                                        ),
+                                                        createFolderItem(
+                                                                MOST_LISTENED_ID,
+                                                                getString(
+                                                                        org.guakamole
+                                                                                .onair
+                                                                                .R
+                                                                                .string
+                                                                                .most_listened
+                                                                ),
+                                                                MediaMetadata
+                                                                        .MEDIA_TYPE_FOLDER_RADIO_STATIONS
+                                                        ),
+                                                        createFolderItem(
+                                                                GENRES_ID,
+                                                                getString(
+                                                                        org.guakamole
+                                                                                .onair
+                                                                                .R
+                                                                                .string
+                                                                                .by_genre
+                                                                ),
+                                                                MediaMetadata
+                                                                        .MEDIA_TYPE_FOLDER_GENRES
+                                                        )
                                                 )
                                         }
                                         STATIONS_ID -> {
-                                                // Return all radio stations
-                                                RadioRepository.stations.map { station ->
+                                                // Return all radio stations with smart ordering
+                                                RadioRepository.getStationsForAndroidAuto().map {
+                                                        station ->
                                                         createMediaItem(station)
                                                 }
                                         }
-                                        else -> emptyList()
+                                        FAVORITES_ID -> {
+                                                // Return favorite stations
+                                                RadioRepository.getFavorites().map { station ->
+                                                        createMediaItem(station)
+                                                }
+                                        }
+                                        MOST_LISTENED_ID -> {
+                                                // Return most listened stations
+                                                RadioRepository.getMostListened(10).map { station ->
+                                                        createMediaItem(station)
+                                                }
+                                        }
+                                        GENRES_ID -> {
+                                                // Return genre folders
+                                                AUTO_GENRE_TAGS.map { tag ->
+                                                        createFolderItem(
+                                                                GENRE_PREFIX + tag,
+                                                                getGenreDisplayName(tag),
+                                                                MediaMetadata
+                                                                        .MEDIA_TYPE_FOLDER_RADIO_STATIONS
+                                                        )
+                                                }
+                                        }
+                                        else -> {
+                                                // Check if it's a genre folder
+                                                if (parentId.startsWith(GENRE_PREFIX)) {
+                                                        val tag =
+                                                                parentId.removePrefix(GENRE_PREFIX)
+                                                        RadioRepository.getStationsByGenre(tag)
+                                                                .map { station ->
+                                                                        createMediaItem(station)
+                                                                }
+                                                } else {
+                                                        emptyList()
+                                                }
+                                        }
                                 }
                         return Futures.immediateFuture(
                                 LibraryResult.ofItemList(ImmutableList.copyOf(children), params)
                         )
+                }
+
+                private fun createFolderItem(id: String, title: String, mediaType: Int): MediaItem {
+                        return MediaItem.Builder()
+                                .setMediaId(id)
+                                .setMediaMetadata(
+                                        MediaMetadata.Builder()
+                                                .setIsBrowsable(true)
+                                                .setIsPlayable(false)
+                                                .setMediaType(mediaType)
+                                                .setTitle(title)
+                                                .build()
+                                )
+                                .build()
+                }
+
+                private fun getGenreDisplayName(tag: String): String {
+                        val resId =
+                                when (tag) {
+                                        "news" -> org.guakamole.onair.R.string.tag_news
+                                        "hits" -> org.guakamole.onair.R.string.tag_hits
+                                        "rock" -> org.guakamole.onair.R.string.tag_rock
+                                        "jazz" -> org.guakamole.onair.R.string.tag_jazz
+                                        "classical" -> org.guakamole.onair.R.string.tag_classical
+                                        else -> return tag.replaceFirstChar { it.uppercase() }
+                                }
+                        return getString(resId)
                 }
 
                 override fun onGetItem(

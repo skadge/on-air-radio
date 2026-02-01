@@ -67,4 +67,8 @@
     <string name="no_stations_found">Keine Sender entsprechen Ihren aktuellen Filtern.</string>
     <string name="favorites">Favoriten</string>
     <string name="all_stations">Alle Sender</string>
+    <string name="sort_by_name">Nach Name sortieren</string>
+    <string name="sort_by_most_listened">Nach meistgehört sortieren</string>
+    <string name="most_listened">Meistgehört</string>
+    <string name="by_genre">Nach Genre</string>
 </resources>
