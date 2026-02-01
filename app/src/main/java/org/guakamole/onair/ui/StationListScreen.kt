@@ -12,8 +12,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
+import androidx.compose.material.icons.outlined.SortByAlpha
+import androidx.compose.material.icons.outlined.TrendingUp
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,7 +39,9 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import org.guakamole.onair.R
+import org.guakamole.onair.data.RadioRepository
 import org.guakamole.onair.data.RadioStation
+import org.guakamole.onair.data.SortOrder
 import org.guakamole.onair.ui.theme.TagColors
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -59,7 +67,22 @@ fun StationListScreen(
         }
 
         val gridState = rememberLazyGridState()
-        val (favorites, others) = stations.partition { it.isFavorite }
+        var sortOrder by remember { mutableStateOf(RadioRepository.getSortOrder()) }
+
+        // Get favorites and sorted non-favorites
+        val favorites = stations.filter { it.isFavorite }
+        val others =
+                remember(sortOrder, stations) {
+                        val nonFavorites = stations.filter { !it.isFavorite }
+                        when (sortOrder) {
+                                SortOrder.ALPHABETICAL ->
+                                        nonFavorites.sortedBy { it.name.lowercase() }
+                                SortOrder.MOST_LISTENED ->
+                                        nonFavorites.sortedByDescending {
+                                                RadioRepository.getListenCount(it.id)
+                                        }
+                        }
+                }
         val hasFavorites = favorites.isNotEmpty()
 
         LazyVerticalGrid(
@@ -96,9 +119,30 @@ fun StationListScreen(
                                         )
                                 }
                         ) {
-                                SectionHeader(
-                                        stringResource(R.string.all_stations),
+                                AllStationsSectionHeader(
+                                        sortOrder = sortOrder,
+                                        onSortOrderChange = { newOrder ->
+                                                sortOrder = newOrder
+                                                RadioRepository.setSortOrder(newOrder)
+                                        },
                                         modifier = Modifier.padding(top = 16.dp)
+                                )
+                        }
+                } else {
+                        // No favorites - show sort header for all stations
+                        item(
+                                span = {
+                                        androidx.compose.foundation.lazy.grid.GridItemSpan(
+                                                maxLineSpan
+                                        )
+                                }
+                        ) {
+                                AllStationsSectionHeader(
+                                        sortOrder = sortOrder,
+                                        onSortOrderChange = { newOrder ->
+                                                sortOrder = newOrder
+                                                RadioRepository.setSortOrder(newOrder)
+                                        }
                                 )
                         }
                 }
@@ -111,6 +155,64 @@ fun StationListScreen(
                                 onFavoriteClick = { onFavoriteToggle(station) },
                                 modifier = Modifier.animateItemPlacement()
                         )
+                }
+        }
+}
+
+@Composable
+private fun AllStationsSectionHeader(
+        sortOrder: SortOrder,
+        onSortOrderChange: (SortOrder) -> Unit,
+        modifier: Modifier = Modifier
+) {
+        Row(
+                modifier = modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+        ) {
+                Text(
+                        text = stringResource(R.string.all_stations),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.onSurface
+                )
+
+                Row(
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                ) {
+                        // Sort by name button
+                        IconButton(
+                                onClick = { onSortOrderChange(SortOrder.ALPHABETICAL) },
+                                modifier = Modifier.size(32.dp)
+                        ) {
+                                Icon(
+                                        imageVector = Icons.Outlined.SortByAlpha,
+                                        contentDescription = stringResource(R.string.sort_by_name),
+                                        tint =
+                                                if (sortOrder == SortOrder.ALPHABETICAL)
+                                                        MaterialTheme.colorScheme.primary
+                                                else MaterialTheme.colorScheme.onSurfaceVariant,
+                                        modifier = Modifier.size(20.dp)
+                                )
+                        }
+
+                        // Sort by most listened button
+                        IconButton(
+                                onClick = { onSortOrderChange(SortOrder.MOST_LISTENED) },
+                                modifier = Modifier.size(32.dp)
+                        ) {
+                                Icon(
+                                        imageVector = Icons.Outlined.TrendingUp,
+                                        contentDescription =
+                                                stringResource(R.string.sort_by_most_listened),
+                                        tint =
+                                                if (sortOrder == SortOrder.MOST_LISTENED)
+                                                        MaterialTheme.colorScheme.primary
+                                                else MaterialTheme.colorScheme.onSurfaceVariant,
+                                        modifier = Modifier.size(20.dp)
+                                )
+                        }
                 }
         }
 }

@@ -61,6 +61,11 @@ class RadioPlaybackService : MediaLibraryService() {
         private val _playbackError = MutableStateFlow<PlaybackError?>(null)
         val playbackError = _playbackError.asStateFlow()
 
+        // Session tracking for listen counts
+        private var currentStationId: String? = null
+        private var playbackStartTimeMs: Long = 0
+        private val LISTEN_SESSION_THRESHOLD_MS = 10_000L // 10 seconds
+
         private val userAgent by lazy {
                 "OnAir Radio/${org.guakamole.onair.BuildConfig.VERSION_NAME} (Android ${android.os.Build.VERSION.RELEASE}; ${android.os.Build.MODEL})"
         }
@@ -156,6 +161,28 @@ class RadioPlaybackService : MediaLibraryService() {
                                         mediaItem: MediaItem?,
                                         reason: Int
                                 ) {
+                                        // Check if previous station played long enough to count
+                                        val previousStationId = currentStationId
+                                        if (previousStationId != null && playbackStartTimeMs > 0) {
+                                                val listenDurationMs =
+                                                        System.currentTimeMillis() -
+                                                                playbackStartTimeMs
+                                                if (listenDurationMs >= LISTEN_SESSION_THRESHOLD_MS
+                                                ) {
+                                                        RadioRepository.incrementListenCount(
+                                                                previousStationId
+                                                        )
+                                                        android.util.Log.d(
+                                                                "ListenTracking",
+                                                                "Session counted for $previousStationId (${listenDurationMs}ms)"
+                                                        )
+                                                }
+                                        }
+
+                                        // Start tracking new station
+                                        currentStationId = mediaItem?.mediaId
+                                        playbackStartTimeMs = System.currentTimeMillis()
+
                                         player?.setOverriddenMetadata(null)
                                         metadataManager.onStationChange(mediaItem?.mediaId)
                                         metadataPoller.startPolling(mediaItem?.mediaId)
@@ -224,6 +251,18 @@ class RadioPlaybackService : MediaLibraryService() {
         }
 
         override fun onDestroy() {
+                // Count session for current station before destroying
+                if (currentStationId != null && playbackStartTimeMs > 0) {
+                        val listenDurationMs = System.currentTimeMillis() - playbackStartTimeMs
+                        if (listenDurationMs >= LISTEN_SESSION_THRESHOLD_MS) {
+                                RadioRepository.incrementListenCount(currentStationId!!)
+                                android.util.Log.d(
+                                        "ListenTracking",
+                                        "Session counted on destroy for $currentStationId (${listenDurationMs}ms)"
+                                )
+                        }
+                }
+
                 metadataPoller.stopPolling()
                 serviceScope.cancel()
                 mediaLibrarySession?.run {

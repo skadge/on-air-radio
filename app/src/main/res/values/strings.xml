@@ -68,6 +68,8 @@
     <string name="tag_oldies">Oldies</string>
     <string name="favorites">Favorites</string>
     <string name="all_stations">All Stations</string>
+    <string name="sort_by_name">Sort by name</string>
+    <string name="sort_by_most_listened">Sort by most listened</string>
     <string name="search_stations">Search stations...</string>
     <string name="no_stations_found">No stations match your current filters.</string>
 

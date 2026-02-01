@@ -464,6 +464,12 @@ import android.content.Context
 import android.content.SharedPreferences
 import org.guakamole.onair.R
 
+/** Sort order options for non-favorite stations */
+enum class SortOrder {{
+    ALPHABETICAL,
+    MOST_LISTENED
+}}
+
 /** Repository providing a curated list of public radio stations */
 object RadioRepository {{
 
@@ -471,15 +477,18 @@ object RadioRepository {{
         private const val FAVORITES_KEY = "favorite_stations"
         private const val REGIONS_KEY = "selected_regions"
         private const val STYLES_KEY = "selected_styles"
+        private const val LISTEN_COUNTS_KEY = "listen_counts"
+        private const val SORT_ORDER_KEY = "sort_order"
         private var prefs: SharedPreferences? = null
         private val favoriteIds = mutableSetOf<String>()
+        private val listenCounts = mutableMapOf<String, Int>()
 
         private val baseStations: List<RadioStation> =
                 listOf(
 {stations_list}
                 )
 
-        /** Initialize favorites from persistent storage */
+        /** Initialize favorites and listen counts from persistent storage */
         fun initialize(context: Context) {{
                 if (prefs == null) {{
                         prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -487,6 +496,20 @@ object RadioRepository {{
                                 prefs?.getStringSet(FAVORITES_KEY, emptySet()) ?: emptySet()
                         favoriteIds.clear()
                         favoriteIds.addAll(savedFavorites)
+                        
+                        // Load listen counts
+                        val countsString = prefs?.getString(LISTEN_COUNTS_KEY, null)
+                        listenCounts.clear()
+                        countsString?.split(",")?.forEach {{ entry ->
+                                val parts = entry.split(":")
+                                if (parts.size == 2) {{
+                                        parts[0].let {{ id ->
+                                                parts[1].toIntOrNull()?.let {{ count ->
+                                                        listenCounts[id] = count
+                                                }}
+                                        }}
+                                }}
+                        }}
                 }}
         }}
 
@@ -501,6 +524,55 @@ object RadioRepository {{
                                         station.copy(isFavorite = favoriteIds.contains(station.id))
                                 }}
                                 .sortedByDescending {{ it.isFavorite }}
+        
+        /** Get non-favorite stations sorted by the specified order */
+        fun getNonFavoritesSorted(sortOrder: SortOrder): List<RadioStation> {{
+                val nonFavorites = baseStations
+                        .map {{ station -> station.copy(isFavorite = favoriteIds.contains(station.id)) }}
+                        .filter {{ !it.isFavorite }}
+                
+                return when (sortOrder) {{
+                        SortOrder.ALPHABETICAL -> nonFavorites.sortedBy {{ it.name.lowercase() }}
+                        SortOrder.MOST_LISTENED -> nonFavorites.sortedByDescending {{ getListenCount(it.id) }}
+                }}
+        }}
+        
+        /** Get favorite stations */
+        fun getFavorites(): List<RadioStation> {{
+                return baseStations
+                        .map {{ station -> station.copy(isFavorite = favoriteIds.contains(station.id)) }}
+                        .filter {{ it.isFavorite }}
+        }}
+        
+        /** Increment listen count for a station */
+        fun incrementListenCount(stationId: String) {{
+                val currentCount = listenCounts[stationId] ?: 0
+                listenCounts[stationId] = currentCount + 1
+                saveListenCounts()
+        }}
+        
+        /** Get listen count for a station */
+        fun getListenCount(stationId: String): Int {{
+                return listenCounts[stationId] ?: 0
+        }}
+        
+        private fun saveListenCounts() {{
+                val countsString = listenCounts.entries.joinToString(",") {{ "${{it.key}}:${{it.value}}" }}
+                prefs?.edit()?.putString(LISTEN_COUNTS_KEY, countsString)?.apply()
+        }}
+        
+        /** Get saved sort order */
+        fun getSortOrder(): SortOrder {{
+                val ordinal = prefs?.getInt(SORT_ORDER_KEY, SortOrder.ALPHABETICAL.ordinal) 
+                        ?: SortOrder.ALPHABETICAL.ordinal
+                return SortOrder.values().getOrElse(ordinal) {{ SortOrder.ALPHABETICAL }}
+        }}
+        
+        /** Save sort order preference */
+        fun setSortOrder(sortOrder: SortOrder) {{
+                prefs?.edit()?.putInt(SORT_ORDER_KEY, sortOrder.ordinal)?.apply()
+        }}
+
 
         fun toggleFavorite(stationId: String) {{
                 if (favoriteIds.contains(stationId)) {{
