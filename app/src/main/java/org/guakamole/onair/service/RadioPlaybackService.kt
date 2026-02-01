@@ -613,6 +613,18 @@ class RadioPlaybackService : MediaLibraryService() {
         }
 
         private fun createMediaItem(station: RadioStation): MediaItem {
+                val artworkUri =
+                        if (station.logoResId != 0) {
+                                // Use our BitmapContentProvider to render vector as bitmap for
+                                // Android Auto
+                                val resourceName = resources.getResourceEntryName(station.logoResId)
+                                Uri.parse(
+                                        "content://org.guakamole.onair.provider.bitmap/$resourceName"
+                                )
+                        } else {
+                                Uri.parse(station.logoUrl)
+                        }
+
                 return MediaItem.Builder()
                         .setMediaId(station.id)
                         .setUri(station.streamUrl)
@@ -621,15 +633,7 @@ class RadioPlaybackService : MediaLibraryService() {
                                         .setTitle(station.name)
                                         .setSubtitle(station.description)
                                         .setArtist(station.name)
-                                        .setArtworkUri(
-                                                if (station.logoResId != 0) {
-                                                        Uri.parse(
-                                                                "android.resource://${packageName}/${station.logoResId}"
-                                                        )
-                                                } else {
-                                                        Uri.parse(station.logoUrl)
-                                                }
-                                        )
+                                        .setArtworkUri(artworkUri)
                                         .setIsBrowsable(false)
                                         .setIsPlayable(true)
                                         .setMediaType(MediaMetadata.MEDIA_TYPE_RADIO_STATION)

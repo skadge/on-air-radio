@@ -44,6 +44,13 @@
             android:name="com.google.android.gms.car.application"
             android:resource="@xml/automotive_app_desc" />
 
+        <!-- Bitmap Provider for Android Auto (renders vector logos as bitmaps) -->
+        <provider
+            android:name=".provider.BitmapContentProvider"
+            android:authorities="org.guakamole.onair.provider.bitmap"
+            android:exported="true"
+            android:grantUriPermissions="true" />
+
     </application>
 
 </manifest>
