@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">on aiR</string>
+    <string name="app_name">on air</string>
     <string name="now_playing">Now Playing</string>
     <string name="stations">Stations</string>
     <string name="play">Play</string>
@@ -70,6 +70,8 @@
     <string name="all_stations">All Stations</string>
     <string name="sort_by_name">Sort by name</string>
     <string name="sort_by_most_listened">Sort by most listened</string>
+    <string name="most_listened">Most Listened</string>
+    <string name="by_genre">By Genre</string>
     <string name="search_stations">Search stations...</string>
     <string name="no_stations_found">No stations match your current filters.</string>
 

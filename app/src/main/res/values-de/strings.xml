@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">on aiR</string>
+    <string name="app_name">on air</string>
     <string name="now_playing">Aktuelle Wiedergabe</string>
     <string name="stations">Sender</string>
     <string name="play">Wiedergabe</string>
