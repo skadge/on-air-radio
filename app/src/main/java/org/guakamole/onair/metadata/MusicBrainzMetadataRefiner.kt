@@ -5,6 +5,7 @@ import java.net.URL
 import java.net.URLEncoder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.json.JSONArray
 import org.json.JSONObject
 
 object MusicBrainzMetadataRefiner {
@@ -55,14 +56,18 @@ object MusicBrainzMetadataRefiner {
                                         null
                                     }
 
-                            // Look for release MBID to fetch artwork
+                            // Look for the best release to fetch artwork from.
+                            // Prefer singles/original albums over compilations.
                             val releases = recording.optJSONArray("releases")
                             val artworkUrl =
                                     if (releases != null && releases.length() > 0) {
-                                        val releaseId = releases.getJSONObject(0).optString("id")
+                                        val bestRelease = pickBestRelease(releases)
+                                        val releaseId = bestRelease.optString("id")
                                         if (!releaseId.isNullOrBlank()) {
-                                            // Using the front-500 thumbnail size from Cover Art
-                                            // Archive
+                                            android.util.Log.d(
+                                                    "MetadataRefiner",
+                                                    "Selected release: ${bestRelease.optString("title")} (type: ${bestRelease.optJSONObject("release-group")?.optString("primary-type")})"
+                                            )
                                             "$COVER_ART_BASE_URL$releaseId/front-500"
                                         } else null
                                     } else null
@@ -100,4 +105,48 @@ object MusicBrainzMetadataRefiner {
 
                 return@withContext MetadataResult(artist, title, null, type)
             }
+    /**
+     * Pick the best release from a JSONArray of releases. Prefers singles and original albums over
+     * compilations.
+     */
+    private fun pickBestRelease(releases: JSONArray): JSONObject {
+        var bestRelease = releases.getJSONObject(0)
+        var bestScore = releaseScore(bestRelease)
+
+        for (i in 1 until releases.length()) {
+            val release = releases.getJSONObject(i)
+            val score = releaseScore(release)
+            if (score > bestScore) {
+                bestScore = score
+                bestRelease = release
+            }
+        }
+        return bestRelease
+    }
+
+    /**
+     * Score a release for cover art preference. Higher = more likely to be the "original" release.
+     */
+    private fun releaseScore(release: JSONObject): Int {
+        val releaseGroup = release.optJSONObject("release-group") ?: return 0
+        val primaryType = releaseGroup.optString("primary-type", "").lowercase()
+        val secondaryTypes = releaseGroup.optJSONArray("secondary-types")
+        val secondaryList = mutableListOf<String>()
+        if (secondaryTypes != null) {
+            for (i in 0 until secondaryTypes.length()) {
+                secondaryList.add(secondaryTypes.optString(i).lowercase())
+            }
+        }
+
+        val isCompilation = "compilation" in secondaryList
+        val hasSecondary = secondaryList.isNotEmpty()
+
+        return when {
+            primaryType == "album" && !hasSecondary -> 4
+            primaryType == "single" && !hasSecondary -> 3
+            primaryType == "album" && !isCompilation -> 2
+            !isCompilation -> 1
+            else -> 0 // compilation — least preferred
+        }
+    }
 }
