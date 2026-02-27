@@ -151,6 +151,26 @@ class MetadataForwardingPlayer(private val wrappedPlayer: Player) :
         return true
     }
 
+    override fun getAvailableCommands(): Player.Commands {
+        return super.getAvailableCommands()
+                .buildUpon()
+                .add(Player.COMMAND_SEEK_TO_NEXT)
+                .add(Player.COMMAND_SEEK_TO_PREVIOUS)
+                .add(Player.COMMAND_SEEK_TO_NEXT_MEDIA_ITEM)
+                .add(Player.COMMAND_SEEK_TO_PREVIOUS_MEDIA_ITEM)
+                .build()
+    }
+
+    override fun isCommandAvailable(command: Int): Boolean {
+        return when (command) {
+            Player.COMMAND_SEEK_TO_NEXT,
+            Player.COMMAND_SEEK_TO_PREVIOUS,
+            Player.COMMAND_SEEK_TO_NEXT_MEDIA_ITEM,
+            Player.COMMAND_SEEK_TO_PREVIOUS_MEDIA_ITEM -> true
+            else -> super.isCommandAvailable(command)
+        }
+    }
+
     override fun hasNextMediaItem(): Boolean {
         return true
     }

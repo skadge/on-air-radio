@@ -332,6 +332,8 @@ class RadioPlaybackService : MediaLibraryService() {
                                         .buildUpon()
                                         .add(Player.COMMAND_SEEK_TO_NEXT)
                                         .add(Player.COMMAND_SEEK_TO_PREVIOUS)
+                                        .add(Player.COMMAND_SEEK_TO_NEXT_MEDIA_ITEM)
+                                        .add(Player.COMMAND_SEEK_TO_PREVIOUS_MEDIA_ITEM)
                                         .build()
 
                         // Auto-resume last played station when Android Auto connects
