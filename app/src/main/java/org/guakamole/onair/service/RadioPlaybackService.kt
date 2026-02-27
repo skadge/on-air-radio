@@ -1,7 +1,9 @@
 package org.guakamole.onair.service
 
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import androidx.annotation.OptIn
 import androidx.media3.common.AudioAttributes
@@ -64,6 +66,7 @@ class RadioPlaybackService : MediaLibraryService() {
         // Session tracking for listen counts
         private var currentStationId: String? = null
         private var playbackStartTimeMs: Long = 0
+        private lateinit var prefs: SharedPreferences
         private val LISTEN_SESSION_THRESHOLD_MS = 10_000L // 10 seconds
 
         private val userAgent by lazy {
@@ -79,6 +82,8 @@ class RadioPlaybackService : MediaLibraryService() {
                 private const val GENRE_PREFIX = "genre_"
                 private const val PREMIUM_REQUIRED_ID = "premium_required"
                 private const val ANDROID_AUTO_PACKAGE = "com.google.android.projection.gearhead"
+                private const val PREFS_NAME = "radio_prefs"
+                private const val LAST_PLAYED_STATION_KEY = "last_played_station"
 
                 // Genre tags for filtering (string res IDs resolved at runtime)
                 val AUTO_GENRE_TAGS = listOf("news", "hits", "rock", "jazz", "classical")
@@ -102,6 +107,7 @@ class RadioPlaybackService : MediaLibraryService() {
 
         override fun onCreate() {
                 super.onCreate()
+                prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
                 artworkManager = ArtworkManager(this)
                 metadataManager = RadioMetadataManager(serviceScope, artworkManager)
@@ -189,6 +195,13 @@ class RadioPlaybackService : MediaLibraryService() {
                                         // Start tracking new station
                                         currentStationId = mediaItem?.mediaId
                                         playbackStartTimeMs = System.currentTimeMillis()
+
+                                        // Persist last played station for auto-resume
+                                        mediaItem?.mediaId?.let {
+                                                prefs.edit()
+                                                        .putString(LAST_PLAYED_STATION_KEY, it)
+                                                        .apply()
+                                        }
 
                                         player?.setOverriddenMetadata(null)
                                         metadataManager.onStationChange(mediaItem?.mediaId)
@@ -320,6 +333,24 @@ class RadioPlaybackService : MediaLibraryService() {
                                         .add(Player.COMMAND_SEEK_TO_NEXT)
                                         .add(Player.COMMAND_SEEK_TO_PREVIOUS)
                                         .build()
+
+                        // Auto-resume last played station when Android Auto connects
+                        if (isAndroidAuto(controller) && player?.isPlaying != true) {
+                                val lastStationId = prefs.getString(LAST_PLAYED_STATION_KEY, null)
+                                if (lastStationId != null) {
+                                        val station = RadioRepository.getStationById(lastStationId)
+                                        if (station != null) {
+                                                val mediaItem = createMediaItem(station)
+                                                player?.setMediaItem(mediaItem)
+                                                player?.prepare()
+                                                player?.play()
+                                                android.util.Log.d(
+                                                        "RadioPlaybackService",
+                                                        "Auto-resuming last played station: ${station.name}"
+                                                )
+                                        }
+                                }
+                        }
 
                         return MediaSession.ConnectionResult.accept(
                                 availableSessionCommands.build(),
